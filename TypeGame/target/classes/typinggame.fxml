@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.TextFlow?>
 
+<!--This page is used to construct the window the game appears in when running [Ben M - Aug 16 2025]-->
+
 <!-- Root layout container: vertical box with spacing and padding -->
 <VBox spacing="10" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
