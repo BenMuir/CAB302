@@ -24,13 +24,20 @@ import com.typinggame.util.SentenceProvider;
 public class TypingGameController {
 
     // UI Components linked via FXML
-    @FXML private TextFlow displayFlow;             // Displays the target sentence with colored feedback
-    @FXML private TextField inputField;             // User input field
-    @FXML private Label timerLabel;                 // Shows elapsed time
-    @FXML private Label resultLabel;                // Shows final result summary
-    @FXML private Label accuracyLabel;              // Shows live accuracy percentage
-    @FXML private Label wpmLabel;                   // Shows live WPM
-    @FXML private Label streakLabel;                // Shows current streak count
+    @FXML
+    private TextFlow displayFlow;             // Displays the target sentence with colored feedback
+    @FXML
+    private TextField inputField;             // User input field
+    @FXML
+    private Label timerLabel;                 // Shows elapsed time
+    @FXML
+    private Label resultLabel;                // Shows final result summary
+    @FXML
+    private Label accuracyLabel;              // Shows live accuracy percentage
+    @FXML
+    private Label wpmLabel;                   // Shows live WPM
+    @FXML
+    private Label streakLabel;                // Shows current streak count
 
     // Game State
     private String targetText;                      // The sentence the user must type
@@ -47,7 +54,10 @@ public class TypingGameController {
         targetText = SentenceProvider.getSentence();    // Load a new sentence
         stats = new TypingStats(targetText);            // Initialize stats tracking
         updateDisplay("");                      // Render empty sentence with default styling
-        startTimer();                                   // Begin timer updates
+        startTimer();
+
+        inputField.setEditable(true);                   // Ensure input is enabled at start
+        inputField.setDisable(false);// Begin timer updates
 
         // Handle typing input in real time
         inputField.setOnKeyTyped(e -> {
@@ -81,7 +91,8 @@ public class TypingGameController {
             if (stats.isComplete()) {
                 timer.stop();
                 showResults();
-                inputField.setEditable(false);
+                inputField.setEditable(false);          // Prevent editing
+                inputField.setDisable(true);            // Fully lock input
             }
         });
     }
@@ -91,8 +102,8 @@ public class TypingGameController {
      * Green = correct, Red = incorrect, Black = not yet typed.
      *
      * @param userInput Current input from the user
-     *
-     * [Ben M – Aug 16 2025]
+     *                  <p>
+     *                  [Ben M – Aug 16 2025]
      */
     private void updateDisplay(String userInput) {
         displayFlow.getChildren().clear();
@@ -117,7 +128,7 @@ public class TypingGameController {
     /**
      * Starts the timer and updates the time label every second.
      * Uses JavaFX Timeline for smooth UI updates.
-     *
+     * <p>
      * [Ben M – Aug 16 2025]
      */
     private void startTimer() {
@@ -133,7 +144,7 @@ public class TypingGameController {
     /**
      * Displays final results when typing is complete.
      * Shows time, WPM, accuracy, and best streak.
-     *
+     * <p>
      * [Ben M – Aug 16 2025]
      */
     private void showResults() {
@@ -142,7 +153,7 @@ public class TypingGameController {
 
         int wpm = stats.calculateWPM(elapsedMinutes);
         double accuracy = stats.getAccuracy();
-        int elapsedSeconds = (int)(elapsedMinutes * 60);
+        int elapsedSeconds = (int) (elapsedMinutes * 60);
         int bestStreak = stats.getBestStreak();
 
         resultLabel.setText("Finished! Time: " + elapsedSeconds + "s | WPM: " + wpm +
@@ -153,13 +164,15 @@ public class TypingGameController {
     /**
      * Resets the game state and UI for a new round.
      * Clears input, reloads sentence, and restarts timer.
-     *
+     * <p>
      * [Ben M – Aug 16 2025]
      */
     @FXML
     private void restartGame() {
         inputField.clear();
-        inputField.setEditable(true);
+        inputField.setEditable(true);      // Re-enable text editing
+        inputField.setDisable(false);      // Re-enable full input interaction
+
         resultLabel.setText("");
         accuracyLabel.setText("Accuracy: 0%");
         wpmLabel.setText("WPM: 0");

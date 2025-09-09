@@ -61,25 +61,28 @@ public class TypingStats {
      *
      *[Ben M - Aug 16 2025]
      */
+
     public void updateAccuracy(String userInput, String targetText) {
         totalTypedChars = userInput.length();
         correctChars = 0;
 
-        for (int i = 0; i < Math.min(userInput.length(), targetText.length()); i++) {
+        for (int i = 0; i < userInput.length(); i++) {
             char typed = userInput.charAt(i);
-            char expected = targetText.charAt(i);
+            char expected = i < targetText.length() ? targetText.charAt(i) : '\0'; // Treat overflow as mismatch
 
             if (typed == expected) {
                 correctChars++;
             } else {
                 // Only count new mistakes (not previously typed errors)
-                if (i >= previousInput.length() || previousInput.charAt(i) == expected) {
+                boolean isNewMistake = i >= previousInput.length() ||
+                        (i < targetText.length() && previousInput.charAt(i) == expected);
+                if (isNewMistake) {
                     cumulativeErrors++;
                 }
             }
         }
 
-        previousInput = userInput; // Store input for next comparison
+        previousInput = userInput;
     }
 
     /**
@@ -92,10 +95,15 @@ public class TypingStats {
      */
     public double getAccuracy() {
         int totalAttempts = correctChars + cumulativeErrors;
-        if (totalAttempts == 0) return 100.0;
+
+        // If no input has been typed, accuracy should be 0%
+        if (totalTypedChars == 0) return 0.0;
+
+        // If no mistakes or correct chars recorded, default to 0%
+        if (totalAttempts == 0) return 0.0;
+
         return (correctChars * 100.0) / totalAttempts;
     }
-
     /**
      * Updates streak count based on latest character typed.
      * Resets streak on mistake, updates best streak if needed.
