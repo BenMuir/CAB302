@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.*?>
 <!-- FXML file for login page - Wren -->
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.typinggame.controller.LoginPage"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LoginPage">
+   <children>
+      <ImageView fitHeight="406.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@LoginBackground.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="334.0" layoutY="34.0" prefHeight="311.0" prefWidth="237.0">
+         <children>
+            <ImageView fitHeight="442.0" fitWidth="436.0" layoutX="-98.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@UIFieldBackground.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="-7.0" layoutY="68.0" prefHeight="41.0" prefWidth="252.0" text="Username">
+               <font>
+                  <Font name="Press Start 2P Regular" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="1.0" prefHeight="64.0" prefWidth="236.0" text="Sign In">
+               <font>
+                  <Font name="Press Start 2P Regular" size="27.0" />
+               </font>
+            </Label>
+            <PasswordField layoutX="24.0" layoutY="176.0" prefHeight="25.0" prefWidth="190.0" promptText="********" />
+            <TextField layoutX="24.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" promptText="example@123.com" />
+            <Label alignment="CENTER" layoutX="-7.0" layoutY="135.0" prefHeight="41.0" prefWidth="252.0" text="Password">
+               <font>
+                  <Font name="Press Start 2P Regular" size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="68.0" layoutY="220.0" mnemonicParsing="false" text="Login">
+               <font>
+                  <Font name="Press Start 2P Regular" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
