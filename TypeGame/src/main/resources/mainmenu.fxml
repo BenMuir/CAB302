@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.MainMenu">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/MainScreenBackground.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="109.0" layoutY="68.0" text="Game Title">
+         <font>
+            <Font name="Press Start 2P Regular" size="21.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="131.0" prefHeight="400.0" prefWidth="303.0">
+         <children>
+            <ImageView fitHeight="246.0" fitWidth="191.0" layoutY="140.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/UIFieldBackground.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="42.0" layoutY="151.0" text="Menu">
+               <font>
+                  <Font name="Press Start 2P Regular" size="26.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="playButton" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="189.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="240.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="optionsButton" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="291.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
