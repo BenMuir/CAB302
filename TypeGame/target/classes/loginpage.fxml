@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.Group?>
+<?import java.lang.Double?>
+<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0"
+           xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.typinggame.controller.LoginPage">
+
+    <!-- Bubble Animation Layer -->
+    <Pane fx:id="bubbleLayer" prefHeight="600.0" prefWidth="800.0" />
+
+    <!-- Sandy Bottom -->
+    <Rectangle fx:id="sandyBottom" fill="#f5deb3" height="80.0" width="800.0"
+               translateY="260.0" />
+
+    <!-- Main Content Layout -->
+    <HBox alignment="CENTER" spacing="50.0">
+        <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+        </padding>
+
+        <!-- Octopus Character Area -->
+        <VBox alignment="CENTER" spacing="20.0">
+
+            <!-- Octopus Group -->
+            <Group fx:id="octopusGroup">
+
+                <!-- Tentacles -->
+                <Rectangle fx:id="tentacle1" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="-4.0" y="40.0" />
+                <Rectangle fx:id="tentacle2" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="31.0" y="55.0" rotate="45.0" />
+                <Rectangle fx:id="tentacle3" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="46.0" y="40.0" rotate="90.0" />
+                <Rectangle fx:id="tentacle4" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="31.0" y="25.0" rotate="135.0" />
+                <Rectangle fx:id="tentacle5" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="-4.0" y="10.0" rotate="180.0" />
+                <Rectangle fx:id="tentacle6" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="-39.0" y="25.0" rotate="225.0" />
+                <Rectangle fx:id="tentacle7" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="-54.0" y="40.0" rotate="270.0" />
+                <Rectangle fx:id="tentacle8" fill="#ff7846" stroke="#c8502a" strokeWidth="2.0"
+                           height="40.0" width="8.0" x="-39.0" y="55.0" rotate="315.0" />
+
+                <!-- Octopus Head -->
+                <Circle fx:id="octopusHead" centerX="0.0" centerY="0.0" radius="60.0"
+                        fill="#ff6432" stroke="#c8502a" strokeWidth="3.0" />
+
+                <!-- Eyes -->
+                <Circle fx:id="leftEye" centerX="-20.0" centerY="-15.0" radius="12.0" fill="white" />
+                <Circle fx:id="rightEye" centerX="20.0" centerY="-15.0" radius="12.0" fill="white" />
+                <Circle fx:id="leftPupil" centerX="-20.0" centerY="-15.0" radius="6.0" fill="black" />
+                <Circle fx:id="rightPupil" centerX="20.0" centerY="-15.0" radius="6.0" fill="black" />
+
+                <!-- Laptop -->
+                <Rectangle fx:id="laptop" fill="#dcdcdc" stroke="#969696" strokeWidth="2.0"
+                           height="30.0" width="40.0" x="-20.0" y="30.0" />
+                <Rectangle fx:id="screen" fill="#323232" height="20.0" width="35.0"
+                           x="-17.5" y="32.0" />
+            </Group>
+
+            <!-- Colorful Fish -->
+            <Group fx:id="fishGroup" translateX="100.0" translateY="-50.0">
+                <!-- Fish Body -->
+                <Polygon fx:id="fishBody" fill="#ffc832" stroke="#c8961e" strokeWidth="2.0">
+                    <points>
+                        <Double fx:value="0.0" />
+                        <Double fx:value="0.0" />
+                        <Double fx:value="30.0" />
+                        <Double fx:value="-10.0" />
+                        <Double fx:value="45.0" />
+                        <Double fx:value="0.0" />
+                        <Double fx:value="30.0" />
+                        <Double fx:value="10.0" />
+                    </points>
+                </Polygon>
+
+                <!-- Fish Tail -->
+                <Polygon fx:id="fishTail" fill="#ff9664" stroke="#c86432" strokeWidth="2.0">
+                    <points>
+                        <Double fx:value="45.0" />
+                        <Double fx:value="0.0" />
+                        <Double fx:value="55.0" />
+                        <Double fx:value="-8.0" />
+                        <Double fx:value="60.0" />
+                        <Double fx:value="0.0" />
+                        <Double fx:value="55.0" />
+                        <Double fx:value="8.0" />
+                    </points>
+                </Polygon>
+
+                <!-- Fish Eye -->
+                <Circle fx:id="fishEye" centerX="15.0" centerY="0.0" radius="4.0" fill="white" />
+                <Circle fx:id="fishPupil" centerX="15.0" centerY="0.0" radius="2.0" fill="black" />
+            </Group>
+        </VBox>
+
+        <!-- Login Form -->
+        <VBox fx:id="loginContainer" alignment="CENTER" maxWidth="300.0" spacing="15.0"
+              style="-fx-background-color: linear-gradient(to bottom, #ffd764, #ffc350); -fx-background-radius: 10; -fx-border-color: #c89632; -fx-border-width: 4; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 5, 5);">
+            <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+            </padding>
+
+            <!-- Username Label -->
+            <Label fx:id="usernameLabel" text="Username" textFill="#323232">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
+
+            <!-- Username Field -->
+            <TextField fx:id="usernameField" prefHeight="35.0" promptText="Password"
+                       style="-fx-background-color: #ffffe6; -fx-border-color: #646464; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 14px;" />
+
+            <!-- Password Label -->
+            <Label fx:id="passwordLabel" text="Password" textFill="#323232">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Label>
+
+            <!-- Password Field -->
+            <PasswordField fx:id="passwordField" prefHeight="35.0" promptText="****"
+                           style="-fx-background-color: #ffffe6; -fx-border-color: #646464; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 14px;" />
+
+            <!-- Login Button -->
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin"
+                    prefHeight="40.0" prefWidth="200.0" text="LOGIN" textFill="#503214"
+                    style="-fx-background-color: #ffb43c; -fx-border-color: #c8821e; -fx-border-width: 3px; -fx-border-radius: 8px; -fx-background-radius: 8px;">
+                <font>
+                    <Font name="System Bold" size="14.0" />
+                </font>
+            </Button>
+        </VBox>
+    </HBox>
+</StackPane>
