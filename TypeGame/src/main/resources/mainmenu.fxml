@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,10 +14,13 @@
             <Image url="@images/MainScreenBackground.png" />
          </image>
       </ImageView>
-      <Label layoutX="109.0" layoutY="68.0" text="Game Title">
+      <Label layoutX="117.0" layoutY="84.0" text="Game Title">
          <font>
             <Font name="Press Start 2P Regular" size="21.0" />
          </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </Label>
       <AnchorPane layoutX="131.0" prefHeight="400.0" prefWidth="303.0">
          <children>
@@ -30,22 +34,47 @@
                   <Font name="Press Start 2P Regular" size="26.0" />
                </font>
             </Label>
-            <ImageView fx:id="playButton" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="189.0" pickOnBounds="true">
+            <ImageView fx:id="playButton" onMousePressed="#playButtonPressed" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="189.0" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="notSureYetButton"  onMousePressed="#randomPressed" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="240.0" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="optionsButton" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="291.0" pickOnBounds="true">
+            <ImageView fx:id="optionsButton" onMousePressed="#optionsButtonPressed" fitHeight="49.0" fitWidth="128.0" layoutX="32.0" layoutY="291.0" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
+            <Label layoutX="64.0" layoutY="205.0" text="Play">
+               <font>
+                  <Font name="Press Start 2P Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="256.0" text="Button 2">
+               <font>
+                  <Font name="Press Start 2P Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="40.0" layoutY="307.0" text="Options">
+               <font>
+                  <Font name="Press Start 2P Regular" size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
+      <ImageView fx:id="profileButton" fitHeight="49.0" fitWidth="122.0" layoutX="477.0" layoutY="3.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/Button.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="489.0" layoutY="21.0" text="PROFILE">
+         <font>
+            <Font name="Press Start 2P Regular" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
