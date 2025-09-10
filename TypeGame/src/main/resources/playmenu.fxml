@@ -33,17 +33,17 @@
                         <Image url="@images/Button.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="247.0" layoutY="390.0" text="Learn">
+                  <Label layoutX="247.0" layoutY="390.0" text="Learn" mouseTransparent="true">
                      <font>
                         <Font name="Press Start 2P Regular" size="32.0" />
                      </font>
                   </Label>
-                  <Label layoutX="264.0" layoutY="512.0" text="Race">
+                  <Label layoutX="264.0" layoutY="512.0" text="Race" mouseTransparent="true">
                      <font>
                         <Font name="Press Start 2P Regular" size="32.0" />
                      </font>
                   </Label>
-                  <Label layoutX="263.0" layoutY="622.0" text="Back">
+                  <Label layoutX="263.0" layoutY="622.0" text="Back" mouseTransparent="true">
                      <font>
                         <Font name="Press Start 2P Regular" size="32.0" />
                      </font>
