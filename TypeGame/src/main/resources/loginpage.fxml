@@ -41,7 +41,7 @@
                   <Font name="Press Start 2P Regular" size="18.0" />
                </font>
             </Label>
-            <TextField layoutX="24.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" />
+            <TextField layoutX="24.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" promptText="email@123.com" />
             <ImageView fx:id="loginButton" fitHeight="41.0" fitWidth="115.0" layoutX="63.0" layoutY="210.0" onMousePressed="#handleLogin">
                <image>
                   <Image url="@images/Button.png" />

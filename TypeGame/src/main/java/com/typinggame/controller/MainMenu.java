@@ -1,5 +1,6 @@
 package com.typinggame.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenu {
+public class MainMenu extends Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -20,25 +21,29 @@ public class MainMenu {
     public ImageView playButton;
     public ImageView optionsButton;
     public ImageView profileButton;
-    public ImageView notSureYetButton;
+    public ImageView exitButton;
+    public ImageView leaderboardButton;
 
+    // When the play button is pressed move to the menu for which game mode to play
     public void playButtonPressed(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/playmenu.fxml"));
-        stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        displayScene("playmenu.fxml", mouseEvent);
     }
-
+    // Move to options menu
     public void optionsButtonPressed(MouseEvent mouseEvent) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/src/main/resources/optionsmenu.fxml"));
-        stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        displayScene("optionsmenu.fxml", mouseEvent);
+    }
+    // exit application
+
+    // open the leaderboards
+    public void leaderboardButtonPressed(MouseEvent mouseEvent) throws IOException {
+        displayScene("leaderboards.fxml", mouseEvent);
     }
 
-    public void randomPressed(MouseEvent mouseEvent) {
+    public void exitPressed(MouseEvent mouseEvent) {
+        Platform.exit();
+    }
 
+    public void profileButtonPressed(MouseEvent mouseEvent) throws IOException{
+        displayScene("profile.fxml" , mouseEvent);
     }
 }

@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.MainMenu">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1988.0" pickOnBounds="true">
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
             <Image url="@images/MainScreenBackground.png" />
          </image>
@@ -34,46 +34,56 @@
                   <Font name="Press Start 2P Regular" size="66.0" />
                </font>
             </Label>
-            <ImageView fx:id="playButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="147.0" onMousePressed="#playButtonPressed" pickOnBounds="true">
+            <ImageView fx:id="playButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="180.0" onMousePressed="#playButtonPressed" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="notSureYetButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="256.0" onMousePressed="#randomPressed" pickOnBounds="true">
+            <ImageView fx:id="optionsButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="295.0" onMousePressed="#optionsButtonPressed" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="optionsButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="365.0" onMousePressed="#optionsButtonPressed" pickOnBounds="true">
+            <ImageView fx:id="exitButton" fitHeight="100.0" fitWidth="261.0" layoutX="103.0" layoutY="410.0" onMousePressed="#exitPressed" pickOnBounds="true">
                <image>
                   <Image url="@images/Button.png" />
                </image>
             </ImageView>
-            <Label layoutX="170.0" layoutY="179.0" mouseTransparent="true" text="Play">
+            <Label layoutX="170.0" layoutY="212.0" mouseTransparent="true" text="Play">
                <font>
                   <Font name="Press Start 2P Regular" size="32.0" />
                </font>
             </Label>
-            <Label layoutX="122.0" layoutY="288.0" mouseTransparent="true" text="Button2">
+            <Label layoutX="122.0" layoutY="327.0" mouseTransparent="true" text="Options">
                <font>
                   <Font name="Press Start 2P Regular" size="32.0" />
                </font>
             </Label>
-            <Label layoutX="127.0" layoutY="397.0" mouseTransparent="true" text="Options">
+            <Label layoutX="170.0" layoutY="442.0" mouseTransparent="true" text="Exit">
                <font>
                   <Font name="Press Start 2P Regular" size="32.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <ImageView fx:id="profileButton" fitHeight="162.0" fitWidth="346.0" layoutX="1601.0" layoutY="35.0" pickOnBounds="true">
+      <ImageView fx:id="profileButton" fitHeight="162.0" onMousePressed="#profileButtonPressed" fitWidth="346.0" layoutX="1552.0" layoutY="35.0" pickOnBounds="true">
          <image>
             <Image url="@images/Button.png" />
          </image>
       </ImageView>
-      <Label layoutX="1622.0" layoutY="95.0" mouseTransparent="true" text="PROFILE">
+      <Label layoutX="1573.0" layoutY="95.0" mouseTransparent="true" text="Profile">
          <font>
             <Font name="Press Start 2P Regular" size="44.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="leaderboardButton" fitHeight="75.0" fitWidth="346.0" layoutX="1553.0" layoutY="216.0" onMousePressed="#leaderboardButtonPressed" pickOnBounds="true">
+         <image>
+            <Image url="@images/Button.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="1579.0" layoutY="230.0" mouseTransparent="true" prefHeight="50.0" prefWidth="288.0" text="Leaderboards">
+         <font>
+            <Font name="Press Start 2P Regular" size="24.0" />
          </font>
       </Label>
    </children>
