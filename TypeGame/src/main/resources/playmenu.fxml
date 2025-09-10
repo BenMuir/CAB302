@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,49 +8,49 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.PlayMenu">
    <children>
-      <SplitPane dividerPositions="0.3333" layoutY="1.0" prefHeight="1080.0" prefWidth="1920.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <ImageView fx:id="learnButton" onMousePressed="#learnModeButtonPressed" fitHeight="100.0" fitWidth="261.0" layoutX="196.0" layoutY="359.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/Button.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="12.0" layoutY="14.0" text="Game Mode">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="68.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="raceModeButton" fitHeight="100.0" fitWidth="261.0" layoutX="196.0" layoutY="476.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/Button.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="backButton" fitHeight="100.0" fitWidth="261.0" layoutX="196.0" layoutY="592.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@images/Button.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="247.0" layoutY="390.0" text="Learn" mouseTransparent="true">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="32.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="264.0" layoutY="512.0" text="Race" mouseTransparent="true">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="32.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="263.0" layoutY="622.0" text="Back" mouseTransparent="true">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="32.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-        </items>
-      </SplitPane>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/GameModeBackground.png" />
+         </image>
+      </ImageView>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <ImageView fx:id="learnButton" fitHeight="100.0" fitWidth="261.0" layoutX="217.0" layoutY="437.0" onMousePressed="#learnModeButtonPressed" pickOnBounds="true">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="raceButton" fitHeight="100.0" fitWidth="261.0" layoutX="217.0" layoutY="554.0" pickOnBounds="true" onMousePressed="#raceModeButtonPressed">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="backButton" fitHeight="100.0" fitWidth="261.0" layoutX="217.0" layoutY="670.0" pickOnBounds="true" onMousePressed="#backButtonPressed">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="268.0" layoutY="468.0" text="Learn" mouseTransparent="true">
+               <font>
+                  <Font name="Press Start 2P Regular" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="285.0" layoutY="590.0" text="Race" mouseTransparent="true">
+               <font>
+                  <Font name="Press Start 2P Regular" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="284.0" layoutY="700.0" text="Back" mouseTransparent="true">
+               <font>
+                  <Font name="Press Start 2P Regular" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="281.0" text="Game Mode" textFill="#e5b514">
+               <font>
+                  <Font name="Press Start 2P Regular" size="68.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

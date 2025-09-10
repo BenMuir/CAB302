@@ -12,4 +12,11 @@ public class PlayMenu extends Controller {
     public void learnModeButtonPressed(MouseEvent mouseEvent) throws IOException {
         displayScene("typinggame.fxml", mouseEvent);
     }
+
+    public void raceModeButtonPressed(MouseEvent mouseEvent) {
+    }
+
+    public void backButtonPressed(MouseEvent mouseEvent) throws IOException {
+        displayScene("mainmenu.fxml", mouseEvent);
+    }
 }
