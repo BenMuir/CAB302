@@ -34,10 +34,12 @@ public interface UserRepository {
      */
     boolean userExists(String username);
 
+    List<User> getAllUsers();
+
     /**
      * Retrieves all users from persistent storage.
      *
      * @return A list of all users
      */
-    List<User> getAllUsers();
+    //List<User> getAllUsers();
 }

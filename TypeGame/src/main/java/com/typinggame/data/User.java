@@ -59,27 +59,27 @@ public class User implements Serializable {
     public int getTotalSessions() {
         return totalSessions;
     }
-
-    public List<Double> getSessionAccuracies() {
-        return sessionAccuracies;
-    }
-
-    public List<Integer> getSessionWPMs() {
-        return sessionWPMs;
-    }
-
-    // Setters
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
-    }
-
-    public void setBestAccuracy(double bestAccuracy) {
-        this.bestAccuracy = bestAccuracy;
-    }
-
-    public void incrementSessions() {
-        this.totalSessions++;
-    }
+//
+//    public List<Double> getSessionAccuracies() {
+//        return sessionAccuracies;
+//    }
+//
+//    public List<Integer> getSessionWPMs() {
+//        return sessionWPMs;
+//    }
+//
+//    // Setters
+//    public void setHighScore(int highScore) {
+//        this.highScore = highScore;
+//    }
+//
+//    public void setBestAccuracy(double bestAccuracy) {
+//        this.bestAccuracy = bestAccuracy;
+//    }
+//
+//    public void incrementSessions() {
+//        this.totalSessions++;
+//    }
 
     /**
      * Records a new game session and updates stats accordingly.
@@ -99,13 +99,13 @@ public class User implements Serializable {
     /**
      * Resets all gameplay statistics.
      */
-    public void resetStats() {
-        highScore = 0;
-        bestAccuracy = 0.0;
-        totalSessions = 0;
-        sessionAccuracies.clear();
-        sessionWPMs.clear();
-    }
+//    public void resetStats() {
+//        highScore = 0;
+//        bestAccuracy = 0.0;
+//        totalSessions = 0;
+//        sessionAccuracies.clear();
+//        sessionWPMs.clear();
+//    }
 
     @Override
     public String toString() {

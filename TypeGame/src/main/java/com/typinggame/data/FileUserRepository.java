@@ -16,7 +16,10 @@ public class FileUserRepository implements UserRepository {
 
     public FileUserRepository() {
         if (!userDir.exists()) {
-            userDir.mkdirs(); // Create directory if it doesn't exist
+            boolean created = userDir.mkdirs();
+            if (!created) {
+                System.err.println("Warning: Failed to create user directory at " + userDir.getAbsolutePath());
+            }
         }
     }
 
@@ -27,7 +30,7 @@ public class FileUserRepository implements UserRepository {
             out.writeObject(user);
             return true;
         } catch (IOException e) {
-            System.err.println("Failed to save user: " + e.getMessage());
+            System.err.println("Failed to save user '" + user.getUsername() + "': " + e.getMessage());
             return false;
         }
     }
@@ -35,20 +38,22 @@ public class FileUserRepository implements UserRepository {
     @Override
     public User loadUser(String username) {
         File file = new File(userDir, username + ".dat");
-        if (!file.exists()) return null;
+        if (!file.exists()) {
+            System.err.println("User file not found for: " + username);
+            return null;
+        }
 
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             return (User) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Failed to load user: " + e.getMessage());
+            System.err.println("Failed to load user '" + username + "': " + e.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean userExists(String username) {
-        File file = new File(userDir, username + ".dat");
-        return file.exists();
+        return new File(userDir, username + ".dat").exists();
     }
 
     @Override
@@ -56,11 +61,16 @@ public class FileUserRepository implements UserRepository {
         List<User> users = new ArrayList<>();
         File[] files = userDir.listFiles((dir, name) -> name.endsWith(".dat"));
 
-        if (files != null) {
-            for (File file : files) {
-                String username = file.getName().replace(".dat", "");
-                User user = loadUser(username);
-                if (user != null) users.add(user);
+        if (files == null) {
+            System.err.println("User directory is empty or inaccessible.");
+            return users;
+        }
+
+        for (File file : files) {
+            String username = file.getName().replace(".dat", "");
+            User user = loadUser(username);
+            if (user != null) {
+                users.add(user);
             }
         }
 
