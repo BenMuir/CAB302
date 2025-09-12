@@ -2,26 +2,34 @@ package com.typinggame;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.util.Objects;
+
+import java.net.URL;
 
 /**
  * MainApp launches the Typing Game JavaFX application.
- * It loads the FXML layout and sets up the primary stage.
+ * It loads the login screen and sets up the primary stage.
  *
- *  [Ben M - Aug 16 2025]
+ * [Ben M - Sept 10 2025]
  */
 public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Load FXML layout
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/typinggame.fxml")));
+
+        URL location = getClass().getResource("/LoginView.fxml");
+
+        if (location == null) {
+            System.err.println("ERROR: LoginView.fxml not found at /LoginView.fxml");
+            return;
+        }
+
+        Parent root = FXMLLoader.load(location);
 
         // Set up scene and stage
-        Scene scene = new Scene(root, 400, 250 );  //  Window size
+        Scene scene = new Scene(root, 400, 250);  // Window size
         primaryStage.setTitle("Typing Game Prototype");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
@@ -32,6 +40,3 @@ public class MainApp extends Application {
         launch(args); // Launch JavaFX application
     }
 }
-
-// testing a push to GitHub - Ben Muir
-

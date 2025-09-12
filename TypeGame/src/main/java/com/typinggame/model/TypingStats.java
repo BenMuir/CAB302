@@ -43,7 +43,7 @@ public class TypingStats {
      *
      * @param elapsedMinutes Time elapsed in minutes
      * @return Estimated WPM
-     *
+     * <p>
      * [Ben M - Aug 16 2025]
      */
     public int calculateWPM(double elapsedMinutes) {
@@ -56,10 +56,10 @@ public class TypingStats {
      * Updates accuracy stats based on current input.
      * Compares typed characters to target and tracks new errors.
      *
-     * @param userInput   Current input from user
-     * @param targetText  Target sentence to compare against
-     *
-     *[Ben M - Aug 16 2025]
+     * @param userInput  Current input from user
+     * @param targetText Target sentence to compare against
+     *                   <p>
+     *                   [Ben M - Aug 16 2025]
      */
 
     public void updateAccuracy(String userInput, String targetText) {
@@ -88,9 +88,8 @@ public class TypingStats {
     /**
      * Returns current accuracy as a percentage.
      *
-     *
      * @return Accuracy percentage
-     *
+     * <p>
      * [Ben M - Aug 16 2025]
      */
     public double getAccuracy() {
@@ -104,14 +103,15 @@ public class TypingStats {
 
         return (correctChars * 100.0) / totalAttempts;
     }
+
     /**
      * Updates streak count based on latest character typed.
      * Resets streak on mistake, updates best streak if needed.
      *
      * @param inputChar  Character typed by user
      * @param targetChar Expected character from target sentence
-     *
-     * [Ben M - Aug 16 2025]
+     *                   <p>
+     *                   [Ben M - Aug 16 2025]
      */
     public void updateStreak(char inputChar, char targetChar) {
         if (inputChar == targetChar) {
