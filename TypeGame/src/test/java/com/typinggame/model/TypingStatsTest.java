@@ -1,12 +1,13 @@
 package com.typinggame.model;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for TypingStats class.
  * Validates accuracy, WPM, streak tracking, and completion logic.
- *
+ * <p>
  * [Ben M – Sep 8 2025]
  */
 public class TypingStatsTest {

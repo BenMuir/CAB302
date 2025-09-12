@@ -1,85 +1,95 @@
 package com.typinggame.controller;
 
+import com.typinggame.data.User;
+import com.typinggame.data.UserManager;
+import com.typinggame.model.TypingStats;
+import com.typinggame.util.SceneManager;
+import com.typinggame.util.SentenceProvider;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.paint.Color;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.animation.Animation;
-
-import com.typinggame.model.TypingStats;
-import com.typinggame.util.SentenceProvider;
 
 /**
- * TypingGameController handles all game logic and UI updates.
- * It connects the FXML layout to backend functionality, tracking user input,
- * updating performance stats, and rendering visual feedback.
- *
- * [Ben M – Aug 16 2025]
+ * TypingGameController handles gameplay logic, UI updates, and user stat tracking.
+ * It connects the FXML layout to backend functionality and updates the user's profile after each session.
+ * <p>
+ * [Ben M – Sept 10 2025]
  */
 public class TypingGameController {
 
-    // UI Components linked via FXML
+    // UI Components
     @FXML
-    private TextFlow displayFlow;             // Displays the target sentence with colored feedback
+    private TextFlow displayFlow;
     @FXML
-    private TextField inputField;             // User input field
+    private TextField inputField;
     @FXML
-    private Label timerLabel;                 // Shows elapsed time
+    private Label timerLabel;
     @FXML
-    private Label resultLabel;                // Shows final result summary
+    private Label resultLabel;
     @FXML
-    private Label accuracyLabel;              // Shows live accuracy percentage
+    private Label accuracyLabel;
     @FXML
-    private Label wpmLabel;                   // Shows live WPM
+    private Label wpmLabel;
     @FXML
-    private Label streakLabel;                // Shows current streak count
+    private Label streakLabel;
 
     // Game State
-    private String targetText;                      // The sentence the user must type
-    private long startTime;                         // Timestamp when typing begins
-    private Timeline timer;                         // JavaFX timer for updating elapsed time
-    private TypingStats stats;                      // Tracks typing performance
+    private String targetText;
+    private long startTime;
+    private Timeline timer;
+    private TypingStats stats;
+
+    // User Context
+    private UserManager userManager;
+    private User currentUser;
+
+    @FXML
+    private Label welcomeLabel;
 
     /**
-     * Called automatically when FXML is loaded.
-     * Initializes game state, loads sentence, and sets up input handling.
+     * Injects user context from previous scene
+     */
+    public void setUserContext(UserManager manager) {
+        this.userManager = manager;
+        this.currentUser = manager.getCurrentUser();
+    }
+
+    /**
+     * Initializes game state and input handling
      */
     @FXML
     public void initialize() {
-        targetText = SentenceProvider.getSentence();    // Load a new sentence
-        stats = new TypingStats(targetText);            // Initialize stats tracking
-        updateDisplay("");                      // Render empty sentence with default styling
+        targetText = SentenceProvider.getSentence();
+        stats = new TypingStats(targetText);
+        updateDisplay("");
         startTimer();
 
-        inputField.setEditable(true);                   // Ensure input is enabled at start
-        inputField.setDisable(false);// Begin timer updates
+        inputField.setEditable(true);
+        inputField.setDisable(false);
 
-        // Handle typing input in real time
         inputField.setOnKeyTyped(e -> {
             String input = inputField.getText();
+            updateDisplay(input);
+            stats.update(input);
+            stats.updateAccuracy(input, targetText);
 
-            updateDisplay(input);                       // Update colored sentence display
-            stats.update(input);                        // Store current input
-            stats.updateAccuracy(input, targetText);    // Update accuracy stats
-
-            // Calculate elapsed time in minutes for WPM
             long elapsedMillis = System.currentTimeMillis() - startTime;
             double elapsedMinutes = elapsedMillis / 60000.0;
 
-            // Update live WPM
             int liveWPM = stats.calculateWPM(elapsedMinutes);
-            wpmLabel.setText("WPM: " + liveWPM);
-
-            // Update live accuracy
             double accuracy = stats.getAccuracy();
+
+            wpmLabel.setText("WPM: " + liveWPM);
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
 
-            // Update streak count (resets on mistake)
             if (!input.isEmpty() && input.length() <= targetText.length()) {
                 char inputChar = input.charAt(input.length() - 1);
                 char targetChar = targetText.charAt(input.length() - 1);
@@ -87,23 +97,17 @@ public class TypingGameController {
                 streakLabel.setText("Streak: " + stats.getCurrentStreak());
             }
 
-            // Completion check
             if (stats.isComplete()) {
                 timer.stop();
+                inputField.setEditable(false);
+                inputField.setDisable(true);
                 showResults();
-                inputField.setEditable(false);          // Prevent editing
-                inputField.setDisable(true);            // Fully lock input
             }
         });
     }
 
     /**
-     * Renders the target sentence with color-coded feedback.
-     * Green = correct, Red = incorrect, Black = not yet typed.
-     *
-     * @param userInput Current input from the user
-     *                  <p>
-     *                  [Ben M – Aug 16 2025]
+     * Renders sentence with color-coded feedback
      */
     private void updateDisplay(String userInput) {
         displayFlow.getChildren().clear();
@@ -112,13 +116,9 @@ public class TypingGameController {
             Text t = new Text(String.valueOf(targetText.charAt(i)));
 
             if (i < userInput.length()) {
-                if (userInput.charAt(i) == targetText.charAt(i)) {
-                    t.setFill(Color.GREEN); // Correct character
-                } else {
-                    t.setFill(Color.RED);   // Incorrect character
-                }
+                t.setFill(userInput.charAt(i) == targetText.charAt(i) ? Color.GREEN : Color.RED);
             } else {
-                t.setFill(Color.BLACK);     // Not yet typed
+                t.setFill(Color.BLACK);
             }
 
             displayFlow.getChildren().add(t);
@@ -126,10 +126,7 @@ public class TypingGameController {
     }
 
     /**
-     * Starts the timer and updates the time label every second.
-     * Uses JavaFX Timeline for smooth UI updates.
-     * <p>
-     * [Ben M – Aug 16 2025]
+     * Starts timer and updates UI every second
      */
     private void startTimer() {
         startTime = System.currentTimeMillis();
@@ -142,10 +139,7 @@ public class TypingGameController {
     }
 
     /**
-     * Displays final results when typing is complete.
-     * Shows time, WPM, accuracy, and best streak.
-     * <p>
-     * [Ben M – Aug 16 2025]
+     * Displays final results and updates user profile
      */
     private void showResults() {
         long elapsedMillis = System.currentTimeMillis() - startTime;
@@ -159,19 +153,21 @@ public class TypingGameController {
         resultLabel.setText("Finished! Time: " + elapsedSeconds + "s | WPM: " + wpm +
                 " | Accuracy: " + String.format("%.2f%%", accuracy) +
                 " | Best Streak: " + bestStreak);
+
+        if (currentUser != null) {
+            currentUser.recordSession(accuracy, wpm);
+            userManager.saveCurrentUser();
+        }
     }
 
     /**
-     * Resets the game state and UI for a new round.
-     * Clears input, reloads sentence, and restarts timer.
-     * <p>
-     * [Ben M – Aug 16 2025]
+     * Resets game state for a new round
      */
     @FXML
     private void restartGame() {
         inputField.clear();
-        inputField.setEditable(true);      // Re-enable text editing
-        inputField.setDisable(false);      // Re-enable full input interaction
+        inputField.setEditable(true);
+        inputField.setDisable(false);
 
         resultLabel.setText("");
         accuracyLabel.setText("Accuracy: 0%");
@@ -180,9 +176,17 @@ public class TypingGameController {
         streakLabel.setText("Streak: 0");
         displayFlow.getChildren().clear();
 
-        targetText = SentenceProvider.getSentence();   // Load new sentence
-        stats = new TypingStats(targetText);           // Reset stats
-        updateDisplay("");                             // Clear display
-        startTimer();                                  // Restart timer
+        targetText = SentenceProvider.getSentence();
+        stats = new TypingStats(targetText);
+        updateDisplay("");
+        startTimer();
+    }
+
+    @FXML
+    private void ToProfile() {
+        SceneManager.switchScene(
+                (Stage) inputField.getScene().getWindow(),
+                "/ProfileView.fxml"
+        );
     }
 }

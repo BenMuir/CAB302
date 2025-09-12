@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Import necessary JavaFX UI components -->
+
+<!--This page is used to construct the window the game appears in when running [Ben M - Aug 16 2025]-->
+
+<!-- Root layout container: vertical box with spacing and padding -->
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+<VBox spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.typinggame.controller.TypingGameController"
+      style="-fx-padding: 20;">
+
+    <!-- Displays the target sentence with color-coded feedback -->
+    <TextFlow fx:id="displayFlow"/>
+
+    <!-- Input field for user typing; triggers live updates -->
+    <TextField fx:id="inputField" promptText="Start typing..."/>
+
+    <!-- Shows elapsed time since typing began -->
+    <Label fx:id="timerLabel" text="Time: 0s"/>
+
+    <!-- Live accuracy percentage display -->
+    <Label fx:id="accuracyLabel" text="Accuracy: 0%"/>
+
+    <!-- Live words-per-minute display -->
+    <Label fx:id="wpmLabel" text="WPM: 0"/>
+
+    <!-- Current streak count display -->
+    <Label fx:id="streakLabel" text="Streak: 0"/>
+
+    <!-- Displays final result summary after completion -->
+    <Label fx:id="resultLabel"/>
+
+    <!--  Restart button to reset the game; calls restartGame() in controller -->
+    <Button text="Restart" onAction="#restartGame"/>
+
+    <!--  Exits game; goes to User Profile -->
+    <Button text="Back to Profile" onAction="#ToProfile" />
+
+
+</VBox>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Import necessary JavaFX UI components -->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.typinggame.controller.ProfileController" spacing="10"
+      alignment="CENTER">
+    <Label fx:id="welcomeLabel" text="Welcome!"/>
+    <Label fx:id="highScoreLabel"/>
+    <Label fx:id="accuracyLabel"/>
+    <Label fx:id="sessionCountLabel"/>
+    <Button text="Start Game" onAction="#handleStartGame"/>
+    <Button text="Logout" onAction="#handleLogout"/>
+</VBox>
