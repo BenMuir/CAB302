@@ -23,6 +23,8 @@ public class LoginController {
 
     private final UserManager userManager = new UserManager(new FileUserRepository());
 
+    private static final String MAIN_MENU_FXML = "/MainMenu.fxml";
+
     @FXML
     public void handleLogin() {
         String username = usernameField.getText().trim();
@@ -36,10 +38,13 @@ public class LoginController {
         if (userManager.login(username, password)) {
             System.out.println("Login successful for user: " + username);
             setStatus("Login successful. Welcome, " + username + "!", true);
-            SceneManager.switchScene(
+            boolean switched = SceneManager.switchScene(
                     (Stage) usernameField.getScene().getWindow(),
-                    "/MainMenu.fxml"
+                    MAIN_MENU_FXML
             );
+            if (!switched) {
+                setStatus("Failed to load main menu. Please try again.", false);
+            }
         } else {
             System.out.println("Login failed for user: " + username);
             setStatus("Login failed. Please check your credentials.", false);
@@ -59,10 +64,13 @@ public class LoginController {
         if (userManager.register(username, password)) {
             System.out.println("Registration successful for user: " + username);
             setStatus("Registration successful. Welcome, " + username + "!", true);
-            SceneManager.switchScene(
+            boolean switched = SceneManager.switchScene(
                     (Stage) usernameField.getScene().getWindow(),
-                    "/MainMenu.fxml"
+                    MAIN_MENU_FXML
             );
+            if (!switched) {
+                setStatus("Failed to load main menu. Please try again.", false);
+            }
         } else {
             System.out.println("Registration failed — username already exists: " + username);
             setStatus("Username already exists.", false);

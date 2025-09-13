@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.typinggame.controller.ProfileController"
             prefHeight="400.0" prefWidth="600.0">
 
-    <children>
-        <Label fx:id="welcomeLabel" layoutX="20.0" layoutY="20.0" text="Welcome," />
-        <Label fx:id="highScoreLabel" layoutX="20.0" layoutY="60.0" text="High Score:" />
-        <Label fx:id="accuracyLabel" layoutX="20.0" layoutY="100.0" text="Best Accuracy:" />
-        <Label fx:id="sessionCountLabel" layoutX="20.0" layoutY="140.0" text="Sessions Played:" />
+    <VBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+        <Label fx:id="welcomeLabel" text="Welcome, User!" style="-fx-font-size: 18px;"/>
+        <Label fx:id="highScoreLabel" text="High Score: 0"/>
+        <Label fx:id="accuracyLabel" text="Best Accuracy: 0%"/>
+        <Label fx:id="sessionCountLabel" text="Sessions Played: 0"/>
 
-        <Button layoutX="20.0" layoutY="200.0" text="Start Game" onAction="#handleStartGame"/>
-        <Button layoutX="120.0" layoutY="200.0" text="Logout" onAction="#handleLogout"/>
-        <Button layoutX="220.0" layoutY="200.0" text="Back" onAction="#handleBack"/>
-    </children>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Start Game" onAction="#handleStartGame"/>
+            <Button text="Logout" onAction="#handleLogout"/>
+            <Button text="Back" onAction="#handleBack"/>
+        </HBox>
+    </VBox>
+
 </AnchorPane>

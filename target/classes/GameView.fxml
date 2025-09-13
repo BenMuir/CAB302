@@ -37,7 +37,7 @@
     <Button text="Restart" onAction="#restartGame"/>
 
     <!--  Exits game; goes to User Profile -->
-    <Button text="Back" onAction="#ToProfile" />
+    <Button text="Back to Profile" onAction="#ToProfile" />
 
 
 </VBox>
