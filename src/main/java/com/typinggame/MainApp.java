@@ -20,7 +20,7 @@ public class MainApp extends Application {
         Scene loginScene = new Scene(loginRoot, 800, 500);
         primaryStage.setTitle("Typing Game Prototype");
         primaryStage.setScene(loginScene);
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 
