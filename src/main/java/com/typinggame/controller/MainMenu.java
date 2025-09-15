@@ -26,11 +26,11 @@ public class MainMenu extends Controller {
 
     // When the play button is pressed move to the menu for which game mode to play
     public void playButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("playmenu.fxml", mouseEvent);
+        displayScene("/playmenu.fxml", mouseEvent);
     }
     // Move to options menu
     public void optionsButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("optionsmenu.fxml", mouseEvent);
+        displayScene("/optionsmenu.fxml", mouseEvent);
     }
     // exit application
 

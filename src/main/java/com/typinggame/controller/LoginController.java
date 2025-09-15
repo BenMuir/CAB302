@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  *
  * [Ben M – Sept 13 2025]
  */
-public class LoginController {
+public class LoginController extends Controller {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;

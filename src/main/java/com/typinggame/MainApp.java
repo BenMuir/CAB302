@@ -13,11 +13,11 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         Parent loginRoot = loadFXML("/loginView.fxml");
         if (loginRoot == null) {
-            System.err.println("ERROR: Could not load loginpage.fxml. Check path and resource folder.");
+            System.err.println("ERROR: Could not load loginView.fxml. Check path and resource folder.");
             return;
         }
 
-        Scene loginScene = new Scene(loginRoot, 800, 500);
+        Scene loginScene = new Scene(loginRoot, 1920, 1080);
         primaryStage.setTitle("Typing Game Prototype");
         primaryStage.setScene(loginScene);
         primaryStage.setResizable(true);

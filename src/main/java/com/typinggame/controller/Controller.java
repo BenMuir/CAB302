@@ -15,18 +15,23 @@ public abstract class Controller {
 
     public void displayScene(String fxmlFile, MouseEvent mouseEvent) {
         try {
-            URL location = getClass().getResource("/" + fxmlFile);
+            URL location = getClass().getResource(fxmlFile);
             if (location == null) {
-                System.err.println("ERROR: FXML file not found: /" + fxmlFile);
+                System.err.println("ERROR: FXML file not found: " + fxmlFile);
                 return;
             }
 
-            Parent root = FXMLLoader.load(getClass().getResource("/" + fxmlFile));
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
             Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-            StackPane wrapper = new StackPane(root);
-            Scene scene = new Scene(wrapper, 1280,720);
+
             double designWidth = 1920;
             double designHeight = 1080;
+            double prevWidth = stage.getWidth();
+            double prevHeight = stage.getHeight();
+
+            StackPane wrapper = new StackPane(root);
+            Scene scene = new Scene(wrapper, prevWidth, prevHeight);
+
 
             var scale = javafx.beans.binding.Bindings.min(
                     scene.widthProperty().divide(designWidth),
