@@ -4,26 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f21e9c2a-a7b2-4cdb-8f23-e185dd5c603d" name="Changes" comment="Login GUI Finished, Added Window Scaling and Preservation">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/SessionBackground.png" afterDir="false" />
+    <list default="true" id="f21e9c2a-a7b2-4cdb-8f23-e185dd5c603d" name="Changes" comment="Session GUI Finished Window Resizing Mostly Working">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/typinggame/model/MainMenuControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/PlayMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/PlayMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/TypingGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/typinggame/controller/TypingGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/GameView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/GameView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mainmenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mainmenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/playmenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/playmenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GameView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GameView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/typinggame/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/typinggame/MainApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/typinggame/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/typinggame/controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/typinggame/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/typinggame/controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/typinggame/controller/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/typinggame/controller/MainMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/typinggame/controller/PlayMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/typinggame/controller/PlayMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mainmenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mainmenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/playmenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/playmenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +85,9 @@
       <recent name="C:\Users\Wren\IdeaProjects\CAB302\src\main\resources\images" />
       <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources" />
       <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources\images" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.typinggame.model" />
     </key>
   </component>
   <component name="TaskManager">
@@ -240,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757898587108</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Session GUI Finished Window Resizing Mostly Working">
+      <option name="closed" value="true" />
+      <created>1757905298523</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1757905298523</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,6 +256,7 @@
     <MESSAGE value="Added A bunch of controllers and fxmls, changed main to launch into Main menu" />
     <MESSAGE value="Finished The Main Menu GUI... For now" />
     <MESSAGE value="Login GUI Finished, Added Window Scaling and Preservation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login GUI Finished, Added Window Scaling and Preservation" />
+    <MESSAGE value="Session GUI Finished Window Resizing Mostly Working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Session GUI Finished Window Resizing Mostly Working" />
   </component>
 </project>
