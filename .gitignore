@@ -1,0 +1,5 @@
+# Ignore IDE config files
+.idea/
+
+# Ignore build output
+target/
