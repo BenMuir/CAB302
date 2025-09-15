@@ -122,6 +122,7 @@ public class TypingGameController {
             }
 
             displayFlow.getChildren().add(t);
+            displayFlow.setStyle("-fx-font-family: 'Press Start 2P'; -fx-font-size: 24px; -fx-background-color: white; -fx-background-radius: 20; -fx-padding: 20;");
         }
     }
 

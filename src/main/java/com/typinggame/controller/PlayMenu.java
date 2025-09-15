@@ -1,22 +1,19 @@
 package com.typinggame.controller;
 
 
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class PlayMenu extends Controller {
-    public ImageView learnButton;
 
-    public void learnModeButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("/GameView.fxml", mouseEvent);
+    public void learnModeButtonPressed(ActionEvent event) throws IOException {
+        displayScene("/GameView.fxml", event);
     }
 
-    public void raceModeButtonPressed(MouseEvent mouseEvent) {
+    public void raceModeButtonPressed(ActionEvent event) {
     }
 
-    public void backButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("/mainmenu.fxml", mouseEvent);
+    public void backButtonPressed(ActionEvent event) throws IOException {
+        displayScene("/mainmenu.fxml", event);
     }
 }

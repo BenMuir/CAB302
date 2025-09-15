@@ -2,17 +2,15 @@ package com.typinggame.controller;
 
 import com.typinggame.data.UserManager;
 import com.typinggame.data.FileUserRepository;
-import com.typinggame.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  * LoginController handles user authentication and registration.
  * It connects the login UI to the backend user system and transitions to the main menu.
- *
  * [Ben M – Sept 13 2025]
  */
 public class LoginController extends Controller {
@@ -26,7 +24,7 @@ public class LoginController extends Controller {
     private static final String MAIN_MENU_FXML = "/MainMenu.fxml";
 
     @FXML
-    public void handleLogin() {
+    public void handleLogin(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -38,10 +36,7 @@ public class LoginController extends Controller {
         if (userManager.login(username, password)) {
             System.out.println("Login successful for user: " + username);
             setStatus("Login successful. Welcome, " + username + "!", true);
-            boolean switched = SceneManager.switchScene(
-                    (Stage) usernameField.getScene().getWindow(),
-                    MAIN_MENU_FXML
-            );
+            boolean switched = displayScene(MAIN_MENU_FXML, event );
             if (!switched) {
                 setStatus("Failed to load main menu. Please try again.", false);
             }
@@ -52,7 +47,7 @@ public class LoginController extends Controller {
     }
 
     @FXML
-    public void handleRegister() {
+    public void handleRegister(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -64,10 +59,7 @@ public class LoginController extends Controller {
         if (userManager.register(username, password)) {
             System.out.println("Registration successful for user: " + username);
             setStatus("Registration successful. Welcome, " + username + "!", true);
-            boolean switched = SceneManager.switchScene(
-                    (Stage) usernameField.getScene().getWindow(),
-                    MAIN_MENU_FXML
-            );
+            boolean switched = displayScene(MAIN_MENU_FXML, event);
             if (!switched) {
                 setStatus("Failed to load main menu. Please try again.", false);
             }

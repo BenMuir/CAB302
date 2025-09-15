@@ -1,49 +1,33 @@
 package com.typinggame.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainMenu extends Controller {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
-    public ImageView playButton;
-    public ImageView optionsButton;
-    public ImageView profileButton;
-    public ImageView exitButton;
-    public ImageView leaderboardButton;
-
     // When the play button is pressed move to the menu for which game mode to play
-    public void playButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("/playmenu.fxml", mouseEvent);
+    public void playButtonPressed(ActionEvent event) throws IOException {
+        displayScene("/playmenu.fxml", event);
     }
     // Move to options menu
-    public void optionsButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("/optionsmenu.fxml", mouseEvent);
+    public void optionsButtonPressed(ActionEvent event) throws IOException {
+        displayScene("/optionsmenu.fxml", event);
     }
     // exit application
 
     // open the leaderboards
-    public void leaderboardButtonPressed(MouseEvent mouseEvent) throws IOException {
-        displayScene("leaderboards.fxml", mouseEvent);
+    public void leaderboardButtonPressed(ActionEvent event) throws IOException {
+        displayScene("/leaderboards.fxml", event);
     }
 
-    public void profileButtonPressed(MouseEvent mouseEvent) throws IOException{
-        displayScene("ProfileView.fxml" , mouseEvent);
+    public void profileButtonPressed(ActionEvent event) throws IOException{
+        displayScene("/ProfileView.fxml" , event);
     }
 //exit app
-    public void exitPressed(MouseEvent mouseEvent) {
+    public void exitButtonPressed() {
         Platform.exit();
     }
 }
