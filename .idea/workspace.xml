@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f21e9c2a-a7b2-4cdb-8f23-e185dd5c603d" name="Changes" comment="Session GUI Finished Window Resizing Mostly Working">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/typinggame/model/MainMenuControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="FxmlFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="REBASE" />
+      </set>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Main-Menu-UI" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;wrenald&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BenMuir/CAB302.git&quot;,
+    &quot;accountId&quot;: &quot;8c14da56-7eee-4ff7-9e37-4a253a0b737f&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="32Rlgj7KEQty5HKnKCUji7DnWak" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MainApp.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Window-Size-and-SessionGUI",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_directory_selection": "C:/Users/home/IdeaProjects/CAB302/TypeGame/src/main/java",
+    "last_opened_file_path": "C:/Users/Wren/IdeaProjects/CAB302/src/main/resources/images",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Wren\IdeaProjects\CAB302\src\main\resources\images" />
+      <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources\images" />
+      <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Wren\IdeaProjects\CAB302\src\main\resources\images" />
+      <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources" />
+      <recent name="C:\Users\home\IdeaProjects\CAB302\TypeGame\src\main\resources\images" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.typinggame.model" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f21e9c2a-a7b2-4cdb-8f23-e185dd5c603d" name="Changes" comment="" />
+      <created>1757391381151</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757391381151</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Working on login UI added some resources for it and began the layout">
+      <option name="closed" value="true" />
+      <created>1757472142159</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1757472142159</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Working on login UI added some resources for it and began the layout">
+      <option name="closed" value="true" />
+      <created>1757472221287</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1757472221287</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Working on login UI added some resources for it and began the layout">
+      <option name="closed" value="true" />
+      <created>1757475387686</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757475387686</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Working on login UI added some resources for it and began the layout">
+      <option name="closed" value="true" />
+      <created>1757475452266</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757475452266</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Working on login UI added some resources for it and began the layout">
+      <option name="closed" value="true" />
+      <created>1757475519109</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757475519109</updated>
+    </task>
+    <task id="LOCAL-00006" summary="working on main menu UI">
+      <option name="closed" value="true" />
+      <created>1757478356525</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757478356525</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added some fxml files for new menus">
+      <option name="closed" value="true" />
+      <created>1757481511242</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1757481511242</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added some fxml files for new menus">
+      <option name="closed" value="true" />
+      <created>1757483848840</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1757483848841</updated>
+    </task>
+    <task id="LOCAL-00009" summary="more files :)">
+      <option name="closed" value="true" />
+      <created>1757483896685</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1757483896685</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added A bunch of controllers and fxmls, changed main to launch into Main menu">
+      <option name="closed" value="true" />
+      <created>1757493774386</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1757493774386</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added A bunch of controllers and fxmls, changed main to launch into Main menu">
+      <option name="closed" value="true" />
+      <created>1757493911892</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1757493911892</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added A bunch of controllers and fxmls, changed main to launch into Main menu">
+      <option name="closed" value="true" />
+      <created>1757493920802</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1757493920802</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added A bunch of controllers and fxmls, changed main to launch into Main menu">
+      <option name="closed" value="true" />
+      <created>1757493931189</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757493931189</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added A bunch of controllers and fxmls, changed main to launch into Main menu">
+      <option name="closed" value="true" />
+      <created>1757494097162</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1757494097162</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Finished The Main Menu GUI... For now">
+      <option name="closed" value="true" />
+      <created>1757495329232</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1757495329232</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Login GUI Finished, Added Window Scaling and Preservation">
+      <option name="closed" value="true" />
+      <created>1757898587108</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1757898587108</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Session GUI Finished Window Resizing Mostly Working">
+      <option name="closed" value="true" />
+      <created>1757905298523</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1757905298523</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Working on login UI added some resources for it and began the layout" />
+    <MESSAGE value="working on main menu UI" />
+    <MESSAGE value="added some fxml files for new menus" />
+    <MESSAGE value="more files :)" />
+    <MESSAGE value="Added A bunch of controllers and fxmls, changed main to launch into Main menu" />
+    <MESSAGE value="Finished The Main Menu GUI... For now" />
+    <MESSAGE value="Login GUI Finished, Added Window Scaling and Preservation" />
+    <MESSAGE value="Session GUI Finished Window Resizing Mostly Working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Session GUI Finished Window Resizing Mostly Working" />
+  </component>
+</project>

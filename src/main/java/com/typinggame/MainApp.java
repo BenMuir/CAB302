@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.net.URL;
 
@@ -13,15 +14,37 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         Parent loginRoot = loadFXML("/loginView.fxml");
         if (loginRoot == null) {
-            System.err.println("ERROR: Could not load loginpage.fxml. Check path and resource folder.");
+            System.err.println("ERROR: Could not load loginView.fxml. Check path and resource folder.");
             return;
         }
 
-        Scene loginScene = new Scene(loginRoot, 800, 500);
         primaryStage.setTitle("Typing Game Prototype");
+        primaryStage.setResizable(true);
+        primaryStage.setMinWidth(960);
+        primaryStage.setMinHeight(540);
+
+        // Center content and allow letterboxing
+        StackPane container = new StackPane(loginRoot);
+
+        double startHeight = 720;
+        double startWidth = 1280;
+        Scene loginScene = new Scene(container, startWidth, startHeight);
+
+        // Bind scale to scene size (keep aspect ratio by taking the smaller factor)
+
+        double baseWidth = 1920;
+        double baseHeight = 1080;
+        var scale = javafx.beans.binding.Bindings.min(
+                loginScene.widthProperty().divide(baseWidth),
+                loginScene.heightProperty().divide(baseHeight)
+        );
+
+        loginRoot.scaleXProperty().bind(scale);
+        loginRoot.scaleYProperty().bind(scale);
+
         primaryStage.setScene(loginScene);
-        primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
     /**
