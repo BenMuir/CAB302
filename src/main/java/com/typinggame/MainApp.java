@@ -6,11 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.net.URL;
+import com.typinggame.data.Database;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //Database Init
+        Database.init();
+
         Parent loginRoot = loadFXML("/loginView.fxml");
         if (loginRoot == null) {
             System.err.println("ERROR: Could not load loginpage.fxml. Check path and resource folder.");

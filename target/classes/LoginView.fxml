@@ -1,74 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Import necessary JavaFX UI components -->
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<GridPane fx:controller="com.typinggame.controller.LoginController"
+          xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+    <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/24.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.typinggame.controller.LoginController">
+    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <children>
-        <!-- Background Image -->
-        <ImageView fitHeight="406.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/LoginBackground.png" />
-            </image>
-        </ImageView>
+    <Button text="Login" onAction="#handleLogin" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button text="Register" onAction="#handleRegister" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <!-- Login Pane -->
-        <Pane layoutX="329.0" layoutY="18.0" prefHeight="312.0" prefWidth="237.0">
-            <children>
-                <ImageView fitHeight="325.0" fitWidth="301.0" layoutX="-30.0" layoutY="1.0" pickOnBounds="true">
-                    <image>
-                        <Image url="@images/UIFieldBackground.png" />
-                    </image>
-                </ImageView>
-
-                <Label alignment="CENTER" layoutX="1.0" layoutY="20.0" prefHeight="64.0" prefWidth="236.0" text="Sign In">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="27.0" />
-                    </font>
-                </Label>
-
-                <Label alignment="CENTER" layoutX="-7.0" layoutY="68.0" prefHeight="41.0" prefWidth="252.0" text="Username">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="18.0" />
-                    </font>
-                </Label>
-
-                <TextField fx:id="usernameField" layoutX="24.0" layoutY="109.0" prefHeight="25.0" prefWidth="190.0" promptText="email@123.com" />
-
-                <Label alignment="CENTER" layoutX="-7.0" layoutY="135.0" prefHeight="41.0" prefWidth="252.0" text="Password">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="18.0" />
-                    </font>
-                </Label>
-
-                <PasswordField fx:id="passwordField" layoutX="24.0" layoutY="176.0" prefHeight="25.0" prefWidth="190.0" promptText="********" />
-
-                <!-- Login Button -->
-                <ImageView fitHeight="41.0" fitWidth="115.0" layoutX="63.0" layoutY="210.0" onMousePressed="#handleLogin">
-                    <image>
-                        <Image url="@images/Button.png" />
-                    </image>
-                </ImageView>
-
-                <Label alignment="CENTER" layoutX="79.0" layoutY="221.0" text="Login">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="16.0" />
-                    </font>
-                </Label>
-
-                <!-- Register Button -->
-                <Button text="Register" fx:id="registerButton" layoutX="63.0" layoutY="260.0" onAction="#handleRegister" />
-
-                <!-- Status Label -->
-                <Label fx:id="statusLabel" layoutX="24.0" layoutY="300.0" prefWidth="190.0" wrapText="true" textFill="red" />
-            </children>
-        </Pane>
-    </children>
-</AnchorPane>
+    <Label fx:id="statusLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+</GridPane>
