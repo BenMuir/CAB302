@@ -1,5 +1,27 @@
-# Ignore IDE config files
+# IntelliJ project files
 .idea/
+*.iml
+out/
 
-# Ignore build output
+# Maven build output
 target/
+
+# Java class files
+*.class
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+
+# JavaFX runtime cache (if any)
+hs_err_pid*.log
+
+# Ignore compiled controller classes
+**/controller/*.class
