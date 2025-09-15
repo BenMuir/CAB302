@@ -25,3 +25,6 @@ hs_err_pid*.log
 
 # Ignore compiled controller classes
 **/controller/*.class
+
+# Local SQLite database
+typinggame.db
