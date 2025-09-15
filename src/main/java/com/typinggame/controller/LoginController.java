@@ -1,5 +1,6 @@
 package com.typinggame.controller;
 
+import com.typinggame.data.SqliteUserRepository;
 import com.typinggame.data.UserManager;
 import com.typinggame.data.FileUserRepository;
 import javafx.event.ActionEvent;
@@ -19,7 +20,7 @@ public class LoginController extends Controller {
     @FXML private PasswordField passwordField;
     @FXML private Label statusLabel;
 
-    private final UserManager userManager = new UserManager(new FileUserRepository());
+    private final UserManager userManager = new UserManager(new SqliteUserRepository());
 
     private static final String MAIN_MENU_FXML = "/MainMenu.fxml";
 
