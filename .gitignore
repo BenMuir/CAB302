@@ -1,0 +1,16 @@
+cat > .gitignore <<'EOF'
+# IDE
+.idea/
+*.iml
+
+# Build output
+/target/
+/out/
+*.class
+
+# OS
+.DS_Store
+
+# Local DB
+typinggame.db
+EOF
