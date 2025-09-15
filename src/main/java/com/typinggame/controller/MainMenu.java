@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class MainMenu extends Controller {
+
+
     @FXML
     // When the play button is pressed move to the menu for which game mode to play
     public void playButtonPressed(ActionEvent event) throws IOException {

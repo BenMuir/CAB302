@@ -10,7 +10,6 @@ public class UserManager {
 
     public boolean register(String username, String password) {
         if (userRepo.userExists(username)) return false;
-
         String hashedPassword = hash(password);
         User newUser = new User(username, hashedPassword);
         boolean success = userRepo.saveUser(newUser);

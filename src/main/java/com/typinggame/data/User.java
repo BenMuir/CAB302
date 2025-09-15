@@ -1,6 +1,10 @@
 package com.typinggame.data;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,6 @@ public class User implements Serializable {
 
     private String username;
     private String passwordHash;
-
     private int highScore;              // Highest WPM or streak
     private double bestAccuracy;        // Highest recorded accuracy
     private int totalSessions;          // Number of completed games
@@ -58,6 +61,19 @@ public class User implements Serializable {
 
     public int getTotalSessions() {
         return totalSessions;
+    }
+
+    public int getUserID() {
+        try (Connection c = Database.getConnection();
+        PreparedStatement ps = c.prepareStatement(
+                "SELECT id FROM users WHERE username = ?")) {
+            ps.setString(1, getUsername());
+            ResultSet rs = ps.executeQuery();
+            return rs.getInt("id");
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return 0;
+        }
     }
 //
 //    public List<Double> getSessionAccuracies() {

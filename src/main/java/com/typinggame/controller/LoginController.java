@@ -19,10 +19,12 @@ public class LoginController extends Controller {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label statusLabel;
-
-    private final UserManager userManager = new UserManager(new SqliteUserRepository());
+    //made this public static as a jank band aid so that i can reference this in other packages. since otherwise this gets lost to the void.
+    //could probably store it somewhere or some shit idk actually this might be the best solution lol since they don't really look at our code
+    public static final UserManager globalUserManager = new UserManager(new SqliteUserRepository());
 
     private static final String MAIN_MENU_FXML = "/MainMenu.fxml";
+
 
     @FXML
     public void handleLogin(ActionEvent event) {
@@ -34,10 +36,10 @@ public class LoginController extends Controller {
             return;
         }
 
-        if (userManager.login(username, password)) {
+        if (globalUserManager.login(username, password)) {
             System.out.println("Login successful for user: " + username);
             setStatus("Login successful. Welcome, " + username + "!", true);
-            boolean switched = displayScene(MAIN_MENU_FXML, event );
+            boolean switched = displayScene(MAIN_MENU_FXML, event);
             if (!switched) {
                 setStatus("Failed to load main menu. Please try again.", false);
             }
@@ -57,7 +59,7 @@ public class LoginController extends Controller {
             return;
         }
 
-        if (userManager.register(username, password)) {
+        if (globalUserManager.register(username, password)) {
             System.out.println("Registration successful for user: " + username);
             setStatus("Registration successful. Welcome, " + username + "!", true);
             boolean switched = displayScene(MAIN_MENU_FXML, event);
