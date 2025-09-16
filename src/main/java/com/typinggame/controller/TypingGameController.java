@@ -8,6 +8,7 @@ import com.typinggame.util.SentenceProvider;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,7 +24,7 @@ import javafx.util.Duration;
  * <p>
  * [Ben M – Sept 10 2025]
  */
-public class TypingGameController {
+public class TypingGameController extends Controller {
 
     // UI Components
     @FXML
@@ -184,10 +185,7 @@ public class TypingGameController {
     }
 
     @FXML
-    private void ToProfile() {
-        SceneManager.switchScene(
-                (Stage) inputField.getScene().getWindow(),
-                "/playmenu.fxml"
-        );
+    private void ToProfile(ActionEvent event) {
+        displayScene("/playmenu.fxml", event);
     }
 }
