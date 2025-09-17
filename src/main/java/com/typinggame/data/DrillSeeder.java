@@ -14,35 +14,41 @@ public final class DrillSeeder {
             String tierCol = findExistingColumnOrDefault(c, "drills",
                     new String[]{"tier", "difficulty", "difficulty_tier", "difficultyTier"}, "tier");
 
-            // If tier column doesn't exist, try to add it.
+            // Add tier column if missing and we’re allowed to call it 'tier'
             if (!columnExists(c, "drills", tierCol) && "tier".equals(tierCol)) {
                 try (Statement st = c.createStatement()) {
                     st.executeUpdate("ALTER TABLE drills ADD COLUMN tier INTEGER NOT NULL DEFAULT 1;");
                 }
             }
 
-            String sql = "INSERT OR IGNORE INTO drills(id, title, " + bodyCol + ", " + tierCol + ") VALUES(?,?,?,?)";
+            // Use SQLite UPSERT so existing rows are corrected
+            String sql = "INSERT INTO drills(id, title, " + bodyCol + ", " + tierCol + ") VALUES(?,?,?,?) " +
+                    "ON CONFLICT(id) DO UPDATE SET " +
+                    "  title=excluded.title, " + bodyCol + "=excluded." + bodyCol + ", " + tierCol + "=excluded." + tierCol;
+
             try (PreparedStatement ps = c.prepareStatement(sql)) {
-                insert(ps, 1, "Easy 1",   "cat dog sun run fun", 1);
-                insert(ps, 2, "Easy 2",   "time day night light bright", 1);
-                insert(ps, 3, "Easy 3",   "red blue green yellow orange", 1);
-                insert(ps, 4, "Medium 1", "The quick brown fox jumps over the lazy dog.", 2);
-                insert(ps, 5, "Medium 2", "Typing fast is fun, but accuracy is even better!", 2);
-                insert(ps, 6, "Hard 1",   "Complexity arises when we type: symbols, commas, and quotes—yet fluency must remain.", 3);
+                upsert(ps, 1,  "Easy 1",   "The quick brown fox jumps over the lazy dog.", 1);
+                upsert(ps, 2,  "Easy 2",   "hello world hello world practice letters and spaces", 1);
+                upsert(ps, 3,  "Easy 3",   "type these easy words to build rhythm and accuracy", 1);
+
+                upsert(ps, 10, "Medium 1", "now add punctuation: commas, periods, and question marks?", 2);
+                upsert(ps, 11, "Medium 2", "mix CAPS and numbers: ABC 123 easy as one two three!",       2);
+
+                upsert(ps, 20, "Hard 1",   "speed and precision matter; minimize errors to maximize score.", 3);
+                upsert(ps, 21, "Hard 2",   "sphinx of black quartz, judge my vow: pack my box with five dozen liquor jugs.", 3);
             }
-            System.out.println("DrillSeeder: ensured baseline drills.");
+            System.out.println("DrillSeeder: ensured baseline drills (upsert).");
         } catch (Exception e) {
             throw new RuntimeException("DrillSeeder failed", e);
         }
     }
 
-    private static void insert(PreparedStatement ps, int id, String title, String body, int tier) throws SQLException {
+    private static void upsert(PreparedStatement ps, int id, String title, String body, int tier) throws SQLException {
         ps.setInt(1, id);
         ps.setString(2, title);
         ps.setString(3, body);
         ps.setInt(4, tier);
-        ps.addBatch();
-        ps.executeBatch();
+        ps.executeUpdate();
     }
 
     private static String findExistingColumn(Connection c, String table, String[] candidates) throws SQLException {

@@ -1,3 +1,4 @@
+
 package com.typinggame.controller;
 
 import javafx.event.ActionEvent;
@@ -23,11 +24,14 @@ public class Controller {
 
             Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
             Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene prevScene = stage.getScene();
+
+            double prevWidth = prevScene.getWidth();
+            double prevHeight = prevScene.getHeight();
 
             double designWidth = 1920;
             double designHeight = 1080;
-            double prevWidth = stage.getWidth();
-            double prevHeight = stage.getHeight();
+
 
             StackPane wrapper = new StackPane(root);
             Scene scene = new Scene(wrapper, prevWidth, prevHeight);
@@ -41,6 +45,7 @@ public class Controller {
             root.scaleXProperty().bind(scale);
             root.scaleYProperty().bind(scale);
 
+
             stage.setScene(scene);
             stage.setResizable(true);
             stage.show();
@@ -53,4 +58,3 @@ public class Controller {
         }
     }
 }
-

@@ -1,27 +1,98 @@
 package com.typinggame.service;
 
-import com.typinggame.config.Config;
-import com.typinggame.data.DrillRepository;
-import com.typinggame.data.SessionRepository;
+import com.typinggame.data.Database;
 
-public class ProgressService {
-    private final SessionRepository sessions;
-    private final DrillRepository drills;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-    public ProgressService(SessionRepository sessions, DrillRepository drills){
-        this.sessions = sessions;
-        this.drills = drills;
+/**
+ * Tier progression:
+ *  - Start at Tier 1.
+ *  - Unlock Tier 2 when ALL drills in Tier 1 have at least one completed session.
+ *  - Unlock Tier 3 when ALL drills in Tier 2 have at least one completed session.
+ */
+public final class ProgressService {
+
+    // No state needed; we query directly via Database.getConnection()
+    public ProgressService() {}
+
+    /** Returns 1..3 based strictly on completed tiers for this user. */
+    public int currentUnlockedTier(int userId) {
+        if (userId <= 0) return 1;
+
+        boolean tier1Done = hasCompletedAllDrillsInTier(userId, 1);
+        if (!tier1Done) {
+            debug(userId, 1);
+            return 1;
+        }
+
+        boolean tier2Done = hasCompletedAllDrillsInTier(userId, 2);
+        if (!tier2Done) {
+            debug(userId, 2);
+            return 2;
+        }
+
+        debug(userId, 3);
+        return 3;
     }
 
-    public int currentUnlockedTier(int userId){
-        int maxTier = drills.maxTier();
-        double best = sessions.bestScoreForUser(userId) == null ? 0.0 : sessions.bestScoreForUser(userId);
-        int tier = 1;
-        while (tier < maxTier) {
-            boolean byScore = best >= Config.UNLOCK_SCORE_THRESHOLD;
-            boolean bySessions = sessions.countSessionsInTier(userId, tier) >= Config.SESSIONS_TO_UNLOCK_NEXT;
-            if (byScore || bySessions) tier++; else break;
+    /** True if user has at least one session recorded for EVERY drill in the given tier. */
+    public boolean hasCompletedAllDrillsInTier(int userId, int tier) {
+        int total = totalDrillsInTier(tier);
+        if (total == 0) return false; // no drills in schema → cannot complete
+        int distinctCompleted = distinctCompletedInTier(userId, tier);
+        return distinctCompleted >= total;
+    }
+
+    /** Total number of drills that exist in a given tier. */
+    private int totalDrillsInTier(int tier) {
+        String sql = "SELECT COUNT(*) AS cnt FROM drills WHERE tier = ?";
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, tier);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("totalDrillsInTier failed", e);
         }
-        return tier;
+        return 0;
+    }
+
+    /** How many DISTINCT drills this user has completed in a given tier (any score counts). */
+    public int distinctCompletedInTier(int userId, int tier) {
+        String sql = """
+            SELECT COUNT(DISTINCT s.drill_id) AS cnt
+            FROM sessions s
+            JOIN drills d ON d.id = s.drill_id
+            WHERE s.user_id = ? AND d.tier = ?
+        """;
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, tier);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("distinctCompletedInTier failed", e);
+        }
+        return 0;
+    }
+
+    /** Small helper to print current progression counts. */
+    private void debug(int userId, int upToTier) {
+        try {
+            int t1Total = totalDrillsInTier(1);
+            int t1Done  = distinctCompletedInTier(userId, 1);
+            int t2Total = totalDrillsInTier(2);
+            int t2Done  = distinctCompletedInTier(userId, 2);
+            System.out.println("[Progress] user=" + userId +
+                    " | Tier1 " + t1Done + "/" + t1Total +
+                    " | Tier2 " + t2Done + "/" + t2Total +
+                    " | returning upTo=" + upToTier);
+        } catch (Exception ignore) {}
     }
 }

@@ -3,6 +3,7 @@ package com.typinggame.controller;
 import com.typinggame.data.SqliteUserRepository;
 import com.typinggame.data.UserManager;
 import com.typinggame.data.FileUserRepository;
+import com.typinggame.config.AppContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -38,6 +39,11 @@ public class LoginController extends Controller {
 
         if (globalUserManager.login(username, password)) {
             System.out.println("Login successful for user: " + username);
+
+            AppContext.userManager = globalUserManager;
+            System.out.println("[Login] set AppContext.userManager id=" +
+                    globalUserManager.getCurrentUser().getUserID());
+
             setStatus("Login successful. Welcome, " + username + "!", true);
             boolean switched = displayScene(MAIN_MENU_FXML, event);
             if (!switched) {
@@ -61,6 +67,11 @@ public class LoginController extends Controller {
 
         if (globalUserManager.register(username, password)) {
             System.out.println("Registration successful for user: " + username);
+
+            AppContext.userManager = globalUserManager;
+            System.out.println("[Login] set AppContext.userManager id=" +
+                    globalUserManager.getCurrentUser().getUserID());
+
             setStatus("Registration successful. Welcome, " + username + "!", true);
             boolean switched = displayScene(MAIN_MENU_FXML, event);
             if (!switched) {
