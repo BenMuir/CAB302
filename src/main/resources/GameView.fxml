@@ -15,83 +15,108 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.control.ComboBox?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.TypingGameController">
-   <children>
-      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-         <image>
-            <Image url="@images/SessionBackground.png" />
-         </image>
-      </ImageView>
-      <VBox layoutX="1126.0" layoutY="808.0" spacing="10" style="-fx-padding: 20;" />
-      <TextFlow fx:id="displayFlow" layoutX="150.0" layoutY="280.0" prefHeight="220.0" prefWidth="1640.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 20; -fx-padding: 24;" />
-      <TextField fx:id="inputField" layoutX="150.0" layoutY="550.0" prefHeight="80.0" prefWidth="1640.0" promptText="Type here..." style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 14; -fx-font-size: 24;">
-         <font>
-            <Font name="Press Start 2P Regular" size="18.0" />
-         </font>
-      </TextField>
-      <StackPane layoutX="65.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
-         <children>
-            <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
-               <image>
-                  <Image url="@images/Button.png" />
-               </image>
-            </ImageView>
-            <Button onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Restart">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Button>
-         </children>
-      </StackPane>
-      <StackPane layoutX="292.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
-         <children>
-            <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
-               <image>
-                  <Image url="@images/Button.png" />
-               </image>
-            </ImageView>
-            <Button onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Button>
-         </children>
-      </StackPane>
-   
-          <!-- Displays final result summary after completion -->
-       <Label fx:id="resultLabel" />
-      <HBox layoutX="150.0" layoutY="688.0" prefHeight="62.0" prefWidth="1640.0" spacing="100.0">
-         <children>
-         
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.TypingGameController">
+    <children>
+        <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/SessionBackground.png" />
+            </image>
+        </ImageView>
+        <VBox layoutX="1126.0" layoutY="808.0" spacing="10" style="-fx-padding: 20;" />
+        <TextFlow fx:id="displayFlow" layoutX="150.0" layoutY="280.0" prefHeight="220.0" prefWidth="1640.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 20; -fx-padding: 24;" />
+        <TextField fx:id="inputField" layoutX="150.0" layoutY="550.0" prefHeight="80.0" prefWidth="1640.0" promptText="Type here..." style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 14; -fx-font-size: 24;">
+            <font>
+                <Font name="Press Start 2P Regular" size="18.0" />
+            </font>
+        </TextField>
+        <StackPane layoutX="65.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
+            <children>
+                <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
+                    <image>
+                        <Image url="@images/Button.png" />
+                    </image>
+                </ImageView>
+                <Button onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Restart">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Button>
+            </children>
+        </StackPane>
+        <StackPane layoutX="292.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
+            <children>
+                <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
+                    <image>
+                        <Image url="@images/Button.png" />
+                    </image>
+                </ImageView>
+                <Button onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Button>
+            </children>
+        </StackPane>
+
+        <HBox spacing="16" layoutX="40.0" layoutY="40.0">
+            <!-- Drill dropdown -->
+            <ComboBox fx:id="drillSelect"
+                      prefWidth="320.0"
+                      promptText="Select a drill"/>
+            <!-- Start button styled like the others -->
+            <StackPane prefHeight="84.0" prefWidth="195.0">
+                <children>
+                    <ImageView fitHeight="101.0" fitWidth="217.0">
+                        <image><Image url="@images/Button.png"/></image>
+                    </ImageView>
+                    <Button fx:id="startButton"
+                            onAction="#startSelectedDrill"
+                            prefHeight="84.0" prefWidth="195.0"
+                            style="-fx-background-color: transparent; -fx-border-color: transparent;"
+                            text="Start Drill">
+                        <font><Font name="Press Start 2P Regular" size="22.0"/></font>
+                    </Button>
+                </children>
+            </StackPane>
+        </HBox>
+
+
+        <!-- Displays final result summary after completion -->
+        <HBox layoutX="150.0" layoutY="688.0" prefHeight="62.0" prefWidth="1640.0" spacing="100.0">
+            <children>
+
                 <!-- Current streak count display -->
-             <Label fx:id="streakLabel" text="Streak: 0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Label>
-         
-                            <!-- Live words-per-minute display -->
-             <Label fx:id="wpmLabel" text="WPM: 0">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Label>
-         
+                <Label fx:id="streakLabel" text="Streak: 0">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Label>
+
+                <!-- Live words-per-minute display -->
+                <Label fx:id="wpmLabel" text="WPM: 0">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Label>
+
                 <!-- Live accuracy percentage display -->
-             <Label fx:id="accuracyLabel" text="Accuracy: 0%">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Label>
-         
+                <Label fx:id="accuracyLabel" text="Accuracy: 0%">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Label>
+
                 <!-- Shows elapsed time since typing began -->
-             <Label fx:id="timerLabel" text="Time: 0s">
-               <font>
-                  <Font name="Press Start 2P Regular" size="22.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-   </children>
+                <Label fx:id="timerLabel" text="Time: 0s">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="22.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>
+

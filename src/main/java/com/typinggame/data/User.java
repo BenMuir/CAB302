@@ -65,8 +65,8 @@ public class User implements Serializable {
 
     public int getUserID() {
         try (Connection c = Database.getConnection();
-        PreparedStatement ps = c.prepareStatement(
-                "SELECT id FROM users WHERE username = ?")) {
+             PreparedStatement ps = c.prepareStatement(
+                     "SELECT id FROM users WHERE username = ?")) {
             ps.setString(1, getUsername());
             ResultSet rs = ps.executeQuery();
             return rs.getInt("id");

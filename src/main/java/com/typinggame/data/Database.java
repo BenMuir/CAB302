@@ -1,6 +1,7 @@
 package com.typinggame.data;
 
 import java.sql.*;
+import com.typinggame.data.DrillSeeder;
 
 public class Database {
     private static final String URL = "jdbc:sqlite:typinggame.db";
@@ -25,22 +26,25 @@ public class Database {
             // Drills (basic seed so scores can reference drill 1)
             st.execute("""
               CREATE TABLE IF NOT EXISTS drills(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title   TEXT NOT NULL,
-                content TEXT NOT NULL
+                id    INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT    NOT NULL,
+                body  TEXT    NOT NULL,
+                tier  INTEGER NOT NULL DEFAULT 1
               );
             """);
 
             // Scores (store accuracy as percentage for simplicity)
             st.execute("""
-              CREATE TABLE IF NOT EXISTS scores(
+              CREATE TABLE IF NOT EXISTS sessions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id  INTEGER NOT NULL,
-                drill_id INTEGER NOT NULL,
-                wpm      REAL    NOT NULL,
-                accuracy REAL    NOT NULL,   -- percentage, e.g. 92.3
-                duration INTEGER NOT NULL,   -- seconds
-                created_at TEXT NOT NULL DEFAULT (datetime('now')),
+                user_id          INTEGER NOT NULL,
+                drill_id         INTEGER NOT NULL,
+                wpm              REAL    NOT NULL,
+                accuracy         REAL    NOT NULL,   -- 0..100
+                score            REAL    NOT NULL,   -- WPM * Accuracy
+                typed_chars      INTEGER NOT NULL,
+                duration_seconds REAL    NOT NULL,
+                started_at       TEXT    NOT NULL DEFAULT (datetime('now')),
                 FOREIGN KEY(user_id)  REFERENCES users(id),
                 FOREIGN KEY(drill_id) REFERENCES drills(id)
               );
@@ -49,7 +53,7 @@ public class Database {
             // User settings / preferences (per-user row)
             st.execute("""
               CREATE TABLE IF NOT EXISTS user_settings(
-                user_id     INTEGER PRIMARY KEY,
+                user_id      INTEGER PRIMARY KEY,
                 display_name TEXT    NOT NULL DEFAULT '',
                 font_family  TEXT    NOT NULL DEFAULT 'System',
                 font_size    INTEGER NOT NULL DEFAULT 16,
@@ -66,20 +70,15 @@ public class Database {
                 ps.executeUpdate();
             }
 
-            // Seed one drill (id=1)
-            try (PreparedStatement ps = c.prepareStatement(
-                    "INSERT OR IGNORE INTO drills(id, title, content) VALUES(1, ?, ?)")) {
-                ps.setString(1, "Home Row Warmup");
-                ps.setString(2, "asdf jkl; asdf jkl;");
-                ps.executeUpdate();
-            }
-
             // Ensure demo has default settings
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT OR IGNORE INTO user_settings(user_id, display_name) " +
                             "SELECT id, 'Demo User' FROM users WHERE username='demo'")) {
                 ps.executeUpdate();
             }
+
+            // Ensure baseline drills exist (and add tier column if needed)
+            DrillSeeder.ensureBaselineDrills();
 
             inited = true;
             System.out.println("DB init OK -> typinggame.db");

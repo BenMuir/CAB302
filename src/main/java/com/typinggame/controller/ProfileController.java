@@ -62,32 +62,32 @@ public class ProfileController {
     }
 }
 /**
-    @FXML
-    public void handleStartGame() {
-        SceneManager.switchScene(
-                (Stage) welcomeLabel.getScene().getWindow(),
-                "/GameView.fxml"
-        );
-    }
+ @FXML
+ public void handleStartGame() {
+ SceneManager.switchScene(
+ (Stage) welcomeLabel.getScene().getWindow(),
+ "/GameView.fxml"
+ );
+ }
 
-    @FXML
-    public void handleLogout() {
-        userManager.logout();
-        SceneManager.switchScene(
-                (Stage) welcomeLabel.getScene().getWindow(),
-                "/LoginView.fxml"
-        );
-    }
-*/
-    /**
-     * Navigates back to the main menu.
-     */
+ @FXML
+ public void handleLogout() {
+ userManager.logout();
+ SceneManager.switchScene(
+ (Stage) welcomeLabel.getScene().getWindow(),
+ "/LoginView.fxml"
+ );
+ }
+ */
 /**
-    @FXML
-    public void handleBack() {
-        SceneManager.switchScene(
-                (Stage) welcomeLabel.getScene().getWindow(),
-                "/mainmenu.fxml"
-        );
-    }
-} */
+ * Navigates back to the main menu.
+ */
+/**
+ @FXML
+ public void handleBack() {
+ SceneManager.switchScene(
+ (Stage) welcomeLabel.getScene().getWindow(),
+ "/mainmenu.fxml"
+ );
+ }
+ } */
