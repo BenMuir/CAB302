@@ -1,12 +1,12 @@
 package com.typinggame.service;
 
-import com.typinggame.data.SessionRepository;
+import com.typinggame.data.LeaderboardRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LeaderboardService {
-    private final SessionRepository repo;
+    private final LeaderboardRepository repo;
 
     public static class Row {
         public final String name;
@@ -18,12 +18,20 @@ public class LeaderboardService {
         }
     }
 
-    public LeaderboardService(SessionRepository repo){
+    public LeaderboardService(LeaderboardRepository repo){
         this.repo = repo;
     }
 
+    /** Global leaderboard (best per user across all drills). */
     public List<Row> topByBestScore(int limit){
         return repo.topByBestScore(limit).stream()
+                .map(r -> new Row(r.name, r.wpm, r.accuracy, r.score))
+                .collect(Collectors.toList());
+    }
+
+    /** Per-drill leaderboard (best per user for a given drill). */
+    public List<Row> topByBestScoreForDrill(int drillId, int limit){
+        return repo.topByBestScoreForDrill(drillId, limit).stream()
                 .map(r -> new Row(r.name, r.wpm, r.accuracy, r.score))
                 .collect(Collectors.toList());
     }
