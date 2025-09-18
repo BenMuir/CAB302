@@ -75,6 +75,19 @@ public class User implements Serializable {
             return 0;
         }
     }
+
+    public String getDisplayName() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select display_name FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString("display_name");
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
+        }
+    }
 //
 //    public List<Double> getSessionAccuracies() {
 //        return sessionAccuracies;

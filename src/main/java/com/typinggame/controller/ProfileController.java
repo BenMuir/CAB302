@@ -1,6 +1,7 @@
 package com.typinggame.controller;
 
 //import com.typinggame.data.Database;
+import com.typinggame.config.AppContext;
 import com.typinggame.data.Database;
 import com.typinggame.data.UserManager;
 //import com.typinggame.controller.LoginController;
@@ -30,20 +31,20 @@ public class ProfileController {
     //@FXML private Label sessionCountLabel;
     @FXML
     private Label displayNameLabel;
-    private UserManager userManager = LoginController.globalUserManager;
+    private UserManager userManager = AppContext.userManager;
     private User user = userManager.getCurrentUser();
 
     //private final UserManager userManager = new UserManager(new FileUserRepository());
 
     @FXML
     public void initialize() {
-        if (user != null) {
+        //if (user != null) {
             //welcomeLabel.setText("Welcome, " + user.getUsername() + "!");
             //highScoreLabel.setText("High Score: " + user.getHighScore());
             //accuracyLabel.setText("Best Accuracy: " + String.format("%.2f%%", user.getBestAccuracy()));
             //sessionCountLabel.setText("Sessions Played: " + user.getTotalSessions());
-            displayNameLabel.setText("FUCK YEAH");
-        }
+        displayNameLabel.setText(user.getDisplayName());
+        //}
     }
 
     @FXML
