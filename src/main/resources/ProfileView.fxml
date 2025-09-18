@@ -2,23 +2,51 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.ProfileController">
     <children>
-        <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 2;">
-            <children>
-                <Label fx:id="displayNameLabel" layoutX="200.0" layoutY="100.0" text="Display Name: " />
-                <Button onAction="#updateDisplay" layoutX="300.0" layoutY="400.0" prefHeight="40.0" prefWidth="100.0" text="update the data"/>
-            </children>
-        </Pane>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/GameModeBackground.png" />
+         </image>
+      </ImageView>
+          <Label fx:id="displayNameLabel" layoutX="600.0" layoutY="254.0" text="Display Name: ">
+         <font>
+            <Font name="Press Start 2P Regular" size="18.0" />
+         </font>
+      </Label>
+      <StackPane layoutX="50.0" layoutY="929.0" prefHeight="101.0" prefWidth="217.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Button onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+               <font>
+                  <Font name="Press Start 2P Regular" size="30.0" />
+               </font>
+            </Button>
+         </children>
+      </StackPane>
+      <StackPane layoutX="613.0" layoutY="291.0" prefHeight="77.0" prefWidth="201.0">
+         <children>
+            <ImageView fitHeight="77.0" fitWidth="201.0" layoutX="25.0" layoutY="209.0">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Button onAction="#updateDisplay" prefHeight="77.0" prefWidth="201.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update">
+               <font>
+                  <Font name="Press Start 2P Regular" size="27.0" />
+               </font>
+            </Button>
+         </children>
+      </StackPane>
     </children>
 </AnchorPane>

@@ -7,6 +7,7 @@ import com.typinggame.data.UserManager;
 import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -22,7 +23,7 @@ import java.sql.SQLException;
  *
  * [Ben M – Sept 13 2025]
  */
-public class ProfileController {
+public class ProfileController extends Controller{
 
     //@FXML private Label welcomeLabel;
     //@FXML private Label highScoreLabel;
@@ -59,6 +60,10 @@ public class ProfileController {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
         //displayNameLabel.setText("Fuck me lol");
+    }
+
+    public void handleBack(ActionEvent event) {
+        displayScene("/mainmenu.fxml", event);
     }
 }
 /**

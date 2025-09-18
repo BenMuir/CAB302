@@ -2,25 +2,57 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
     <children>
-        <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 2;">
-            <children>
-                <Label fx:id="changeDisplayLabel" layoutX="200.0" layoutY="100.0" text="Change display name: " />
-                <TextField fx:id="displayNameField" layoutX="400.0" layoutY="100.0" prefHeight="60.0" prefWidth="300.0" promptText="new display name here"/>
-                <Button fx:id="updateDisplayBtn" onAction="#updateDisplay" layoutX="300" layoutY="400" prefHeight="40" prefWidth="100" text="update the shit "/>
-            </children>
-        </Pane>
-        <Button fx:id="backButton" onAction="#handleBack" text="Back"/>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/GameModeBackground.png" />
+         </image>
+      </ImageView>
+          <Label fx:id="changeDisplayLabel" alignment="CENTER" layoutX="1082.0" layoutY="181.0" prefHeight="51.0" prefWidth="505.0" text="Change display name: ">
+         <font>
+            <Font name="Press Start 2P Regular" size="24.0" />
+         </font>
+      </Label>
+          <TextField fx:id="displayNameField" layoutX="1175.0" layoutY="245.0" prefHeight="60.0" prefWidth="312.0" promptText="new display name">
+         <font>
+            <Font name="Press Start 2P Regular" size="18.0" />
+         </font>
+      </TextField>
+      <StackPane layoutX="1201.0" layoutY="334.0" prefHeight="101.0" prefWidth="217.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="updateDisplayBtn" onAction="#updateDisplay" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update">
+               <font>
+                  <Font name="Press Start 2P Regular" size="30.0" />
+               </font>
+            </Button>
+         </children>
+      </StackPane>
+      <StackPane layoutX="217.0" layoutY="670.0" prefHeight="101.0" prefWidth="217.0">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="backButton" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+               <font>
+                  <Font name="Press Start 2P Regular" size="30.0" />
+               </font>
+            </Button>
+         </children>
+      </StackPane>
     </children>
 </AnchorPane>
