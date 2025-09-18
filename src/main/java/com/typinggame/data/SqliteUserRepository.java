@@ -25,7 +25,11 @@ public class SqliteUserRepository implements UserRepository {
                     "INSERT INTO users(username, password_hash) VALUES(?, ?)")) {
                 ins.setString(1, user.getUsername());
                 ins.setString(2, user.getPasswordHash());
-                return ins.executeUpdate() == 1;
+                ins.executeUpdate();
+                PreparedStatement ins2 = c.prepareStatement("INSERT INTO user_settings(user_id, display_name) VALUES(?, ?)");
+                ins2.setInt(1, user.getUserID());
+                ins2.setString(2, user.getUsername());
+                return ins2.executeUpdate() == 1;
             }
         } catch (SQLException e) {
             System.err.println("saveUser failed: " + e.getMessage());
