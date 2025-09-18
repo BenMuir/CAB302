@@ -8,6 +8,7 @@ import com.typinggame.data.UserManager;
 import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -23,14 +24,16 @@ import java.sql.SQLException;
  *
  * [Ben M – Sept 13 2025]
  */
-public class ProfileController {
+public class ProfileController extends Controller {
 
     //@FXML private Label welcomeLabel;
     //@FXML private Label highScoreLabel;
     //@FXML private Label accuracyLabel;
     //@FXML private Label sessionCountLabel;
-    @FXML
-    private Label displayNameLabel;
+    @FXML private Label displayNameLabel;
+    @FXML private Label wpmLabel;
+    @FXML private Label accuracyLabel;
+    @FXML private Label sessionsLabel;
     private UserManager userManager = AppContext.userManager;
     private User user = userManager.getCurrentUser();
 
@@ -44,6 +47,9 @@ public class ProfileController {
             //accuracyLabel.setText("Best Accuracy: " + String.format("%.2f%%", user.getBestAccuracy()));
             //sessionCountLabel.setText("Sessions Played: " + user.getTotalSessions());
         displayNameLabel.setText(user.getDisplayName());
+        wpmLabel.setText(String.valueOf(user.getBestWPM()));
+        accuracyLabel.setText(String.valueOf(user.getBestAccuracy()));
+        sessionsLabel.setText(String.valueOf(user.getTotalSessions()));
         //}
     }
 
@@ -60,6 +66,10 @@ public class ProfileController {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
         //displayNameLabel.setText("Fuck me lol");
+    }
+
+    public void handleBack(ActionEvent event) {
+        displayScene("/mainmenu.fxml", event);
     }
 }
 /**

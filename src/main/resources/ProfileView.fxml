@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.ProfileController">
-    <children>
-        <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 2;">
-            <children>
-                <Label fx:id="displayNameLabel" layoutX="200.0" layoutY="100.0" text="Display Name: " />
-                <Button onAction="#updateDisplay" layoutX="300.0" layoutY="400.0" prefHeight="40.0" prefWidth="100.0" text="update the data"/>
-            </children>
-        </Pane>
-    </children>
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.ProfileController">
+<children>
+    <Button onAction="#handleBack" layoutX="273.0" layoutY="320.0" mnemonicParsing="false" text="Back" />
+    <Label layoutX="133.0" layoutY="84.0" text="Display Name:" />
+    <Label layoutX="142.0" layoutY="111.0" text="Highest wpm:" />
+    <Label layoutX="139.0" layoutY="138.0" text="Accuracy" />
+    <Label layoutX="139.0" layoutY="166.0" text="Sessions:" />
+    <Label fx:id="displayNameLabel" layoutX="266.0" layoutY="84.0" text="Label" />
+    <Label fx:id="wpmLabel" layoutX="266.0" layoutY="111.0" text="Label" />
+    <Label fx:id="accuracyLabel" layoutX="266.0" layoutY="138.0" text="Label" />
+    <Label fx:id="sessionsLabel" layoutX="266.0" layoutY="166.0" text="Label" />
+</children>
+</Pane>
