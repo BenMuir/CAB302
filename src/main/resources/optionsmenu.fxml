@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.MotionBlur?>
+<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
-    <children>
-        <Pane layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 2;">
-            <children>
-                <Label fx:id="changeDisplayLabel" layoutX="200.0" layoutY="100.0" text="Change display name: " />
-                <TextField fx:id="displayNameField" layoutX="400.0" layoutY="100.0" prefHeight="60.0" prefWidth="300.0" promptText="new display name here"/>
-                <Button fx:id="updateDisplayBtn" onAction="#updateDisplay" layoutX="300" layoutY="400" prefHeight="40" prefWidth="100" text="update the shit "/>
-            </children>
-        </Pane>
-        <Button fx:id="backButton" onAction="#handleBack" text="Back"/>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
+   <children>
+      <Pane layoutX="122.0" layoutY="63.0" prefHeight="275.0" prefWidth="356.0">
+         <children>
+            <Label layoutX="52.0" layoutY="41.0" text="Display name:" />
+            <Label layoutX="68.0" layoutY="77.0" text="Font:" />
+            <Label layoutX="63.0" layoutY="117.0" text="Font size:" />
+            <Label layoutX="68.0" layoutY="152.0" text="Theme:" />
+            <TextField fx:id="displayNameEntry" layoutX="137.0" layoutY="37.0" promptText="BallSack" />
+            <ComboBox fx:id="fontCombo" layoutX="137.0" layoutY="73.0" prefWidth="150.0" />
+            <ComboBox fx:id="fontSizeCombo" layoutX="142.0" layoutY="113.0" prefWidth="150.0" />
+            <ComboBox fx:id="themeCombo" layoutX="142.0" layoutY="148.0" prefWidth="150.0" />
+            <Button fx:id="backButton" onAction="#handleBack" layoutX="151.0" layoutY="210.0" mnemonicParsing="false" text="Back" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

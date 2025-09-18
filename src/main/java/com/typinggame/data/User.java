@@ -128,6 +128,45 @@ public class User implements Serializable {
             return null;
         }
     }
+
+    public String getFont() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select font_family FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public int getFontSize() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select font_size FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    public String getTheme() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select theme FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
+        }
+    }
 //
 //    public List<Double> getSessionAccuracies() {
 //        return sessionAccuracies;
