@@ -8,17 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Tier progression:
- *  - Start at Tier 1.
- *  - Unlock Tier 2 when ALL drills in Tier 1 have at least one completed session.
- *  - Unlock Tier 3 when ALL drills in Tier 2 have at least one completed session.
+ * Tier progression rules:
+ *  - Start at Tier 1
+ *  - Tier 2 unlocks when ALL Tier 1 drills have ≥1 session
+ *  - Tier 3 unlocks when ALL Tier 2 drills have ≥1 session
  */
 public final class ProgressService {
 
-    // No state needed; we query directly via Database.getConnection()
+    // Stateless; queries DB each call
     public ProgressService() {}
 
-    /** Returns 1..3 based strictly on completed tiers for this user. */
+    /** Returns unlocked tier for the user: 1..3. */
     public int currentUnlockedTier(int userId) {
         if (userId <= 0) return 1;
 
@@ -38,15 +38,15 @@ public final class ProgressService {
         return 3;
     }
 
-    /** True if user has at least one session recorded for EVERY drill in the given tier. */
+    /** True if the user has at least one session for every drill in the tier. */
     public boolean hasCompletedAllDrillsInTier(int userId, int tier) {
         int total = totalDrillsInTier(tier);
-        if (total == 0) return false; // no drills in schema → cannot complete
+        if (total == 0) return false; // no drills → can’t complete
         int distinctCompleted = distinctCompletedInTier(userId, tier);
         return distinctCompleted >= total;
     }
 
-    /** Total number of drills that exist in a given tier. */
+    /** Count drills that exist in a tier. */
     private int totalDrillsInTier(int tier) {
         String sql = "SELECT COUNT(*) AS cnt FROM drills WHERE tier = ?";
         try (Connection c = Database.getConnection();
@@ -61,7 +61,7 @@ public final class ProgressService {
         return 0;
     }
 
-    /** How many DISTINCT drills this user has completed in a given tier (any score counts). */
+    /** Count DISTINCT drills the user has completed in a tier (any score counts). */
     public int distinctCompletedInTier(int userId, int tier) {
         String sql = """
             SELECT COUNT(DISTINCT s.drill_id) AS cnt
@@ -82,7 +82,7 @@ public final class ProgressService {
         return 0;
     }
 
-    /** Small helper to print current progression counts. */
+    /** Log simple progress info (best-effort; ignores errors). */
     private void debug(int userId, int upToTier) {
         try {
             int t1Total = totalDrillsInTier(1);

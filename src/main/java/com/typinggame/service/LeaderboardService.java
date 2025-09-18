@@ -5,9 +5,13 @@ import com.typinggame.data.LeaderboardRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Leaderboard read service (maps repo rows to simple DTOs).
+ */
 public class LeaderboardService {
     private final LeaderboardRepository repo;
 
+    /** Simple DTO for UI or controllers. */
     public static class Row {
         public final String name;
         public final double wpm;
@@ -29,7 +33,7 @@ public class LeaderboardService {
                 .collect(Collectors.toList());
     }
 
-    /** Per-drill leaderboard (best per user for a given drill). */
+    /** Per-drill leaderboard (best per user for one drill). */
     public List<Row> topByBestScoreForDrill(int drillId, int limit){
         return repo.topByBestScoreForDrill(drillId, limit).stream()
                 .map(r -> new Row(r.name, r.wpm, r.accuracy, r.score))

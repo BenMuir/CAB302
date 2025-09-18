@@ -3,12 +3,17 @@ package com.typinggame.data;
 import com.typinggame.model.Session;
 
 import java.sql.*;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Simple repository for typing sessions.
+ * - Uses try-with-resources so DB resources are closed.
+ * - Wraps SQL errors in RuntimeException.
+ */
 public class SessionRepository {
 
+    /** Insert a session and return it with the generated id (if any). */
     public Session insert(Session s) {
         String sql = """
             INSERT INTO sessions(user_id, drill_id, wpm, accuracy, score, typed_chars, duration_seconds, started_at)
@@ -16,6 +21,7 @@ public class SessionRepository {
             """;
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setInt(1, s.userId);
             ps.setInt(2, s.drillId);
             ps.setDouble(3, s.wpm);
@@ -23,11 +29,14 @@ public class SessionRepository {
             ps.setDouble(5, s.score);
             ps.setInt(6, s.typedChars);
             ps.setDouble(7, s.durationSeconds);
-            ps.setString(8, s.startedAt.toString());
+            ps.setString(8, s.startedAt.toString()); // store ISO-8601 string
+
             ps.executeUpdate();
+
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 Integer id = null;
                 if (keys.next()) id = keys.getInt(1);
+                // return a copy that includes the new id
                 return new Session(id, s.userId, s.drillId, s.wpm, s.accuracy, s.typedChars, s.durationSeconds, s.startedAt);
             }
         } catch (SQLException e) {
@@ -35,15 +44,18 @@ public class SessionRepository {
         }
     }
 
+    /** Best (max) score for a user, or null if no sessions. */
     public Double bestScoreForUser(int userId) {
         String sql = "SELECT MAX(score) AS best FROM sessions WHERE user_id = ?";
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setInt(1, userId);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     double v = rs.getDouble("best");
-                    return rs.wasNull() ? null : v;
+                    return rs.wasNull() ? null : v; // handle no rows / NULL
                 }
                 return null;
             }
@@ -52,6 +64,7 @@ public class SessionRepository {
         }
     }
 
+    /** Count sessions by a user for drills in a specific tier. */
     public int countSessionsInTier(int userId, int tier) {
         String sql = """
             SELECT COUNT(*) AS cnt
@@ -61,8 +74,10 @@ public class SessionRepository {
             """;
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setInt(1, userId);
             ps.setInt(2, tier);
+
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? rs.getInt("cnt") : 0;
             }
@@ -71,6 +86,7 @@ public class SessionRepository {
         }
     }
 
+    /** Simple DTO for leaderboard rows. */
     public static class LeaderboardRow {
         public final String name;
         public final double wpm;
@@ -81,6 +97,10 @@ public class SessionRepository {
         }
     }
 
+    /**
+     * Best single session per user (global), sorted by score.
+     * Uses a CTE to pick each user's max score.
+     */
     public List<LeaderboardRow> topByBestScore(int limit) {
         String sql = """
             WITH best AS (
@@ -97,7 +117,9 @@ public class SessionRepository {
             """;
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setInt(1, limit);
+
             try (ResultSet rs = ps.executeQuery()) {
                 List<LeaderboardRow> out = new ArrayList<>();
                 while (rs.next()) {

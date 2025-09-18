@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Read-only queries for leaderboards.
- * Supports global and per-drill leaderboards using the sessions table.
+ * Read-only leaderboard queries using the sessions table.
+ * - Global best (per user)
+ * - Per-drill best (per user)
  */
 public class LeaderboardRepository {
 
+    /** Simple DTO for leaderboard rows. */
     public static class LeaderboardRow {
         public final String name;
         public final double wpm;
@@ -20,10 +22,13 @@ public class LeaderboardRepository {
         }
     }
 
-    /** Top best-single-session scores across ALL drills (one row per user by their best score). */
+    /** Best single session per user across all drills. Sorted by score, then WPM, then accuracy. */
     public List<LeaderboardRow> topByBestScore(int limit) {
-        String sql = "WITH best AS ("
-                + "  SELECT user_id, MAX(score) AS best_score FROM sessions GROUP BY user_id"
+        String sql = ""
+                + "WITH best AS ("
+                + "  SELECT user_id, MAX(score) AS best_score"
+                + "  FROM sessions"
+                + "  GROUP BY user_id"
                 + ") "
                 + "SELECT u.username AS name, s.wpm, s.accuracy, s.score "
                 + "FROM sessions s "
@@ -34,7 +39,9 @@ public class LeaderboardRepository {
 
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setInt(1, limit);
+
             try (ResultSet rs = ps.executeQuery()) {
                 List<LeaderboardRow> out = new ArrayList<>();
                 while (rs.next()) {
@@ -52,10 +59,14 @@ public class LeaderboardRepository {
         }
     }
 
-    /** Top best-single-session scores for a specific drill (one row per user by their best score in that drill). */
+    /** Best single session per user for a given drill. Sorted by score, then WPM, then accuracy. */
     public List<LeaderboardRow> topByBestScoreForDrill(int drillId, int limit) {
-        String sql = "WITH best AS ("
-                + "  SELECT user_id, MAX(score) AS best_score FROM sessions WHERE drill_id = ? GROUP BY user_id"
+        String sql = ""
+                + "WITH best AS ("
+                + "  SELECT user_id, MAX(score) AS best_score"
+                + "  FROM sessions"
+                + "  WHERE drill_id = ?"
+                + "  GROUP BY user_id"
                 + ") "
                 + "SELECT u.username AS name, s.wpm, s.accuracy, s.score "
                 + "FROM sessions s "
@@ -67,9 +78,11 @@ public class LeaderboardRepository {
 
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setInt(1, drillId);
             ps.setInt(2, drillId);
             ps.setInt(3, limit);
+
             try (ResultSet rs = ps.executeQuery()) {
                 List<LeaderboardRow> out = new ArrayList<>();
                 while (rs.next()) {

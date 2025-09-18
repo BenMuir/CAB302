@@ -5,6 +5,9 @@ import com.typinggame.model.Drill;
 
 import java.util.List;
 
+/**
+ * Drill-related operations (read side).
+ */
 public class DrillService {
     private final DrillRepository repo;
     private final ProgressService progress;
@@ -14,6 +17,9 @@ public class DrillService {
         this.progress = progress;
     }
 
+    /**
+     * Return drills up to the user’s currently unlocked tier.
+     */
     public List<Drill> listUnlocked(int userId){
         int tier = progress.currentUnlockedTier(userId);
         return repo.findUpToTier(tier);
