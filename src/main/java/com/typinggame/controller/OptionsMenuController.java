@@ -8,6 +8,7 @@ import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
 import com.typinggame.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +26,7 @@ import java.sql.SQLException;
  *
  * [Ben M – Sept 13 2025]
  */
-public class OptionsMenuController {
+public class OptionsMenuController extends Controller{
 
     @FXML private Button backButton;
     @FXML private Button updateDisplayBtn;
@@ -37,11 +38,8 @@ public class OptionsMenuController {
      * Navigates back to the main menu.
      */
     @FXML
-    public void handleBack() {
-        SceneManager.switchScene(
-                (Stage) backButton.getScene().getWindow(),
-                "/MainMenu.fxml"
-        );
+    public void handleBack(ActionEvent event) {
+        displayScene("/mainmenu.fxml", event);
     }
 
     @FXML
