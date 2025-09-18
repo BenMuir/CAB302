@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.net.URL;
 import com.typinggame.data.Database;
@@ -15,6 +16,9 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         //Database Init
         Database.init();
+
+        //Load the font
+        Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
 
         Parent loginRoot = loadFXML("/loginView.fxml");
         if (loginRoot == null) {
