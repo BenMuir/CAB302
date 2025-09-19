@@ -4,31 +4,74 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.MotionBlur?>
-<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
-   <children>
-      <Pane layoutX="122.0" layoutY="63.0" prefHeight="275.0" prefWidth="356.0">
-         <children>
-            <Label layoutX="52.0" layoutY="41.0" text="Display name:" />
-            <Label layoutX="68.0" layoutY="77.0" text="Font:" />
-            <Label layoutX="63.0" layoutY="117.0" text="Font size:" />
-            <Label layoutX="68.0" layoutY="152.0" text="Theme:" />
-            <TextField fx:id="displayNameEntry" layoutX="137.0" layoutY="37.0" promptText="BallSack" />
-            <ComboBox fx:id="fontCombo" layoutX="137.0" layoutY="73.0" prefWidth="150.0" />
-            <ComboBox fx:id="fontSizeCombo" layoutX="142.0" layoutY="113.0" prefWidth="150.0" />
-            <ComboBox fx:id="themeCombo" layoutX="142.0" layoutY="148.0" prefWidth="150.0" />
-            <Button fx:id="backButton" onAction="#handleBack" layoutX="151.0" layoutY="210.0" mnemonicParsing="false" text="Back" />
-         </children>
-      </Pane>
-   </children>
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
+    <children>
+        <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/GameModeBackground.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="changeDisplayLabel" alignment="CENTER" layoutX="708.0" layoutY="250.0" prefHeight="51.0" prefWidth="505.0" text="Change display name: ">
+            <font>
+                <Font name="Press Start 2P Regular" size="24.0" />
+            </font>
+        </Label>
+        <TextField fx:id="displayNameEntry" layoutX="1175.0" layoutY="245.0" prefHeight="60.0" prefWidth="312.0" promptText="new display name">
+            <font>
+                <Font name="Press Start 2P Regular" size="18.0" />
+            </font>
+        </TextField>
+        <StackPane layoutX="1201.0" layoutY="334.0" prefHeight="101.0" prefWidth="217.0">
+            <children>
+                <ComboBox fx:id="fontCombo" prefHeight="50.0" prefWidth="200.0" promptText="Font" />
+            </children>
+        </StackPane>
+        <StackPane layoutX="217.0" layoutY="670.0" prefHeight="101.0" prefWidth="217.0">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
+                    <image>
+                        <Image url="@images/Button.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="backButton" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+                    <font>
+                        <Font name="Press Start 2P Regular" size="30.0" />
+                    </font>
+                </Button>
+            </children>
+        </StackPane>
+        <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="1201.0" layoutY="834.0">
+            <image>
+                <Image url="@images/Button.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="updateDisplayBtn" layoutX="1201.0" layoutY="834.0" onAction="#updateDisplay" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update">
+            <font>
+                <Font name="Press Start 2P Regular" size="30.0" />
+            </font>
+        </Button>
+        <Label fx:id="changeFontLabel" alignment="CENTER" layoutX="708.0" layoutY="342.0" prefHeight="51.0" prefWidth="505.0" text="Change font:">
+            <font>
+                <Font name="Press Start 2P Regular" size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="changeFontSizeLabel" alignment="CENTER" layoutX="719.0" layoutY="444.0" prefHeight="51.0" prefWidth="505.0" text="Change font size:">
+            <font>
+                <Font name="Press Start 2P Regular" size="24.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="fontSizeCombo" layoutX="1212.0" layoutY="455.0" prefHeight="50.0" prefWidth="200.0" promptText="Font size" />
+        <Label fx:id="changeThemeLabel" alignment="CENTER" layoutX="725.0" layoutY="551.0" prefHeight="51.0" prefWidth="505.0" text="Change theme:">
+            <font>
+                <Font name="Press Start 2P Regular" size="24.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id ="themeCombo" layoutX="1211.0" layoutY="560.0" prefHeight="50.0" prefWidth="200.0" promptText="Theme" />
+    </children>
 </AnchorPane>
