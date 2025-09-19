@@ -37,14 +37,16 @@ public class OptionsMenuController extends Controller{
     @FXML private ComboBox<String> fontCombo;
     @FXML private ComboBox<String> fontSizeCombo;
     @FXML private ComboBox<String> themeCombo;
-    private UserManager userManager = AppContext.userManager;
-    private User user = userManager.getCurrentUser();
+    private UserManager userManager;
+    private User user;
 
     /**
      * Hard coding the options for now. Will make a better solution probably
      */
     @FXML
     public void initialize() {
+        this.userManager = AppContext.userManager;
+        this.user = userManager.getCurrentUser();
         ObservableList<String> fontOptions = FXCollections.observableArrayList("Pixels", "System", "Fortnite or something idk");
         ObservableList<String> fontSizeOptions = FXCollections.observableArrayList("8", "16", "32");
         ObservableList<String> themeOptions = FXCollections.observableArrayList("Ocean", "Light", "Dark");
@@ -55,6 +57,26 @@ public class OptionsMenuController extends Controller{
         fontCombo.setValue(user.getFont());
         fontSizeCombo.setValue(String.valueOf(user.getFontSize()));
         themeCombo.setValue(user.getTheme());
+
+    }
+    //this only exists for the sake of simplifying making unit tests
+    public void updateUserManager(UserManager input){
+        this.userManager = input;
+    }
+    public void updateDisplayEntry(String update) {
+        displayNameEntry.setText(update);
+    }
+    public void updateFont(String update) {
+        fontCombo.setValue(update);
+    }
+    public void updateFontSize(String update) {
+        fontSizeCombo.setValue(update);
+    }
+    public void updateTheme(String update) {
+        themeCombo.setValue(update);
+    }
+    public void updateUser(User update) {
+        this.user = update;
     }
 
     /**
