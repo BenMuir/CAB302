@@ -62,7 +62,7 @@ public class Database {
               );
             """);
 
-            // Seed demo user (hash matches UserManager.hash())
+            // Seed demo user
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT OR IGNORE INTO users(username, password_hash) VALUES(?, ?)")) {
                 ps.setString(1, "demo");
@@ -77,7 +77,7 @@ public class Database {
                 ps.executeUpdate();
             }
 
-            // Ensure baseline drills exist (and add tier column if needed)
+            // Ensure baseline drills exist
             DrillSeeder.ensureBaselineDrills();
 
             inited = true;
@@ -89,5 +89,8 @@ public class Database {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
+    }
+    public static synchronized void forceReinitForTests() {
+        inited = false;
     }
 }
