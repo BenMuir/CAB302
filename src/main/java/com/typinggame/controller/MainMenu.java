@@ -26,7 +26,7 @@ public class MainMenu extends Controller {
     }
 
     public void profileButtonPressed(ActionEvent event) throws IOException{
-        displayScene("/ProfileView.fxml" , event);
+        displayScene("/profile.fxml" , event);
     }
     //exit app
     public void exitButtonPressed() {

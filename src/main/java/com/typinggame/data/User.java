@@ -14,18 +14,24 @@ import java.util.List;
  *
  * [Ben M – Sept 10 2025]
  */
+
+/**
+ * Commented out a bunch of stuff that isn't necessary due to the new db structure. Will go through and
+ * completely remove after prototype submission. Just leaving them to be safe
+ * -Evan
+ */
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String username;
     private String passwordHash;
-    private int highScore;              // Highest WPM or streak
-    private double bestAccuracy;        // Highest recorded accuracy
-    private int totalSessions;          // Number of completed games
+    //private int highScore;              // Highest WPM or streak
+    //private double bestAccuracy;        // Highest recorded accuracy
+    //private int totalSessions;          // Number of completed games
 
-    private List<Double> sessionAccuracies;
-    private List<Integer> sessionWPMs;
+    //private List<Double> sessionAccuracies;
+    //private List<Integer> sessionWPMs;
 
     public User(String username, String passwordHash) {
         if (username == null || username.isEmpty())
@@ -35,11 +41,11 @@ public class User implements Serializable {
 
         this.username = username;
         this.passwordHash = passwordHash;
-        this.highScore = 0;
-        this.bestAccuracy = 0.0;
-        this.totalSessions = 0;
-        this.sessionAccuracies = new ArrayList<>();
-        this.sessionWPMs = new ArrayList<>();
+        //this.highScore = 0;
+        //this.bestAccuracy = 0.0;
+        //this.totalSessions = 0;
+        //this.sessionAccuracies = new ArrayList<>();
+        //this.sessionWPMs = new ArrayList<>();
     }
 
     // Getters
@@ -50,17 +56,51 @@ public class User implements Serializable {
     public String getPasswordHash() {
         return passwordHash;
     }
-
+/** come back to this later when it's actually needed. just getting what we need working rn
     public int getHighScore() {
-        return highScore;
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement((
+                     ""
+                     ))
+    }
+*/
+    public double getBestAccuracy() {
+        try (Connection c = Database.getConnection();
+            PreparedStatement ps = c.prepareStatement(
+                    "SELECT MAX(accuracy) FROM sessions WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getDouble(1);
+        } catch (SQLException e) {
+            System.err.println("Retrieve accuracy failed");
+            return 0;
+        }
     }
 
-    public double getBestAccuracy() {
-        return bestAccuracy;
+    public double getBestWPM() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "SELECT MAX(wpm) FROM sessions WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getDouble(1);
+        } catch (SQLException e) {
+            System.err.println("Retrieve WPM failed");
+            return 0;
+        }
     }
 
     public int getTotalSessions() {
-        return totalSessions;
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "SELECT COUNT(*) FROM sessions WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("Retrieve accuracy failed");
+            return 0;
+        }
     }
 
     public int getUserID() {
@@ -73,6 +113,58 @@ public class User implements Serializable {
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
             return 0;
+        }
+    }
+
+    public String getDisplayName() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select display_name FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString("display_name");
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String getFont() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select font_family FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public int getFontSize() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select font_size FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    public String getTheme() {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "Select theme FROM user_settings WHERE user_id = ?")) {
+            ps.setInt(1, getUserID());
+            ResultSet rs = ps.executeQuery();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+            return null;
         }
     }
 //
@@ -103,6 +195,7 @@ public class User implements Serializable {
      * @param accuracy Accuracy percentage from the session
      * @param wpm Words per minute from the session
      */
+    /** Not needed anymore with new databse implementation. Just leaving for now
     public void recordSession(double accuracy, int wpm) {
         sessionAccuracies.add(accuracy);
         sessionWPMs.add(wpm);
@@ -127,9 +220,8 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", highScore=" + highScore +
-                ", bestAccuracy=" + bestAccuracy +
-                ", totalSessions=" + totalSessions +
+                ", bestAccuracy=" + getBestAccuracy() +
+                ", totalSessions=" + getTotalSessions() +
                 '}';
     }
 }

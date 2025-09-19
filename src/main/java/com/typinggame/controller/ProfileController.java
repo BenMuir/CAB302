@@ -1,6 +1,7 @@
 package com.typinggame.controller;
 
 //import com.typinggame.data.Database;
+import com.typinggame.config.AppContext;
 import com.typinggame.data.Database;
 import com.typinggame.data.UserManager;
 //import com.typinggame.controller.LoginController;
@@ -23,28 +24,33 @@ import java.sql.SQLException;
  *
  * [Ben M – Sept 13 2025]
  */
-public class ProfileController extends Controller{
+public class ProfileController extends Controller {
 
     //@FXML private Label welcomeLabel;
     //@FXML private Label highScoreLabel;
     //@FXML private Label accuracyLabel;
     //@FXML private Label sessionCountLabel;
-    @FXML
-    private Label displayNameLabel;
-    private UserManager userManager = LoginController.globalUserManager;
+    @FXML private Label displayNameLabel;
+    @FXML private Label wpmLabel;
+    @FXML private Label accuracyLabel;
+    @FXML private Label sessionsLabel;
+    private UserManager userManager = AppContext.userManager;
     private User user = userManager.getCurrentUser();
 
     //private final UserManager userManager = new UserManager(new FileUserRepository());
 
     @FXML
     public void initialize() {
-        if (user != null) {
+        //if (user != null) {
             //welcomeLabel.setText("Welcome, " + user.getUsername() + "!");
             //highScoreLabel.setText("High Score: " + user.getHighScore());
             //accuracyLabel.setText("Best Accuracy: " + String.format("%.2f%%", user.getBestAccuracy()));
             //sessionCountLabel.setText("Sessions Played: " + user.getTotalSessions());
-            displayNameLabel.setText("FUCK YEAH");
-        }
+        displayNameLabel.setText(user.getDisplayName());
+        wpmLabel.setText(String.valueOf(user.getBestWPM()));
+        accuracyLabel.setText(String.valueOf(user.getBestAccuracy()));
+        sessionsLabel.setText(String.valueOf(user.getTotalSessions()));
+        //}
     }
 
     @FXML
