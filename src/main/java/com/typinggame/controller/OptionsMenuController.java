@@ -61,7 +61,7 @@ public class OptionsMenuController extends Controller{
      * Navigates back to the main menu.
      */
     @FXML
-    public void handleBack() {
+    public void handleBack(ActionEvent event) {
         int idToUpdate = user.getUserID();
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -77,10 +77,7 @@ public class OptionsMenuController extends Controller{
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
-        SceneManager.switchScene(
-                (Stage) backButton.getScene().getWindow(),
-                "/MainMenu.fxml"
-        );
+        displayScene("/mainmenu.fxml", event);
     }
 
     @FXML

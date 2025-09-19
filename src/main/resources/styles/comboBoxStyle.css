@@ -1,0 +1,10 @@
+.combo-box {
+    -fx-font-family: "Press Start 2P Regular";
+    -fx-font-size: 14px;
+}
+
+/* Style the list cells inside the dropdown */
+.combo-box .list-cell {
+    -fx-font-family: "Press Start 2P Regular";
+    -fx-font-size: 14px;
+}
