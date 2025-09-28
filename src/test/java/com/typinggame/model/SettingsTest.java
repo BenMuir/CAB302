@@ -69,6 +69,5 @@ public class SettingsTest {
         controller.updateFontSize("32");
         controller.handleBack(null);
         assertEquals("32", Integer.toString(user.getFontSize()));
-
     }
 }
