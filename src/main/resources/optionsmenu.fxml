@@ -57,7 +57,7 @@
                       <Image url="@images/Button.png" />
                   </image>
               </ImageView>
-              <Button fx:id="updateDisplayBtn" onAction="#updateDisplay" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update">
+              <Button fx:id="updateDisplayBtn" onAction="#updateUserSettings" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Update">
                   <font>
                       <Font name="Press Start 2P Regular" size="30.0" />
                   </font>
@@ -71,7 +71,7 @@
                         <Image url="@images/Button.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="backButton" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+                <Button fx:id="backBtn" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
                     </font>

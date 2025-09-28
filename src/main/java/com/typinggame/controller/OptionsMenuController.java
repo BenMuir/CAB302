@@ -32,7 +32,7 @@ import java.sql.SQLException;
  */
 public class OptionsMenuController extends Controller{
 
-    @FXML private Button backButton;
+    @FXML private Button updateUserSettingsBtn;
     @FXML private TextField displayNameEntry;
     @FXML private ComboBox<String> fontCombo;
     @FXML private ComboBox<String> fontSizeCombo;
@@ -83,7 +83,7 @@ public class OptionsMenuController extends Controller{
      * Navigates back to the main menu.
      */
     @FXML
-    public void handleBack(ActionEvent event) {
+    public void updateUserSettings(ActionEvent event) {
         int idToUpdate = user.getUserID();
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -99,20 +99,11 @@ public class OptionsMenuController extends Controller{
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
-        displayScene("/mainmenu.fxml", event);
+
     }
 
     @FXML
-    public void updateDisplay() {
-        int idToUpdate = user.getUserID();
-        try (Connection c = Database.getConnection();
-             PreparedStatement ps = c.prepareStatement(
-                     "UPDATE user_settings SET display_name = ? WHERE user_id = ?")) {
-            ps.setString(1, displayNameEntry.getText().trim());
-            ps.setInt(2, idToUpdate);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Retreive ID failed: " + e.getMessage());
-        }
+    public void handleBack(ActionEvent event) {
+        displayScene("/mainmenu.fxml", event);
     }
 }
