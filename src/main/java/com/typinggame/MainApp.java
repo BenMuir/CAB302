@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.net.URL;
 import com.typinggame.data.Database;
+import com.typinggame.api.ApiServer;
 
 public class MainApp extends Application {
 
@@ -16,6 +17,13 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         //Database Init
         Database.init();
+
+        // --- NEW: start local API server ---
+        try {
+            new ApiServer().start(18080);
+        } catch (Exception e) {
+            System.err.println("Failed to start API: " + e.getMessage());
+        }
 
         //Load the font
         Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
