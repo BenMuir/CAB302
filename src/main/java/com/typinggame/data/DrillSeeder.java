@@ -45,7 +45,7 @@ public final class DrillSeeder {
                 // Hard
                 upsert(ps, 20, "Hard 1", "speed and precision matter; minimise errors to maximise your score.", 3);
                 upsert(ps, 21, "Hard 2", "sphinx of black quartz, judge my vow: pack my box with five dozen liquor jugs.", 3);
-                upsert(ps, 22, "Hard 3", "encyclopaedia and manoeuvre are spelt the Australian way; practise until it feels natural.", 3);
+                upsert(ps, 22, "Hard 3", "encyclopaedia and manoeuvre are spelt the Australian way; practice until it feels natural.", 3);
             }
 
             System.out.println("DrillSeeder: ensured baseline drills (upsert).");

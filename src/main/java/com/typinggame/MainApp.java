@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.net.URL;
 import com.typinggame.data.Database;
+import com.typinggame.api.ApiServer;
 
 public class MainApp extends Application {
 
@@ -16,6 +18,13 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         //Database Init
         Database.init();
+
+        // --- NEW: start local API server ---
+        try {
+            new ApiServer().start(18080);
+        } catch (Exception e) {
+            System.err.println("Failed to start API: " + e.getMessage());
+        }
 
         //Load the font
         Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
@@ -30,6 +39,7 @@ public class MainApp extends Application {
         primaryStage.setResizable(true);
         primaryStage.setMinWidth(960);
         primaryStage.setMinHeight(540);
+
 
         // Center content and allow letterboxing
         StackPane container = new StackPane(loginRoot);
@@ -49,6 +59,13 @@ public class MainApp extends Application {
 
         loginRoot.scaleXProperty().bind(scale);
         loginRoot.scaleYProperty().bind(scale);
+
+        loginScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F11) {
+                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+            }
+        });
+
 
         primaryStage.setScene(loginScene);
         primaryStage.show();

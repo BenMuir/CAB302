@@ -136,8 +136,9 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
     public void initialize() {
         try {
             Database.init();
-            int userId = resolveUserId();
-            int unlocked = new ProgressService().currentUnlockedTier(userId);
+
+            int userId   = resolveUserId();
+            int unlocked = new ProgressService().unlockedUpTo(userId);
 
             var options = drillRepo.findUpToTier(unlocked);
             if (drillSelect != null) {
@@ -373,7 +374,7 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
                     " drill=" + drillId + " wpm=" + wpm + " acc=" + accuracyPct);
 
             // Refresh dropdown if a new tier unlocked
-            int unlocked = new ProgressService().currentUnlockedTier(userId);
+            int unlocked = new ProgressService().unlockedUpTo(userId);
             var options  = drillRepo.findUpToTier(unlocked);
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);

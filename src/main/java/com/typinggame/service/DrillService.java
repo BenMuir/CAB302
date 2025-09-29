@@ -5,23 +5,23 @@ import com.typinggame.model.Drill;
 
 import java.util.List;
 
-/**
- * Drill-related operations (read side).
- */
 public class DrillService {
     private final DrillRepository repo;
     private final ProgressService progress;
 
-    public DrillService(DrillRepository repo, ProgressService progress){
+    public DrillService(DrillRepository repo, ProgressService progress) {
         this.repo = repo;
         this.progress = progress;
     }
 
-    /**
-     * Return drills up to the user’s currently unlocked tier.
-     */
-    public List<Drill> listUnlocked(int userId){
-        int tier = progress.currentUnlockedTier(userId);
+    /** Return drills up to the user's currently unlocked tier. */
+    public List<Drill> listUnlocked(int userId) {
+        int tier = progress.unlockedUpTo(userId);   // <-- updated method name
         return repo.findUpToTier(tier);
     }
+
+    // --- custom drill passthroughs ---
+    public int insertCustom(Drill d)        { return repo.insertCustom(d); }
+    public List<Drill> findCustom()         { return repo.findCustom(); }
+    public boolean deleteCustom(int id)     { return repo.deleteCustom(id); }
 }

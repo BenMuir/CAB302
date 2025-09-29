@@ -10,11 +10,10 @@ public class Database {
     public static synchronized void init() {
         if (inited) return;
 
-        // Optional: load driver explicitly for clearer errors
         try { Class.forName("org.sqlite.JDBC"); } catch (ClassNotFoundException ignore) {}
 
         try (Connection c = getConnection(); Statement st = c.createStatement()) {
-            // Users with hashed password
+            // Users
             st.execute("""
               CREATE TABLE IF NOT EXISTS users(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,7 +22,7 @@ public class Database {
               );
             """);
 
-            // Drills (basic seed so scores can reference drill 1)
+            // Drills
             st.execute("""
               CREATE TABLE IF NOT EXISTS drills(
                 id    INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,15 +32,26 @@ public class Database {
               );
             """);
 
-            // Scores (store accuracy as percentage for simplicity)
+            // --- NEW: additive migration for custom drills ---
+            try (Statement st2 = c.createStatement()) {
+                st2.execute("ALTER TABLE drills ADD COLUMN is_custom INTEGER DEFAULT 0");
+            } catch (SQLException ignore) {}
+            try (Statement st2 = c.createStatement()) {
+                st2.execute("ALTER TABLE drills ADD COLUMN created_by TEXT");
+            } catch (SQLException ignore) {}
+            try (Statement st2 = c.createStatement()) {
+                st2.execute("ALTER TABLE drills ADD COLUMN created_at INTEGER");
+            } catch (SQLException ignore) {}
+
+            // Sessions
             st.execute("""
               CREATE TABLE IF NOT EXISTS sessions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id          INTEGER NOT NULL,
                 drill_id         INTEGER NOT NULL,
                 wpm              REAL    NOT NULL,
-                accuracy         REAL    NOT NULL,   -- 0..100
-                score            REAL    NOT NULL,   -- WPM * Accuracy
+                accuracy         REAL    NOT NULL,
+                score            REAL    NOT NULL,
                 typed_chars      INTEGER NOT NULL,
                 duration_seconds REAL    NOT NULL,
                 started_at       TEXT    NOT NULL DEFAULT (datetime('now')),
@@ -50,7 +60,7 @@ public class Database {
               );
             """);
 
-            // User settings / preferences (per-user row)
+            // User settings
             st.execute("""
               CREATE TABLE IF NOT EXISTS user_settings(
                 user_id      INTEGER PRIMARY KEY,
@@ -62,7 +72,7 @@ public class Database {
               );
             """);
 
-            // Seed demo user
+            // Seed demo
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT OR IGNORE INTO users(username, password_hash) VALUES(?, ?)")) {
                 ps.setString(1, "demo");
@@ -70,16 +80,13 @@ public class Database {
                 ps.executeUpdate();
             }
 
-            // Ensure demo has default settings
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT OR IGNORE INTO user_settings(user_id, display_name) " +
                             "SELECT id, 'Demo User' FROM users WHERE username='demo'")) {
                 ps.executeUpdate();
             }
 
-            // Ensure baseline drills exist
             DrillSeeder.ensureBaselineDrills();
-
             inited = true;
             System.out.println("DB init OK -> typinggame.db");
         } catch (SQLException e) {
