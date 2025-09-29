@@ -20,25 +20,15 @@ public class CustomDrillController extends Controller {
 
     /**
      * Initialize UI state when the view loads.
-     * Populates tierBox with allowed tiers, capped by DB max and VISIBLE_TIER_CAP.
+     * Always shows tiers 1–5 in the tierBox.
      */
     @FXML
     private void initialize() {
         final int VISIBLE_TIER_CAP = 5; // Max tiers user can ever see (hard cap)
 
-        int dbMax;
-        try {
-            // Ask DB for the highest tier that exists
-            dbMax = new DrillRepository().maxTier();
-        } catch (Exception ignored) {
-            dbMax = 1; // fallback if DB not ready
-        }
-
-        // Only show up to the smaller of DB max vs cap
-        int maxToShow = Math.min(dbMax, VISIBLE_TIER_CAP);
-
+        // Always show 1..5, regardless of DB max
         tierBox.getItems().clear();
-        for (int i = 1; i <= maxToShow; i++) {
+        for (int i = 1; i <= VISIBLE_TIER_CAP; i++) {
             tierBox.getItems().add(i);
         }
         tierBox.getSelectionModel().selectFirst();
