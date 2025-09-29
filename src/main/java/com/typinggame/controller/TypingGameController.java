@@ -96,7 +96,7 @@ public class TypingGameController extends Controller {
             Database.init();
 
             int userId   = resolveUserId();
-            int unlocked = new ProgressService().currentUnlockedTier(userId);
+            int unlocked = new ProgressService().unlockedUpTo(userId);
 
             var options = drillRepo.findUpToTier(unlocked);
             if (drillSelect != null) {
@@ -270,7 +270,7 @@ public class TypingGameController extends Controller {
                     " drill=" + drillId + " wpm=" + wpm + " acc=" + accuracyPct);
 
             // Refresh dropdown if a new tier unlocked
-            int unlocked = new ProgressService().currentUnlockedTier(userId);
+            int unlocked = new ProgressService().unlockedUpTo(userId);
             var options  = drillRepo.findUpToTier(unlocked);
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);
