@@ -120,7 +120,7 @@ public class TypingStats {
             currentStreak = 0; // Reset streak on mistake
         }
     }
-
+//fix tests
     /**
      * Returns the current streak of consecutive correct characters typed.
      *
