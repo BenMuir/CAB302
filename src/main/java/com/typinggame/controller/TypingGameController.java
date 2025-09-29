@@ -26,6 +26,15 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
+//keyboard
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.Node;
+import java.util.HashMap;
+import java.util.Map;
+
 import java.time.Instant;
 
 /**
@@ -45,6 +54,39 @@ public class TypingGameController extends Controller {
     @FXML private Label streakLabel;
     @FXML private ComboBox<Drill> drillSelect;
     @FXML private Button startButton;
+//keyboard
+private final Map<KeyCode, Button> keyMap = new HashMap<>();
+    @FXML private Button keyQ;
+    @FXML private Button keyW;
+    @FXML private Button keyE;
+    @FXML private Button keyR;
+    @FXML private Button keyT;
+    @FXML private Button keyY;
+    @FXML private Button keyU;
+    @FXML private Button keyI;
+    @FXML private Button keyO;
+    @FXML private Button keyP;
+
+    @FXML private Button keyA;
+    @FXML private Button keyS;
+    @FXML private Button keyD;
+    @FXML private Button keyF;
+    @FXML private Button keyG;
+    @FXML private Button keyH;
+    @FXML private Button keyJ;
+    @FXML private Button keyK;
+    @FXML private Button keyL;
+
+    @FXML private Button keyZ;
+    @FXML private Button keyX;
+    @FXML private Button keyC;
+    @FXML private Button keyV;
+    @FXML private Button keyB;
+    @FXML private Button keyN;
+    @FXML private Button keyM;
+
+    @FXML private Button keySPACE;
+
 
     // Game State
     private String targetText;
@@ -104,26 +146,21 @@ public class TypingGameController extends Controller {
                 if (!options.isEmpty()) {
                     drillSelect.getSelectionModel().selectFirst();
                     currentDrill = options.get(0);
-                    targetText   = currentDrill.body;
-                    if (startButton != null) startButton.setDisable(false);
+                    targetText = currentDrill.body;
+                    startButton.setDisable(false);
                 } else {
-                    if (startButton != null) startButton.setDisable(true);
+                    startButton.setDisable(true);
                     currentDrill = null;
-                    targetText   = SentenceProvider.getSentence();
+                    targetText = SentenceProvider.getSentence();
                 }
             } else {
-                if (!options.isEmpty()) {
-                    currentDrill = options.get(0);
-                    targetText   = currentDrill.body;
-                } else {
-                    currentDrill = null;
-                    targetText   = SentenceProvider.getSentence();
-                }
+                currentDrill = options.isEmpty() ? null : options.get(0);
+                targetText = (currentDrill != null) ? currentDrill.body : SentenceProvider.getSentence();
             }
         } catch (Exception ex) {
             System.err.println("[GameView] drill init skipped: " + ex.getMessage());
             currentDrill = null;
-            targetText   = SentenceProvider.getSentence();
+            targetText = SentenceProvider.getSentence();
         }
 
         stats = new TypingStats(targetText);
@@ -139,17 +176,17 @@ public class TypingGameController extends Controller {
             stats.update(input);
             stats.updateAccuracy(input, targetText);
 
-            long   elapsedMillis  = System.currentTimeMillis() - startTime;
+            long elapsedMillis = System.currentTimeMillis() - startTime;
             double elapsedMinutes = elapsedMillis / 60000.0;
 
-            int    liveWPM   = stats.calculateWPM(elapsedMinutes);
-            double accuracy  = stats.getAccuracy();
+            int liveWPM = stats.calculateWPM(elapsedMinutes);
+            double accuracy = stats.getAccuracy();
 
             wpmLabel.setText("WPM: " + liveWPM);
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
 
             if (!input.isEmpty() && input.length() <= targetText.length()) {
-                char inputChar  = input.charAt(input.length() - 1);
+                char inputChar = input.charAt(input.length() - 1);
                 char targetChar = targetText.charAt(input.length() - 1);
                 stats.updateStreak(inputChar, targetChar);
                 streakLabel.setText("Streak: " + stats.getCurrentStreak());
@@ -159,12 +196,79 @@ public class TypingGameController extends Controller {
                 try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
                 inputField.setEditable(false);
                 inputField.setDisable(true);
-
                 saveSession();
                 showResults();
             }
         });
+
+        // Keyboard mapping and highlighting logic
+        javafx.application.Platform.runLater(() -> {
+            // Manual key mapping
+            keyMap.put(KeyCode.Q, keyQ); keyMap.put(KeyCode.W, keyW); keyMap.put(KeyCode.E, keyE);
+            keyMap.put(KeyCode.R, keyR); keyMap.put(KeyCode.T, keyT); keyMap.put(KeyCode.Y, keyY);
+            keyMap.put(KeyCode.U, keyU); keyMap.put(KeyCode.I, keyI); keyMap.put(KeyCode.O, keyO);
+            keyMap.put(KeyCode.P, keyP);
+
+            keyMap.put(KeyCode.A, keyA); keyMap.put(KeyCode.S, keyS); keyMap.put(KeyCode.D, keyD);
+            keyMap.put(KeyCode.F, keyF); keyMap.put(KeyCode.G, keyG); keyMap.put(KeyCode.H, keyH);
+            keyMap.put(KeyCode.J, keyJ); keyMap.put(KeyCode.K, keyK); keyMap.put(KeyCode.L, keyL);
+
+            keyMap.put(KeyCode.Z, keyZ); keyMap.put(KeyCode.X, keyX); keyMap.put(KeyCode.C, keyC);
+            keyMap.put(KeyCode.V, keyV); keyMap.put(KeyCode.B, keyB); keyMap.put(KeyCode.N, keyN);
+            keyMap.put(KeyCode.M, keyM);
+
+            keyMap.put(KeyCode.SPACE, keySPACE);
+
+            inputField.setOnKeyPressed(event -> {
+                KeyCode code = event.getCode();
+                boolean isCorrect = false;
+
+                String input = inputField.getText();
+                int index = input.length();
+
+                if (index < targetText.length()) {
+                    char expected = targetText.charAt(index);
+
+                    if (code == KeyCode.SPACE) {
+                        isCorrect = expected == ' ';
+                    } else {
+                        String name = code.getName();
+                        if (name != null && name.length() == 1) {
+                            char typed = name.charAt(0);
+                            isCorrect = Character.toUpperCase(typed) == Character.toUpperCase(expected);
+                        }
+                    }
+                }
+
+                highlightKey(code, isCorrect);
+            });
+
+            inputField.setOnKeyReleased(event -> unhighlightKey(event.getCode()));
+            inputField.requestFocus();
+        });
     }
+
+
+
+    // Keyboard
+    private void highlightKey(KeyCode code, boolean isCorrect) {
+        Button key = keyMap.get(code);
+        if (key != null) {
+            if (isCorrect) {
+                key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
+            } else {
+                key.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+            }
+        }
+    }
+
+    private void unhighlightKey(KeyCode code) {
+        Button key = keyMap.get(code);
+        if (key != null) {
+            key.setStyle(""); // Reset to default
+        }
+    }
+
 
     /**
      * starts selected drill
@@ -343,3 +447,5 @@ public class TypingGameController extends Controller {
         streakLabel.setText("Streak: " + bestStreak);
     }
 }
+
+
