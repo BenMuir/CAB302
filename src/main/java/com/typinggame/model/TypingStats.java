@@ -1,10 +1,12 @@
 package com.typinggame.model;
 
 /**
- * TypingStats is a model class that tracks the user's typing performance.
- * It handles accuracy, WPM calculation, and streak tracking for correct input.
- * This class is updated in real time as the user types.
- * [Ben M - Aug 16 2025]
+ * Tracks typing performance metrics during a session, including accuracy,
+ * words per minute (WPM), and streaks of correct input. This class is updated
+ * in real time as the user types and is used to evaluate session results.
+ *
+ * @author Ben M
+ * @since 2025-08-16
  */
 public class TypingStats {
 
@@ -22,29 +24,39 @@ public class TypingStats {
     private final String target;             // Sentence the user is trying to type
     private String currentInput = "";        // Latest input from the user
 
-    // Constructor initializes with the target sentence
+    /**
+     * Constructs a new TypingStats object for the given target sentence.
+     *
+     * @param target The sentence the user is expected to type
+     */
     public TypingStats(String target) {
         this.target = target;
     }
 
-    // Updates the current input string
+    /**
+     * Updates the current input string.
+     *
+     * @param input The latest input typed by the user
+     */
     public void update(String input) {
         this.currentInput = input;
     }
 
-    // Checks if the user has completed typing the full target sentence
+    /**
+     * Checks if the user has completed typing the full target sentence.
+     *
+     * @return true if the input matches the target sentence; false otherwise
+     */
     public boolean isComplete() {
         return currentInput.equals(target);
     }
 
     /**
-     * Calculates words per minute (WPM).
-     * Assumes one word = one whitespace-separated token.
+     * Calculates the user's typing speed in words per minute (WPM).
+     * Assumes one word is defined as a whitespace-separated token.
      *
-     * @param elapsedMinutes Time elapsed in minutes
-     * @return Estimated WPM
-     *
-     * [Ben M - Aug 16 2025]
+     * @param elapsedMinutes Time elapsed since the start of the session, in minutes
+     * @return Estimated words per minute
      */
     public int calculateWPM(double elapsedMinutes) {
         if (elapsedMinutes <= 0) return 0;
@@ -53,13 +65,11 @@ public class TypingStats {
     }
 
     /**
-     * Updates accuracy stats based on current input.
-     * Compares typed characters to target and tracks new errors.
+     * Updates accuracy statistics based on the current input.
+     * Compares typed characters to the target and tracks new errors.
      *
-     * @param userInput   Current input from user
-     * @param targetText  Target sentence to compare against
-     *
-     *[Ben M - Aug 16 2025]
+     * @param userInput  Current input from the user
+     * @param targetText Target sentence to compare against
      */
     public void updateAccuracy(String userInput, String targetText) {
         totalTypedChars = userInput.length();
@@ -83,12 +93,9 @@ public class TypingStats {
     }
 
     /**
-     * Returns current accuracy as a percentage.
+     * Returns the current typing accuracy as a percentage.
      *
-     *
-     * @return Accuracy percentage
-     *
-     * [Ben M - Aug 16 2025]
+     * @return Accuracy percentage (0–100)
      */
     public double getAccuracy() {
         int totalAttempts = correctChars + cumulativeErrors;
@@ -97,13 +104,11 @@ public class TypingStats {
     }
 
     /**
-     * Updates streak count based on latest character typed.
-     * Resets streak on mistake, updates best streak if needed.
+     * Updates the streak count based on the latest character typed.
+     * Resets streak on mistake and updates best streak if needed.
      *
-     * @param inputChar  Character typed by user
-     * @param targetChar Expected character from target sentence
-     *
-     * [Ben M - Aug 16 2025]
+     * @param inputChar  Character typed by the user
+     * @param targetChar Expected character from the target sentence
      */
     public void updateStreak(char inputChar, char targetChar) {
         if (inputChar == targetChar) {
@@ -116,12 +121,20 @@ public class TypingStats {
         }
     }
 
-    // Returns current streak count
+    /**
+     * Returns the current streak of consecutive correct characters typed.
+     *
+     * @return Current streak count
+     */
     public int getCurrentStreak() {
         return currentStreak;
     }
 
-    // Returns best streak achieved during session
+    /**
+     * Returns the best streak achieved during the session.
+     *
+     * @return Best streak count
+     */
     public int getBestStreak() {
         return bestStreak;
     }
