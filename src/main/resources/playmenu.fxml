@@ -78,7 +78,7 @@
                 <Button onAction="#onAddCustomDrill"
                         prefHeight="100.0" prefWidth="261.0"
                         style="-fx-background-color: transparent; -fx-border-color: transparent;"
-                        text="Add Custom Drill">
+                        text="Custom">
                     <font>
                         <Font name="Press Start 2P Regular" size="20.0" />
                     </font>

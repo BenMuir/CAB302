@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.typinggame.controller.CustomDrillController">
+    <center>
+        <VBox spacing="12.0" alignment="TOP_LEFT" BorderPane.alignment="CENTER">
+            <padding><Insets top="24" right="24" bottom="24" left="24"/></padding>
+
+            <Label text="Add Custom Drill" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="120" halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="titleField" promptText="Title" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Tier:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="tierBox" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Content:" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.valignment="TOP"/>
+                <TextArea fx:id="contentArea" promptText="Paste drill text here..."
+                          prefRowCount="12" wrapText="true"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="10">
+                <!-- These onAction calls pass an ActionEvent to the controller methods -->
+                <Button text="Save" onAction="#onSave"/>
+                <Button text="Cancel" onAction="#onCancel"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
