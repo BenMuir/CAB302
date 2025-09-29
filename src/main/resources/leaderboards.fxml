@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LeaderboardsController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
@@ -54,10 +53,11 @@
          <center>
               <TableView fx:id="table" style="-fx-background-color: transparent;" stylesheets="@styles/tableViewStyle.css" BorderPane.alignment="CENTER">
                   <columns>
-                      <TableColumn fx:id="colName" prefWidth="200" text="User" />
-                      <TableColumn fx:id="colWpm" prefWidth="120" text="WPM" />
-                      <TableColumn fx:id="colAcc" prefWidth="140" text="Accuracy (%)" />
-                      <TableColumn fx:id="colScore" prefWidth="160" text="Score (WPM×Acc)" />
+                      <TableColumn fx:id="colName" prefWidth="400.0" text="User" />
+                      <TableColumn fx:id="colWpm" prefWidth="400.0" text="WPM" />
+                      <TableColumn fx:id="colAcc" prefWidth="400.0" text="Accuracy (%)" />
+                      <TableColumn fx:id="colScore" prefWidth="400.0" text="Score (WPM×Acc)" />
+                      <TableColumn fx:id="colRank" prefWidth="400" text="Rank"/>
                   </columns>
               </TableView>
          </center>

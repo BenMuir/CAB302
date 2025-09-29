@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Controller {
-
     public boolean displayScene(String fxmlFile, ActionEvent event) {
         try {
             URL location = getClass().getResource(fxmlFile);
