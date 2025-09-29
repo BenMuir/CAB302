@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.typinggame","c":"MainApp","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"com.typinggame","c":"MainApp","l":"MainApp()","u":"%3Cinit%3E()"},{"p":"com.typinggame","c":"MainApp","l":"start(Stage)","u":"start(javafx.stage.Stage)"}];updateSearchResults();
