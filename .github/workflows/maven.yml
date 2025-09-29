@@ -23,8 +23,8 @@ jobs:
       - name: Build project (skip tests)
         run: mvn clean package -DskipTests
 
-      - name: Generate Javadoc
-        run: mvn javadoc:javadoc
+      - name: Generate Javadoc (bound to verify phase)
+        run: mvn verify -DskipTests
 
       - name: Publish Javadoc to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -32,3 +32,5 @@ jobs:
           folder: target/docs/javadoc
           branch: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}
+          git-config-name: Ben Muir
+          git-config-email: n10867716@qut.edu.au
