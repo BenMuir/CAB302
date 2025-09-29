@@ -65,7 +65,7 @@ public class ProfileController extends Controller {
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
-        //displayNameLabel.setText("Fuck me lol");
+        //displayNameLabel.setText("");
     }
 
     public void handleBack(ActionEvent event) {
