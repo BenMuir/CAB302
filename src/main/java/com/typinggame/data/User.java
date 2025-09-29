@@ -167,6 +167,23 @@ public class User implements Serializable {
             return null;
         }
     }
+
+    public void updateAllSettings(String displayName, String font, int fontSize, String theme) {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "UPDATE user_settings SET display_name = ?," +
+                             "font_family = ?, font_size = ?," +
+                             "theme = ? WHERE user_id = ?")) {
+            ps.setString(1, displayName);
+            ps.setString(2, font);
+            ps.setInt(3, fontSize);
+            ps.setString(4, theme);
+            ps.setInt(5, getUserID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
+        }
+    }
 //
 //    public List<Double> getSessionAccuracies() {
 //        return sessionAccuracies;

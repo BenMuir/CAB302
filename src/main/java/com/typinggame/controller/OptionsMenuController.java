@@ -84,6 +84,13 @@ public class OptionsMenuController extends Controller{
      */
     @FXML
     public void updateUserSettings(ActionEvent event) {
+        User userToUpdate = userManager.getCurrentUser();
+        String displayName = displayNameEntry.getText().trim();
+        String font = fontCombo.getSelectionModel().getSelectedItem();
+        int fontSize = Integer.parseInt(fontSizeCombo.getSelectionModel().getSelectedItem());
+        String theme = themeCombo.getSelectionModel().getSelectedItem();
+        userToUpdate.updateAllSettings(displayName, font, fontSize, theme);
+        /**
         int idToUpdate = user.getUserID();
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -98,8 +105,7 @@ public class OptionsMenuController extends Controller{
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
-        }
-
+        } */
     }
 
     @FXML
