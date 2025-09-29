@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,8 +31,6 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
     @FXML private ComboBox<Drill> drillSelect;
     @FXML private TableView<LeaderboardService.Row> table;
     @FXML private TableColumn<LeaderboardService.Row, String> colName;
-    @FXML private TableColumn<LeaderboardService.Row, Number> colWpm;
-    @FXML private TableColumn<LeaderboardService.Row, Number> colAcc;
     @FXML private TableColumn<LeaderboardService.Row, Number> colScore;
     @FXML private  TableColumn<LeaderboardService.Row, Image> colRank;
 
@@ -43,8 +42,12 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
         this.leaderboardService = new LeaderboardService(new LeaderboardRepository());
         this.drillService = new DrillService(new DrillRepository(), new ProgressService());
 
+        customizeColumnHeader(colRank, "Rank");
+        customizeColumnHeader(colName, "User");
+        customizeColumnHeader(colScore, "Score (WPM×Acc)");
+
         User current = AppContext.userManager.getCurrentUser();
-        int userId = current.getUserID(); // your User class exposes getUserID()
+        int userId = current.getUserID();
 
         List<Drill> unlocked = drillService.listUnlocked(userId);
         drillSelect.setItems(FXCollections.observableArrayList(unlocked));
@@ -53,8 +56,6 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
         }
 
         colName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().name));
-        colWpm.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().wpm));
-        colAcc.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().accuracy));
         colScore.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().score));
 
         colRank.setCellValueFactory(c -> {
@@ -67,7 +68,7 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
             private final ImageView view = new ImageView();
             {
                 view.setPreserveRatio(true);
-                view.setFitHeight(24);  // adjust to taste
+                view.setFitHeight(128);
                 view.setSmooth(true);
             }
 
@@ -86,6 +87,13 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
         refreshTable();
     }
 
+    private void customizeColumnHeader(TableColumn<?, ?> column, String heading) {
+        Label label = new Label(heading);
+        label.setFont(Font.font("Press Start 2P Regular", 18));
+        label.setStyle("-fx-text-fill: black;");
+        column.setGraphic(label);
+    }
+
     private void refreshTable(){
         Drill selected = drillSelect.getSelectionModel().getSelectedItem();
         if (selected == null) return;
@@ -96,8 +104,6 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
 
     @FXML
     public void handleBack(ActionEvent event) throws IOException {
-        // Use the same helper that applies the StackPane + scale binding
-        // IMPORTANT: match your actual resource name/case
         displayScene("/mainmenu.fxml", event);
     }
 

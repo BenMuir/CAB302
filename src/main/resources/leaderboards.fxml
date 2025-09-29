@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -14,53 +15,54 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LeaderboardsController">
+<AnchorPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LeaderboardsController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
             <Image url="@images/GameModeBackground.png" />
          </image>
       </ImageView>
-      <BorderPane blendMode="SRC_ATOP" prefHeight="1080.0" prefWidth="1920.0">
+          <Label alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="27.0" prefWidth="157.0" text="Drill:" textFill="WHITE">
+         <font>
+            <Font name="Press Start 2P Regular" size="24.0" />
+         </font>
+      </Label>
+          <ComboBox fx:id="drillSelect" layoutX="200.0" layoutY="50.0" prefWidth="300" />
+      <StackPane layoutX="1696.0" layoutY="50.0" prefHeight="45.0" prefWidth="174.0">
+         <children>
+            <ImageView fitHeight="47.0" fitWidth="139.0" layoutX="25.0" layoutY="209.0">
+               <image>
+                  <Image url="@images/Button.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="backButton" onAction="#handleBack" prefHeight="25.0" prefWidth="136.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+               <font>
+                  <Font name="Press Start 2P Regular" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </StackPane>
+      <BorderPane blendMode="SRC_ATOP" mouseTransparent="true" prefHeight="1080.0" prefWidth="1920.0">
       
                 <top>
               <HBox spacing="10" style="-fx-padding: 10;">
                   <children>
-                      <Label alignment="CENTER" prefHeight="27.0" prefWidth="157.0" text="Drill:" textFill="WHITE">
-                     <font>
-                        <Font name="Press Start 2P Regular" size="24.0" />
-                     </font>
-                  </Label>
-                      <ComboBox fx:id="drillSelect" prefWidth="300" />
                       <Pane HBox.hgrow="ALWAYS" />
-                  <StackPane prefHeight="45.0" prefWidth="174.0">
-                     <children>
-                        <ImageView fitHeight="47.0" fitWidth="139.0" layoutX="25.0" layoutY="209.0">
-                           <image>
-                              <Image url="@images/Button.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="backButton" onAction="#handleBack" prefHeight="25.0" prefWidth="136.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
-                           <font>
-                              <Font name="Press Start 2P Regular" size="24.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </StackPane>
                   </children>
               </HBox>
           </top>
          <center>
-              <TableView fx:id="table" style="-fx-background-color: transparent;" stylesheets="@styles/tableViewStyle.css" BorderPane.alignment="CENTER">
+              <TableView fx:id="table" prefWidth="1420.0" style="-fx-background-color: transparent;" stylesheets="@styles/tableViewStyle.css" BorderPane.alignment="CENTER">
                   <columns>
-                      <TableColumn fx:id="colName" prefWidth="400.0" text="User" />
-                      <TableColumn fx:id="colWpm" prefWidth="400.0" text="WPM" />
-                      <TableColumn fx:id="colAcc" prefWidth="400.0" text="Accuracy (%)" />
-                      <TableColumn fx:id="colScore" prefWidth="400.0" text="Score (WPM×Acc)" />
-                      <TableColumn fx:id="colRank" prefWidth="400" text="Rank"/>
+                      <TableColumn fx:id="colRank" prefWidth="225.0" />
+                      <TableColumn fx:id="colName" prefWidth="370.0" />
+                      <TableColumn fx:id="colScore" prefWidth="311.0" />
                   </columns>
               </TableView>
          </center>
+         <padding>
+            <Insets bottom="50.0" left="507.0" right="507.0" top="100.0" />
+         </padding>
       
             </BorderPane>
    </children>
