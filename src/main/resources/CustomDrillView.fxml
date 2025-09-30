@@ -33,9 +33,9 @@
                  <ColumnConstraints halignment="RIGHT" minWidth="120" />
                  <ColumnConstraints hgrow="ALWAYS" />
              </columnConstraints>
-         <TextField fx:id="titleField" prefHeight="80.0" prefWidth="1114.0" promptText="Title" style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 14; -fx-font-size: 24;" GridPane.columnIndex="1">
+         <TextField fx:id="titleField" prefHeight="80.0" prefWidth="1114.0" promptText="Title" GridPane.columnIndex="1">
             <font>
-               <Font size="24.0" />
+               <Font name="Press Start 2P Regular" size="24.0" />
             </font>
          </TextField>
 
@@ -100,5 +100,6 @@
    <stylesheets>
       <URL value="@styles/comboBoxStyle.css" />
       <URL value="@styles/textAreaStyle.css" />
+      <URL value="@styles/textFieldStyle.css" />
    </stylesheets>
 </AnchorPane>
