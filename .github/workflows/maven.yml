@@ -23,6 +23,11 @@ jobs:
       - name: Run tests (excluding known failures)
         run: mvn test -Dtest=!SettingsTest,!TypingStatsTest
 
+      - name: Confirm test report folder exists
+        run: |
+          echo "Checking for test reports..."
+          ls -l target/surefire-reports || echo "No test reports found"
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
