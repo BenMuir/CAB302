@@ -54,8 +54,8 @@ public class TypingGameController extends Controller {
     @FXML private Label streakLabel;
     @FXML private ComboBox<Drill> drillSelect;
     @FXML private Button startButton;
-//keyboard
-private final Map<KeyCode, Button> keyMap = new HashMap<>();
+    //keyboard
+    private final Map<KeyCode, Button> keyMap = new HashMap<>();
     @FXML private Button keyQ;
     @FXML private Button keyW;
     @FXML private Button keyE;
