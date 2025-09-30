@@ -18,11 +18,8 @@
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.TypingGameController" stylesheets="@styles/comboBoxStyle.css">
-    <children>
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
                 <Image url="@images/SessionBackground.png" />
-            </image>
         </ImageView>
         <VBox layoutX="1126.0" layoutY="808.0" spacing="10" style="-fx-padding: 20;" />
         <TextFlow fx:id="displayFlow" layoutX="150.0" layoutY="280.0" prefHeight="220.0" prefWidth="1640.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 20; -fx-padding: 24;" />
@@ -32,32 +29,24 @@
             </font>
         </TextField>
         <StackPane layoutX="65.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
-                    <image>
                         <Image url="@images/Button.png" />
-                    </image>
                 </ImageView>
                 <Button onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Restart">
                     <font>
                         <Font name="Press Start 2P Regular" size="22.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
         <StackPane layoutX="292.0" layoutY="934.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="25.0" layoutY="209.0">
-                    <image>
                         <Image url="@images/Button.png" />
-                    </image>
                 </ImageView>
                 <Button onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="22.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
 
         <HBox layoutX="40.0" layoutY="40.0" spacing="16">
@@ -65,21 +54,19 @@
             <ComboBox fx:id="drillSelect" prefWidth="320.0" promptText="Select a drill" />
             <!-- Start button styled like the others -->
             <StackPane prefHeight="101.0" prefWidth="392.0">
-                <children>
+
                     <ImageView fitHeight="101.0" fitWidth="392.0">
-                        <image><Image url="@images/Button.png" /></image>
+                        <Image url="@images/Button.png" />
                     </ImageView>
                     <Button fx:id="startButton" onAction="#startSelectedDrill" prefHeight="101.0" prefWidth="392.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Start Drill">
                         <font><Font name="Press Start 2P Regular" size="22.0" /></font>
                     </Button>
-                </children>
             </StackPane>
         </HBox>
 
 
         <!-- Displays final result summary after completion -->
         <HBox layoutX="150.0" layoutY="688.0" prefHeight="62.0" prefWidth="1640.0" spacing="100.0">
-            <children>
 
                 <!-- Current streak count display -->
                 <Label fx:id="streakLabel" text="Streak: 0">
@@ -108,7 +95,5 @@
                         <Font name="Press Start 2P Regular" size="22.0" />
                     </font>
                 </Label>
-            </children>
         </HBox>
-    </children>
 </AnchorPane>
