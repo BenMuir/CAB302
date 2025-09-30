@@ -35,7 +35,7 @@
              </columnConstraints>
          <TextField fx:id="titleField" prefHeight="80.0" prefWidth="1114.0" promptText="Title" style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 14; -fx-font-size: 24;" GridPane.columnIndex="1">
             <font>
-               <Font name="Press Start 2P Regular" size="24.0" />
+               <Font size="24.0" />
             </font>
          </TextField>
 
