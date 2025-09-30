@@ -27,7 +27,7 @@
                 <Font name="Press Start 2P Regular" size="24.0" />
             </font>
         </Label>
-        <ComboBox fx:id="drillSelect" layoutX="200.0" layoutY="50.0" prefWidth="300" stylesheets="styles/comboBoxStyle.css" />
+        <ComboBox fx:id="drillSelect" layoutX="200.0" layoutY="50.0" prefWidth="300"/>
         <StackPane layoutX="1696.0" layoutY="50.0" prefHeight="45.0" prefWidth="174.0">
             <children>
                 <ImageView fitHeight="47.0" fitWidth="139.0" layoutX="25.0" layoutY="209.0">
