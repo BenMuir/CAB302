@@ -20,11 +20,21 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      - name: Build project (skip tests)
-        run: mvn clean package -DskipTests
+      - name: Run tests
+        run: mvn test
 
-      - name: Generate Javadoc (bound to verify phase)
-        run: mvn verify -DskipTests
+      - name: Upload test results (optional)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/surefire-reports/
+
+      - name: Build project
+        run: mvn clean package
+
+      - name: Generate Javadoc
+        run: mvn verify
 
       - name: Publish Javadoc to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
