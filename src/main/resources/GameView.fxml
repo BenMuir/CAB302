@@ -26,7 +26,7 @@
         </ImageView>
         <VBox layoutX="1126.0" layoutY="808.0" spacing="10" style="-fx-padding: 20;" />
         <TextFlow fx:id="displayFlow" layoutX="150.0" layoutY="280.0" prefHeight="220.0" prefWidth="1640.0" style="-fx-background-color: rgba(0,0,0,0.4); -fx-background-radius: 20; -fx-padding: 24;" />
-        <TextField fx:id="inputField" layoutX="150.0" layoutY="550.0" prefHeight="80.0" prefWidth="1640.0" promptText="Type here..." style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 14; -fx-font-size: 24;">
+        <TextField fx:id="inputField" layoutX="150.0" layoutY="550.0" prefHeight="80.0" prefWidth="1640.0" promptText="Type here..." >
             <font>
                 <Font name="Press Start 2P Regular" size="18.0" />
             </font>

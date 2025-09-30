@@ -44,15 +44,13 @@
                <Font name="Press Start 2P Regular" size="30.0" />
             </font>
          </Label>
-
-                   <Label text="Tier:" textFill="#e5b514" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                  <Label text="Tier:" textFill="#e5b514" GridPane.columnIndex="0" GridPane.rowIndex="1">
             <font>
                <Font name="Press Start 2P Regular" size="30.0" />
             </font>
          </Label>
              <ComboBox fx:id="tierBox" prefHeight="80.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                   <Label text="Content:" textFill="#e5b514" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                  <Label text="Content:" textFill="#e5b514" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="TOP">
             <font>
                <Font name="Press Start 2P Regular" size="30.0" />
             </font>
