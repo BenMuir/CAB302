@@ -1,0 +1,18 @@
+/* TextField Styling */
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-font-family: "Press Start 2P Regular";
+    -fx-font-size: 24px;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
+}
+
+.text-field .text {
+    -fx-font-family: "Press Start 2P Regular";
+}
+
+.text-field:focused {
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+}
