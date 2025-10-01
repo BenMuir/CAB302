@@ -47,6 +47,7 @@ public class RegisterController extends Controller {
             return;
         } else if (!checkValidEmail(email)){
             errorResponse.setText("Please enter a valid email");
+            return;
         }
         if (globalUserManager.register(email, password)) {
             AppContext.userManager = globalUserManager;
