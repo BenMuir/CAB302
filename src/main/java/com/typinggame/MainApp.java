@@ -1,5 +1,6 @@
 package com.typinggame;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +33,7 @@ public class MainApp extends Application {
 
         // Load login view FXML
         System.out.println("[FXML] Attempting to load /LoginView.fxml...");
-        Parent loginRoot = loadFXML("/LoginView.fxml"); // ✅ Use leading slash for classpath root
+        Parent loginRoot = loadFXML("/LoginView.fxml"); // Use leading slash for classpath root
         if (loginRoot == null) {
             System.err.println("[FXML] ERROR: Could not load LoginView.fxml. Check path and resource folder.");
             return;
