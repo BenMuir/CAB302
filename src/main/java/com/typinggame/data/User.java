@@ -129,6 +129,19 @@ public class User implements Serializable {
         }
     }
 
+    public void updateDisplayName(String newName) {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "UPDATE user_settings SET display_name = ? WHERE user_id = ?")) {
+            ps.setString(1, newName);
+            ps.setInt(2, getUserID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("updating display name failed");
+        }
+
+    }
+
     public String getFont() {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
