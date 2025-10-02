@@ -14,7 +14,7 @@
     <!-- Fullscreen Background Image -->
     <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutX="0.0" layoutY="0.0" mouseTransparent="true" pickOnBounds="false">
         <image>
-            <Image url="@images/Gamescreen-BG-WIP-B-v2.png" />
+            <Image url="@images/Gamescreen-BG-WIP-B-v3.png" />
         </image>
     </ImageView>
 
@@ -22,50 +22,44 @@
 
 
     <!-- Drill Select -->
-    <ComboBox fx:id="drillSelect" layoutX="1468.0" layoutY="645.0" prefWidth="320.0" promptText="Select a drill" />
+    <ComboBox fx:id="drillSelect" layoutX="1468.0" layoutY="789.0" prefWidth="320.0" promptText="Select a drill" />
 
 
 
     <!-- Start Button Background -->
-    <ImageView fitHeight="101.0" fitWidth="392.0" layoutX="1432.0" layoutY="533.0" mouseTransparent="true" pickOnBounds="false">
+    <ImageView fitHeight="101.0" fitWidth="392.0" layoutX="1443.0" layoutY="683.0" mouseTransparent="true" pickOnBounds="false">
         <image>
             <Image url="@images/Button.png" />
         </image>
     </ImageView>
 
     <!-- Start Button -->
-    <Button fx:id="startButton" layoutX="1432.0" layoutY="533.0" onAction="#startSelectedDrill" prefHeight="101.0" prefWidth="392.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Start Drill">
+    <Button fx:id="startButton" layoutX="1443.0" layoutY="683.0" onAction="#startSelectedDrill" prefHeight="101.0" prefWidth="392.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Start Drill">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
     </Button>
 
-    <!-- Restart Button -->
-    <StackPane layoutX="784.0" layoutY="40.0" prefHeight="101.0" prefWidth="217.0" />
-
-    <!-- Back Button -->
-    <StackPane layoutX="1011.0" layoutY="40.0" prefHeight="101.0" prefWidth="217.0" />
-
     <!-- Display Text -->
-    <TextFlow fx:id="displayFlow" layoutX="154.0" layoutY="69.0" prefHeight="381.0" prefWidth="980.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-padding: 24;" />
+    <TextFlow fx:id="displayFlow" layoutX="170.0" layoutY="100.0" prefHeight="350.0" prefWidth="950.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-padding: 24;" />
 
     <!-- Stats -->
-    <Label fx:id="streakLabel" layoutX="1365.0" layoutY="420.0" style="-fx-text-fill: limegreen;" text="Streak: 0">
+    <Label fx:id="streakLabel" layoutX="1450.0" layoutY="550.0" style="-fx-text-fill: limegreen;" text="Streak: 0">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
     </Label>
-    <Label fx:id="wpmLabel" layoutX="1365.0" layoutY="390.0" style="-fx-text-fill: yellow;" text="WPM: 0">
+    <Label fx:id="wpmLabel" layoutX="1450.0" layoutY="510.0" style="-fx-text-fill: yellow;" text="WPM: 0">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
     </Label>
-    <Label fx:id="accuracyLabel" layoutX="1365.0" layoutY="450.0" style="-fx-text-fill: red;" text="Accuracy: 0%">
+    <Label fx:id="accuracyLabel" layoutX="1450.0" layoutY="590.0" style="-fx-text-fill: red;" text="Accuracy: 0%">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
     </Label>
-    <Label fx:id="timerLabel" layoutX="1365.0" layoutY="360.0" style="-fx-text-fill: deepskyblue;" text="Time: 0s">
+    <Label fx:id="timerLabel" layoutX="1450.0" layoutY="470.0" style="-fx-text-fill: deepskyblue;" text="Time: 0s">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
@@ -122,7 +116,7 @@
         <Button fx:id="keyS" layoutX="271.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="S" />
         <Button fx:id="keyD" layoutX="363.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="D" />
         <Button fx:id="keyF" layoutX="455.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="F" />
-        <Button fx:id="keyG" layoutX="547.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="G"  style="-fx-font-size: 28px; -fx-font-family: 'Comic Sans MS';" />
+        <Button fx:id="keyG" layoutX="547.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 28px; -fx-font-family: 'Comic Sans MS';" text="G" />
         <Button fx:id="keyH" layoutX="639.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="H" />
         <Button fx:id="keyJ" layoutX="731.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="J" />
         <Button fx:id="keyK" layoutX="823.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" text="K" />
@@ -148,22 +142,22 @@
 
         <!-- Spacebar -->
         <Button fx:id="keySPACE" layoutX="332.0" layoutY="987.0" prefHeight="80.0" prefWidth="563.0" text="SPACE" />
-          <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="1628.0" layoutY="943.0">
+          <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="1652.0" layoutY="944.0">
               <image>
             <Image url="@images/Button.png" />
          </image>
           </ImageView>
-          <Button layoutX="1639.0" layoutY="952.0" onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
+          <Button layoutX="1663.0" layoutY="953.0" onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Back">
               <font>
             <Font name="Press Start 2P Regular" size="22.0" />
          </font>
           </Button>
-          <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="1377.0" layoutY="943.0">
+          <ImageView fitHeight="101.0" fitWidth="217.0" layoutX="1422.0" layoutY="945.0">
               <image>
             <Image url="@images/Button.png" />
          </image>
           </ImageView>
-          <Button layoutX="1388.0" layoutY="952.0" onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Restart">
+          <Button layoutX="1433.0" layoutY="954.0" onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Restart">
               <font>
             <Font name="Press Start 2P Regular" size="22.0" />
          </font>
@@ -176,12 +170,12 @@
         </font>
     </TextField>
 
-          <LineChart fx:id="wpmChart" animated="false" layoutX="1350.0" layoutY="80.0" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="450.0">
+          <LineChart fx:id="wpmChart" animated="false" layoutX="1386.0" layoutY="210.0" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="449.0">
         <xAxis>
             <NumberAxis label="Time (s)" />
         </xAxis>
         <yAxis>
-            <NumberAxis label="WPM" />
+            <NumberAxis label="WPM" prefHeight="186.0" prefWidth="50.0" />
         </yAxis>
     </LineChart>
 
