@@ -43,7 +43,7 @@ public class TypingStats {
      *
      * @param elapsedMinutes Time elapsed in minutes
      * @return Estimated WPM
-     * <p>
+     *
      * [Ben M - Aug 16 2025]
      */
     public int calculateWPM(double elapsedMinutes) {
@@ -56,51 +56,43 @@ public class TypingStats {
      * Updates accuracy stats based on current input.
      * Compares typed characters to target and tracks new errors.
      *
-     * @param userInput  Current input from user
-     * @param targetText Target sentence to compare against
-     *                   <p>
-     *                   [Ben M - Aug 16 2025]
+     * @param userInput   Current input from user
+     * @param targetText  Target sentence to compare against
+     *
+     *[Ben M - Aug 16 2025]
      */
-
     public void updateAccuracy(String userInput, String targetText) {
         totalTypedChars = userInput.length();
         correctChars = 0;
 
-        for (int i = 0; i < userInput.length(); i++) {
+        for (int i = 0; i < Math.min(userInput.length(), targetText.length()); i++) {
             char typed = userInput.charAt(i);
-            char expected = i < targetText.length() ? targetText.charAt(i) : '\0'; // Treat overflow as mismatch
+            char expected = targetText.charAt(i);
 
             if (typed == expected) {
                 correctChars++;
             } else {
                 // Only count new mistakes (not previously typed errors)
-                boolean isNewMistake = i >= previousInput.length() ||
-                        (i < targetText.length() && previousInput.charAt(i) == expected);
-                if (isNewMistake) {
+                if (i >= previousInput.length() || previousInput.charAt(i) == expected) {
                     cumulativeErrors++;
                 }
             }
         }
 
-        previousInput = userInput;
+        previousInput = userInput; // Store input for next comparison
     }
 
     /**
      * Returns current accuracy as a percentage.
      *
+     *
      * @return Accuracy percentage
-     * <p>
+     *
      * [Ben M - Aug 16 2025]
      */
     public double getAccuracy() {
         int totalAttempts = correctChars + cumulativeErrors;
-
-        // If no input has been typed, accuracy should be 0%
-        if (totalTypedChars == 0) return 0.0;
-
-        // If no mistakes or correct chars recorded, default to 0%
-        if (totalAttempts == 0) return 0.0;
-
+        if (totalAttempts == 0) return 100.0;
         return (correctChars * 100.0) / totalAttempts;
     }
 
@@ -110,8 +102,8 @@ public class TypingStats {
      *
      * @param inputChar  Character typed by user
      * @param targetChar Expected character from target sentence
-     *                   <p>
-     *                   [Ben M - Aug 16 2025]
+     *
+     * [Ben M - Aug 16 2025]
      */
     public void updateStreak(char inputChar, char targetChar) {
         if (inputChar == targetChar) {

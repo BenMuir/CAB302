@@ -67,11 +67,18 @@ public class DrillRepository {
     // --- NEW METHODS for custom drills ---
 
     public int insertCustom(Drill d) {
+        // validation so tests can check for bad input
+        String title = d.title == null ? "" : d.title.trim();
+        String body = d.body == null ? "" : d.body.trim();
+        if (title.isEmpty()) throw new IllegalArgumentException("title must not be empty");
+        if (body.isEmpty()) throw new IllegalArgumentException("content must not be empty");
+        if (d.tier < 1) throw new IllegalArgumentException("tier must be >= 1");
+
         final String sql = "INSERT INTO drills(title, body, tier, is_custom, created_by, created_at) VALUES(?,?,?,?,?,?)";
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, d.title);
-            ps.setString(2, d.body);
+            ps.setString(1, title);
+            ps.setString(2, body);
             ps.setInt(3, d.tier);
             ps.setInt(4, 1);
             ps.setString(5, "local");
@@ -114,6 +121,19 @@ public class DrillRepository {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("deleteCustom failed", e);
+        }
+    }
+
+    // --- TEST HELPERS ---
+
+    /** Remove all drills (useful for test isolation). */
+    public void clearAll() {
+        try (Connection c = Database.getConnection();
+             Statement st = c.createStatement()) {
+            st.executeUpdate("DELETE FROM drills;");
+            st.executeUpdate("DELETE FROM sqlite_sequence WHERE name='drills';");
+        } catch (SQLException e) {
+            throw new RuntimeException("clearAll failed", e);
         }
     }
 }
