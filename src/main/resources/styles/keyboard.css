@@ -1,0 +1,9 @@
+
+/*Keyboard keys styling */
+<Button fx:id="keyG"
+        layoutX="547.0"
+        layoutY="804.0"
+        prefHeight="80.0"
+        prefWidth="80.0"
+        text="G"
+        styleClass="key-button" />
