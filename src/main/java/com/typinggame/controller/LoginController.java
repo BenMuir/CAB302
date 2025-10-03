@@ -56,6 +56,16 @@ public class LoginController extends Controller {
     }
 
     @FXML
+    /**
+     * Sends the user over to the register screen
+     * @param event sent from fxml
+     * [Evan B 01/09]
+     */
+    public void handleRegister(ActionEvent event) {
+        displayScene("/RegisterView.fxml", event);
+    }
+    /** COMMENTING OUT OLD OUTDATED METHOD. ONLY LEAVING TEMPORARILY UNTIL EVERYTHING IS TESTED
+    @FXML
     public void handleRegister(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
@@ -82,6 +92,7 @@ public class LoginController extends Controller {
             setStatus("Username already exists.", false);
         }
     }
+    */
 
     /**
      * Updates the status label with styled feedback.

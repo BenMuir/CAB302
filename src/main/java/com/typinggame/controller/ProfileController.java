@@ -8,9 +8,12 @@ import com.typinggame.data.UserManager;
 import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
+import com.typinggame.util.Rank;
+import com.typinggame.util.RankLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -34,8 +37,11 @@ public class ProfileController extends Controller {
     @FXML private Label wpmLabel;
     @FXML private Label accuracyLabel;
     @FXML private Label sessionsLabel;
+    @FXML private ImageView rankBadgeImageView;
+
     private UserManager userManager = AppContext.userManager;
     private User user = userManager.getCurrentUser();
+
 
     //private final UserManager userManager = new UserManager(new FileUserRepository());
 
@@ -50,6 +56,8 @@ public class ProfileController extends Controller {
         wpmLabel.setText(String.valueOf(user.getBestWPM()));
         accuracyLabel.setText(String.valueOf(user.getBestAccuracy()));
         sessionsLabel.setText(String.valueOf(user.getTotalSessions()));
+        updateRank();
+
         //}
     }
 
@@ -70,6 +78,16 @@ public class ProfileController extends Controller {
 
     public void handleBack(ActionEvent event) {
         displayScene("/mainmenu.fxml", event);
+    }
+
+    public void updateRank(){
+        try{
+        double highestWPM = user.getBestWPM();
+        var rank = Rank.forTypingSpeed(highestWPM);
+        rankBadgeImageView.setImage(RankLoader.load(rank));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 /**

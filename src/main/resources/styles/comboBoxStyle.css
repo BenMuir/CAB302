@@ -1,12 +1,80 @@
 .combo-box {
     -fx-font-family: "Press Start 2P Regular";
-    -fx-font-size: 14px;
+    -fx-font-size: 24px;
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+}
+
+/* Style the button/arrow area */
+.combo-box .arrow-button {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 0 14 14 0;
+    -fx-border-radius: 0 14 14 0;
+}
+
+/* Style the arrow itself */
+.combo-box .arrow {
+    -fx-background-color: black;
+}
+
+/* Style the text display area */
+.combo-box .text-input {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 14 0 0 14;
 }
 
 /* Style the list cells inside the dropdown */
 .combo-box .list-cell {
     -fx-font-family: "Press Start 2P Regular";
-    -fx-font-size: 14px;
+    -fx-font-size: 24px;
+    -fx-background-color: transparent;
 }
 
+/* Style the selected item display */
+.combo-box .list-cell:filled:selected {
+    -fx-background-color: rgba(229, 181, 20, 0.3);
+    -fx-background-radius: 14;
+}
 
+/* Style dropdown popup */
+.combo-box-popup .list-view {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-padding: 0;
+}
+
+/* Remove default list cell padding that interferes with radius */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+
+/* First item rounded top */
+.combo-box-popup .list-view .list-cell:first {
+    -fx-background-radius: 14 14 0 0;
+}
+
+/* Last item rounded bottom */
+.combo-box-popup .list-view .list-cell:last {
+    -fx-background-radius: 0 0 14 14;
+}
+
+/* Hover effect with matching radius */
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: rgba(229, 181, 20, 0.2);
+    -fx-text-fill: black;
+}
+
+.combo-box-popup .list-view .list-cell:first:hover {
+    -fx-background-color: rgba(229, 181, 20, 0.2);
+    -fx-background-radius: 14 14 0 0;
+    -fx-text-fill: black;
+}
+
+.combo-box-popup .list-view .list-cell:last:hover {
+    -fx-background-color: rgba(229, 181, 20, 0.2);
+    -fx-background-radius: 0 0 14 14;
+    -fx-text-fill: black;
+}

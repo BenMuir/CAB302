@@ -74,5 +74,15 @@
               </Label>
          </children>
       </Pane>
+      <Pane layoutX="50.0" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: rgba(255,255,255,0.4); -fx-background-radius: 20; -fx-padding: 24;">
+         <children>
+            <ImageView fx:id="rankBadgeImageView" fitHeight="250.0" fitWidth="250.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Label layoutX="64.0" layoutY="16.0" text="Rank" textFill="#e5b514">
+         <font>
+            <Font name="Press Start 2P Regular" size="68.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

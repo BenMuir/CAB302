@@ -129,6 +129,19 @@ public class User implements Serializable {
         }
     }
 
+    public void updateDisplayName(String newName) {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "UPDATE user_settings SET display_name = ? WHERE user_id = ?")) {
+            ps.setString(1, newName);
+            ps.setInt(2, getUserID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("updating display name failed");
+        }
+
+    }
+
     public String getFont() {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -165,6 +178,23 @@ public class User implements Serializable {
         } catch (SQLException e) {
             System.err.println("Retreive ID failed: " + e.getMessage());
             return null;
+        }
+    }
+
+    public void updateAllSettings(String displayName, String font, int fontSize, String theme) {
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(
+                     "UPDATE user_settings SET display_name = ?," +
+                             "font_family = ?, font_size = ?," +
+                             "theme = ? WHERE user_id = ?")) {
+            ps.setString(1, displayName);
+            ps.setString(2, font);
+            ps.setInt(3, fontSize);
+            ps.setString(4, theme);
+            ps.setInt(5, getUserID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Retreive ID failed: " + e.getMessage());
         }
     }
 //

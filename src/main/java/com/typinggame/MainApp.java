@@ -5,11 +5,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.net.URL;
 import com.typinggame.data.Database;
+import com.typinggame.api.ApiServer;
 
 public class MainApp extends Application {
 
@@ -22,14 +24,15 @@ public class MainApp extends Application {
         Database.init();
         System.out.println("[Init] Database initialized.");
 
-        // Load font safely
+        // --- NEW: start local API server ---
         try {
-            System.out.println("[Font] Loading custom font...");
-            Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
-            System.out.println("[Font] Font loaded successfully.");
+            new ApiServer().start(18080);
         } catch (Exception e) {
-            System.err.println("[Font] Font load failed: " + e.getMessage());
+            System.err.println("Failed to start API: " + e.getMessage());
         }
+
+        //Load the font
+        Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
 
         // Load login view FXML
         System.out.println("[FXML] Attempting to load /LoginView.fxml...");
@@ -45,7 +48,7 @@ public class MainApp extends Application {
         primaryStage.setMinWidth(960);
         primaryStage.setMinHeight(540);
 
-        // Wrap root in container for scaling
+        // Center content and allow letterboxing
         StackPane container = new StackPane(loginRoot);
         Scene loginScene = new Scene(container, 1280, 720);
 
@@ -56,6 +59,13 @@ public class MainApp extends Application {
         );
         loginRoot.scaleXProperty().bind(scale);
         loginRoot.scaleYProperty().bind(scale);
+
+        loginScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F11) {
+                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+            }
+        });
+
 
         primaryStage.setScene(loginScene);
         primaryStage.show();
