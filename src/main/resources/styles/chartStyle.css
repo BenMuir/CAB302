@@ -1,0 +1,67 @@
+/* 🎯 Chart background and grid lines */
+.chart {
+    -fx-background-color: transparent;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke: transparent;
+}
+
+/* Axis cleanup */
+.axis {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-tick-label-fill: lightgray;
+    -fx-font-size: 10px;
+    -fx-font-family: "Comic Sans MS"; /* or "Press Start 2P" */
+}
+
+.axis .axis-label {
+    -fx-text-fill: white; /* brighter for visibility */
+    -fx-font-size: 25px;
+    -fx-font-family: "Comic Sans MS";
+}
+
+.axis .axis-line {
+    -fx-stroke: transparent;
+}
+
+.axis .tick-mark,
+.axis .minor-tick-mark {
+    -fx-stroke: transparent;
+    -fx-length: 0;
+}
+
+.axis .tick-label {
+    -fx-text-fill: lightgray;
+    -fx-font-size: 10px;
+}
+
+
+/* Line styling */
+.default-color0.chart-series-line {
+    -fx-stroke: yellow;
+    -fx-stroke-width: 4px;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: red;
+    -fx-stroke-width: 4px;
+}
+
+/* Hide data point symbols */
+.chart-line-symbol {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+
+.default-color2.chart-series-line {
+    -fx-stroke: limegreen;
+    -fx-stroke-width: 4px;
+}

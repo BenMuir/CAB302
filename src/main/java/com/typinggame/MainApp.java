@@ -1,5 +1,6 @@
 package com.typinggame;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,8 +17,12 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //Database Init
+        System.out.println("=== Typing Game Boot Sequence ===");
+
+        // Initialize database
+        System.out.println("[Init] Starting database...");
         Database.init();
+        System.out.println("[Init] Database initialized.");
 
         // --- NEW: start local API server ---
         try {
@@ -29,34 +34,29 @@ public class MainApp extends Application {
         //Load the font
         Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
 
-        Parent loginRoot = loadFXML("/loginView.fxml");
+        // Load login view FXML
+        System.out.println("[FXML] Attempting to load /LoginView.fxml...");
+        Parent loginRoot = loadFXML("/LoginView.fxml"); // Use leading slash for classpath root
         if (loginRoot == null) {
-            System.err.println("ERROR: Could not load loginView.fxml. Check path and resource folder.");
+            System.err.println("[FXML] ERROR: Could not load LoginView.fxml. Check path and resource folder.");
             return;
         }
 
+        // Configure stage
         primaryStage.setTitle("Typing Game Prototype");
         primaryStage.setResizable(true);
         primaryStage.setMinWidth(960);
         primaryStage.setMinHeight(540);
 
-
         // Center content and allow letterboxing
         StackPane container = new StackPane(loginRoot);
+        Scene loginScene = new Scene(container, 1280, 720);
 
-        double startHeight = 720;
-        double startWidth = 1280;
-        Scene loginScene = new Scene(container, startWidth, startHeight);
-
-        // Bind scale to scene size (keep aspect ratio by taking the smaller factor)
-
-        double baseWidth = 1920;
-        double baseHeight = 1080;
+        // Bind scale to maintain aspect ratio
         var scale = javafx.beans.binding.Bindings.min(
-                loginScene.widthProperty().divide(baseWidth),
-                loginScene.heightProperty().divide(baseHeight)
+                loginScene.widthProperty().divide(1920),
+                loginScene.heightProperty().divide(1080)
         );
-
         loginRoot.scaleXProperty().bind(scale);
         loginRoot.scaleYProperty().bind(scale);
 
@@ -69,7 +69,7 @@ public class MainApp extends Application {
 
         primaryStage.setScene(loginScene);
         primaryStage.show();
-
+        System.out.println("[Stage] Login screen displayed.");
     }
 
     /**
@@ -79,14 +79,18 @@ public class MainApp extends Application {
      */
     private Parent loadFXML(String path) {
         try {
-            URL location = getClass().getResource(path);
+            System.out.println("[Loader] Looking for FXML at: " + path);
+            URL location = getClass().getResource(path); // Leading slash means absolute classpath
+            System.out.println("[Loader] Resolved URL: " + location);
+
             if (location == null) {
-                System.err.println("FXML file not found at: " + path);
+                System.err.println("[Loader] FXML file not found at: " + path);
                 return null;
             }
+
             return FXMLLoader.load(location);
         } catch (Exception e) {
-            System.err.println("Failed to load FXML: " + path);
+            System.err.println("[Loader] Failed to load FXML: " + path);
             e.printStackTrace();
             return null;
         }

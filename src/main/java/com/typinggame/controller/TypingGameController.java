@@ -15,8 +15,12 @@ import com.typinggame.util.SentenceProvider;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -32,6 +36,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Node;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +61,29 @@ public class TypingGameController extends Controller {
     @FXML private Label streakLabel;
     @FXML private ComboBox<Drill> drillSelect;
     @FXML private Button startButton;
-//keyboard
-private final Map<KeyCode, Button> keyMap = new HashMap<>();
+    //keyboard
+    private final Map<KeyCode, Button> keyMap = new HashMap<>();
+
+
+    //keyboard row 0
+
+    @FXML private Button keyBACKQUOTE;
+    @FXML private Button key1;
+    @FXML private Button key2;
+    @FXML private Button key3;
+    @FXML private Button key4;
+    @FXML private Button key5;
+    @FXML private Button key6;
+    @FXML private Button key7;
+    @FXML private Button key8;
+    @FXML private Button key9;
+    @FXML private Button key0;
+    @FXML private Button keyMINUS;
+    @FXML private Button keyEQUALS;
+    @FXML private Button keyBACKSPACE;
+
+    //row 1
+    @FXML private Button keyTAB;
     @FXML private Button keyQ;
     @FXML private Button keyW;
     @FXML private Button keyE;
@@ -66,7 +94,12 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
     @FXML private Button keyI;
     @FXML private Button keyO;
     @FXML private Button keyP;
+    @FXML private Button keyLBRACKET;
+    @FXML private Button keyRBRACKET;
+    @FXML private Button keyBACKSLASH;
 
+    //row 2
+    @FXML private Button keyCAPS;
     @FXML private Button keyA;
     @FXML private Button keyS;
     @FXML private Button keyD;
@@ -76,7 +109,12 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
     @FXML private Button keyJ;
     @FXML private Button keyK;
     @FXML private Button keyL;
+    @FXML private Button keySEMICOLON;
+    @FXML private Button keyQUOTE;
+    @FXML private Button keyENTER;
 
+    //row 3
+    @FXML private Button keyLSHIFT;
     @FXML private Button keyZ;
     @FXML private Button keyX;
     @FXML private Button keyC;
@@ -84,8 +122,27 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
     @FXML private Button keyB;
     @FXML private Button keyN;
     @FXML private Button keyM;
+    @FXML private Button keyCOMMA;
+    @FXML private Button keyPERIOD;
+    @FXML private Button keySLASH;
+    @FXML private Button keyRSHIFT;
 
+    //row 4
     @FXML private Button keySPACE;
+
+
+    // Modifier state
+    private boolean[] capsActive = {false};
+    private boolean leftShiftActive = false;
+    private boolean rightShiftActive = false;
+// WPM
+    private final Deque<Integer> wpmHistory = new ArrayDeque<>();
+    @FXML private LineChart<Number, Number> wpmChart;
+    private final XYChart.Series<Number, Number> wpmSeries = new XYChart.Series<>();
+
+    // ACCURACY
+    private final XYChart.Series<Number, Number> accuracySeries = new XYChart.Series<>();
+
 
 
     // Game State
@@ -134,6 +191,38 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
      */
     @FXML
     public void initialize() {
+
+        // Chart setup
+        wpmSeries.setName("WPM");
+        accuracySeries.setName("Accuracy");
+        XYChart.Series<Number, Number> streakSeries = new XYChart.Series<>();
+        streakSeries.setName("Streak");
+
+        wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
+        wpmChart.setCreateSymbols(false); // disables dot markers
+
+        NumberAxis xAxis = (NumberAxis) wpmChart.getXAxis();
+        NumberAxis yAxis = (NumberAxis) wpmChart.getYAxis();
+        xAxis.setLabel("");
+        yAxis.setLabel("");
+
+        xAxis.setTickLabelsVisible(false);
+        xAxis.setTickMarkVisible(false);
+        yAxis.setTickLabelsVisible(false);
+        yAxis.setTickMarkVisible(false);
+
+        inputField.setEditable(true);
+        inputField.setDisable(false);
+        Platform.runLater(() -> inputField.requestFocus());
+        inputField.setStyle(
+                "-fx-font-family: 'Press Start 2P'; " +
+                        "-fx-font-size: 24px; " +
+                        "-fx-text-fill: whitesmoke; " +
+                        "-fx-background-color: transparent; " +
+                        "-fx-background-radius: 14;"
+        );
+
+        // Game setup...
         try {
             Database.init();
 
@@ -141,6 +230,7 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
             int unlocked = new ProgressService().unlockedUpTo(userId);
 
             var options = drillRepo.findUpToTier(unlocked);
+
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);
                 if (!options.isEmpty()) {
@@ -178,11 +268,30 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
             long elapsedMillis = System.currentTimeMillis() - startTime;
             double elapsedMinutes = elapsedMillis / 60000.0;
-
-            int liveWPM = stats.calculateWPM(elapsedMinutes);
             double accuracy = stats.getAccuracy();
 
-            wpmLabel.setText("WPM: " + liveWPM);
+            if (elapsedMillis >= 3000) {
+                int liveWPM = stats.calculateWPM(elapsedMinutes);
+                wpmHistory.addLast(liveWPM);
+                if (wpmHistory.size() > 5) wpmHistory.removeFirst();
+
+                int avgWPM = wpmHistory.stream().mapToInt(Integer::intValue).sum() / wpmHistory.size();
+                wpmLabel.setText("WPM: " + avgWPM);
+
+                int elapsedSeconds = (int) (elapsedMillis / 1000);
+                int currentStreak = stats.getCurrentStreak();
+
+                wpmSeries.getData().add(new XYChart.Data<>(elapsedSeconds, avgWPM));
+                accuracySeries.getData().add(new XYChart.Data<>(elapsedSeconds, accuracy));
+                streakSeries.getData().add(new XYChart.Data<>(elapsedSeconds, currentStreak));
+
+                if (wpmSeries.getData().size() > 50) wpmSeries.getData().remove(0);
+                if (accuracySeries.getData().size() > 50) accuracySeries.getData().remove(0);
+                if (streakSeries.getData().size() > 50) streakSeries.getData().remove(0);
+            } else {
+                wpmLabel.setText("WPM: ...");
+            }
+
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
 
             if (!input.isEmpty() && input.length() <= targetText.length()) {
@@ -201,34 +310,122 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
             }
         });
 
-        // Keyboard mapping and highlighting logic
-        javafx.application.Platform.runLater(() -> {
-            // Manual key mapping
-            keyMap.put(KeyCode.Q, keyQ); keyMap.put(KeyCode.W, keyW); keyMap.put(KeyCode.E, keyE);
-            keyMap.put(KeyCode.R, keyR); keyMap.put(KeyCode.T, keyT); keyMap.put(KeyCode.Y, keyY);
-            keyMap.put(KeyCode.U, keyU); keyMap.put(KeyCode.I, keyI); keyMap.put(KeyCode.O, keyO);
-            keyMap.put(KeyCode.P, keyP);
 
-            keyMap.put(KeyCode.A, keyA); keyMap.put(KeyCode.S, keyS); keyMap.put(KeyCode.D, keyD);
-            keyMap.put(KeyCode.F, keyF); keyMap.put(KeyCode.G, keyG); keyMap.put(KeyCode.H, keyH);
-            keyMap.put(KeyCode.J, keyJ); keyMap.put(KeyCode.K, keyK); keyMap.put(KeyCode.L, keyL);
+        Platform.runLater(() -> {
+                    // Key mapping
+                    keyMap.put(KeyCode.BACK_QUOTE, keyBACKQUOTE);
+                    keyMap.put(KeyCode.DIGIT1, key1);
+                    keyMap.put(KeyCode.DIGIT2, key2);
+                    keyMap.put(KeyCode.DIGIT3, key3);
+                    keyMap.put(KeyCode.DIGIT4, key4);
+                    keyMap.put(KeyCode.DIGIT5, key5);
+                    keyMap.put(KeyCode.DIGIT6, key6);
+                    keyMap.put(KeyCode.DIGIT7, key7);
+                    keyMap.put(KeyCode.DIGIT8, key8);
+                    keyMap.put(KeyCode.DIGIT9, key9);
+                    keyMap.put(KeyCode.DIGIT0, key0);
+                    keyMap.put(KeyCode.MINUS, keyMINUS);
+                    keyMap.put(KeyCode.EQUALS, keyEQUALS);
+                    keyMap.put(KeyCode.BACK_SPACE, keyBACKSPACE);
 
-            keyMap.put(KeyCode.Z, keyZ); keyMap.put(KeyCode.X, keyX); keyMap.put(KeyCode.C, keyC);
-            keyMap.put(KeyCode.V, keyV); keyMap.put(KeyCode.B, keyB); keyMap.put(KeyCode.N, keyN);
-            keyMap.put(KeyCode.M, keyM);
+                    keyMap.put(KeyCode.TAB, keyTAB);
+                    keyMap.put(KeyCode.Q, keyQ);
+                    keyMap.put(KeyCode.W, keyW);
+                    keyMap.put(KeyCode.E, keyE);
+                    keyMap.put(KeyCode.R, keyR);
+                    keyMap.put(KeyCode.T, keyT);
+                    keyMap.put(KeyCode.Y, keyY);
+                    keyMap.put(KeyCode.U, keyU);
+                    keyMap.put(KeyCode.I, keyI);
+                    keyMap.put(KeyCode.O, keyO);
+                    keyMap.put(KeyCode.P, keyP);
+                    keyMap.put(KeyCode.OPEN_BRACKET, keyLBRACKET);
+                    keyMap.put(KeyCode.CLOSE_BRACKET, keyRBRACKET);
+                    keyMap.put(KeyCode.BACK_SLASH, keyBACKSLASH);
 
-            keyMap.put(KeyCode.SPACE, keySPACE);
+                    keyMap.put(KeyCode.CAPS, keyCAPS);
+                    keyMap.put(KeyCode.A, keyA);
+                    keyMap.put(KeyCode.S, keyS);
+                    keyMap.put(KeyCode.D, keyD);
+                    keyMap.put(KeyCode.F, keyF);
+                    keyMap.put(KeyCode.G, keyG);
+                    keyMap.put(KeyCode.H, keyH);
+                    keyMap.put(KeyCode.J, keyJ);
+                    keyMap.put(KeyCode.K, keyK);
+                    keyMap.put(KeyCode.L, keyL);
+                    keyMap.put(KeyCode.SEMICOLON, keySEMICOLON);
+                    keyMap.put(KeyCode.QUOTE, keyQUOTE);
+                    keyMap.put(KeyCode.ENTER, keyENTER);
+
+                    keyMap.put(KeyCode.SHIFT, keyLSHIFT); // Left Shift and Right shift light up at same time
+                    keyMap.put(KeyCode.Z, keyZ);
+                    keyMap.put(KeyCode.X, keyX);
+                    keyMap.put(KeyCode.C, keyC);
+                    keyMap.put(KeyCode.V, keyV);
+                    keyMap.put(KeyCode.B, keyB);
+                    keyMap.put(KeyCode.N, keyN);
+                    keyMap.put(KeyCode.M, keyM);
+                    keyMap.put(KeyCode.COMMA, keyCOMMA);
+                    keyMap.put(KeyCode.PERIOD, keyPERIOD);
+                    keyMap.put(KeyCode.SLASH, keySLASH);
+
+
+                    keyMap.put(KeyCode.SPACE, keySPACE);
+
 
             inputField.setOnKeyPressed(event -> {
                 KeyCode code = event.getCode();
-                boolean isCorrect = false;
-
                 String input = inputField.getText();
                 int index = input.length();
 
+                // Debug testing
+                System.out.println("Pressed: " + code + " | Text: '" + event.getText() + "'");
+
+                // TAB: prevent focus shift and reclaim focus
+                if (code == KeyCode.TAB) {
+                    event.consume();
+                    keyTAB.setStyle("-fx-background-color: #ffd700;");
+                    Platform.runLater(() -> inputField.requestFocus());
+                    return;
+                }
+
+                // CAPS LOCK: toggle visual state
+                if (code == KeyCode.CAPS) {
+                    capsActive[0] = !capsActive[0];
+                    Platform.runLater(() -> {
+                        keyCAPS.setStyle(capsActive[0] ? "-fx-background-color: #ffd700;" : "");
+                    });
+                    return;
+                }
+
+                // SHIFT: light up both sides
+                if (code == KeyCode.SHIFT) {
+                    event.consume();
+                    leftShiftActive = true;
+                    rightShiftActive = true;
+                    keyLSHIFT.setStyle("-fx-background-color: #ffd700;");
+                    keyRSHIFT.setStyle("-fx-background-color: #ffd700;");
+                    return;
+                }
+
+                // ENTER: highlight yellow
+                if (code == KeyCode.ENTER) {
+                    event.consume();
+                    keyENTER.setStyle("-fx-background-color: #ffd700;");
+                    return;
+                }
+
+                // BACKSPACE: highlight yellow
+                if (code == KeyCode.BACK_SPACE) {
+                    event.consume();
+                    keyBACKSPACE.setStyle("-fx-background-color: #ffd700;");
+                    return;
+                }
+
+                // Highlight regular keys
+                boolean isCorrect = false;
                 if (index < targetText.length()) {
                     char expected = targetText.charAt(index);
-
                     if (code == KeyCode.SPACE) {
                         isCorrect = expected == ' ';
                     } else {
@@ -243,17 +440,54 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
                 highlightKey(code, isCorrect);
             });
 
-            inputField.setOnKeyReleased(event -> unhighlightKey(event.getCode()));
-            inputField.requestFocus();
+            inputField.setOnKeyReleased(event -> {
+                KeyCode code = event.getCode();
+
+                // TAB release
+                if (code == KeyCode.TAB) {
+                    event.consume();
+                    keyTAB.setStyle("");
+                    return;
+                }
+
+                // SHIFT release — clear both sides
+                if (code == KeyCode.SHIFT) {
+                    event.consume();
+                    if (leftShiftActive || rightShiftActive) {
+                        keyLSHIFT.setStyle("");
+                        keyRSHIFT.setStyle("");
+                        leftShiftActive = false;
+                        rightShiftActive = false;
+                    }
+                    unhighlightKey(code);
+                    return;
+                }
+                //ENTER - clear colour
+                if (code == KeyCode.ENTER) {
+                    event.consume();
+                    keyENTER.setStyle("");
+                    return;
+                }
+                //BACKSPACE - clear colour
+                if (code == KeyCode.BACK_SPACE) {
+                    event.consume();
+                    keyBACKSPACE.setStyle("");
+                    return;
+                }
+
+
+                unhighlightKey(code);
+            });
         });
-    }
-
-
+        ;}
 
     // Keyboard
     private void highlightKey(KeyCode code, boolean isCorrect) {
         Button key = keyMap.get(code);
         if (key != null) {
+            // Skip styling Caps entirely — let toggle handle it
+            if (code == KeyCode.CAPS) return;
+
             if (isCorrect) {
                 key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
             } else {
@@ -262,12 +496,16 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
         }
     }
 
+
     private void unhighlightKey(KeyCode code) {
         Button key = keyMap.get(code);
         if (key != null) {
+            // Don't reset Caps if it's active
+            if (code == KeyCode.CAPS && capsActive[0]) return;
             key.setStyle(""); // Reset to default
         }
     }
+
 
 
     /**
@@ -283,7 +521,18 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
                 drillSelect.getSelectionModel().selectFirst();
             }
         }
-        if (choice != null) loadDrill(choice); else loadRandomDrill();
+
+        if (choice != null) {
+            loadDrill(choice);
+        } else {
+            loadRandomDrill();
+        }
+
+        // Reset and focus input field -Ben
+        inputField.clear();
+        inputField.setEditable(true);
+        inputField.setDisable(false);
+        Platform.runLater(() -> inputField.requestFocus());
     }
 
     /**
@@ -292,11 +541,21 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
     @FXML
     private void restartGame() {
         try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+
+        // Reset UI stats
         accuracyLabel.setText("Accuracy: 0%");
         wpmLabel.setText("WPM: 0");
         timerLabel.setText("Time: 0s");
         streakLabel.setText("Streak: 0");
         displayFlow.getChildren().clear();
+
+        // Reset input field
+        inputField.clear();
+        inputField.setEditable(true);
+        inputField.setDisable(false);
+
+        // Ensure input field is focused immediately
+        Platform.runLater(() -> inputField.requestFocus());
 
         // Restart the current drill (preferred), else selected, else first, else random
         Drill d = (currentDrill != null)
@@ -402,7 +661,7 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
             if (i < userInput.length()) {
                 t.setFill(userInput.charAt(i) == targetText.charAt(i) ? Color.GREEN : Color.RED);
             } else {
-                t.setFill(Color.BLACK);
+                t.setFill(Color.WHITESMOKE);
             }
             displayFlow.getChildren().add(t);
         }
@@ -411,7 +670,7 @@ private final Map<KeyCode, Button> keyMap = new HashMap<>();
         displayFlow.setStyle(
                 "-fx-font-family: 'Press Start 2P'; " +
                         "-fx-font-size: 24px; " +
-                        "-fx-background-color: white; " +
+                        "-fx-background-color: transparent; " +
                         "-fx-background-radius: 20; " +
                         "-fx-padding: 20;"
         );
