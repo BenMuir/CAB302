@@ -487,15 +487,20 @@ public class TypingGameController extends Controller {
         if (key != null) {
             // Skip styling Caps entirely — let toggle handle it
             if (code == KeyCode.CAPS) return;
-
+            // Wren - Testing the text fill with the newly styled keycaps
             if (isCorrect) {
-                key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
+                key.setStyle("-fx-text-fill: #00ff00;"); //-fx-text-fill: black;"); - old line
             } else {
-                key.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+                key.setStyle("-fx-text-fill: #ff4444;"); // -fx-text-fill: white;"); - old line
             }
         }
     }
-
+    //              Original Change the Button background Colout for above
+    //                key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
+    //            } else {
+    //                key.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+    //            }
+    //        }
 
     private void unhighlightKey(KeyCode code) {
         Button key = keyMap.get(code);

@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.MainMenu">
+<AnchorPane prefHeight="1080.0" prefWidth="1920" stylesheets="@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.MainMenu">
     <children>
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
             <image>
                 <Image url="@images/MainScreenBackground.png" />
             </image>
         </ImageView>
-        <Label layoutX="402.0" layoutY="216.0" text="Game Title">
+        <Label layoutX="399.0" layoutY="195.0" text="Sea Type">
             <font>
-                <Font name="Press Start 2P Regular" size="67.0" />
+                <Font name="Press Start 2P Regular" size="78.0" />
             </font>
             <opaqueInsets>
                 <Insets />
@@ -38,12 +38,7 @@
                 </Label>
                 <StackPane layoutX="103.0" layoutY="180.0" prefHeight="101.0" prefWidth="217.0">
                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
-                            <image>
-                                <Image url="@images/Button.png" />
-                            </image>
-                        </ImageView>
-                        <Button onAction="#playButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Play">
+                        <Button minHeight="100.0" minWidth="261.0" onAction="#playButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Play">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
@@ -52,12 +47,7 @@
                 </StackPane>
                 <StackPane layoutX="103.0" layoutY="295.0" prefHeight="100.0" prefWidth="261.0">
                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
-                            <image>
-                                <Image url="@images/Button.png" />
-                            </image>
-                        </ImageView>
-                        <Button onAction="#optionsButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Options">
+                        <Button minHeight="100.0" minWidth="261.0" onAction="#optionsButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Options">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
@@ -66,12 +56,7 @@
                 </StackPane>
                 <StackPane layoutX="103.0" layoutY="410.0" prefHeight="100.0" prefWidth="261.0">
                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="261.0" layoutX="25.0" layoutY="209.0">
-                            <image>
-                                <Image url="@images/Button.png" />
-                            </image>
-                        </ImageView>
-                        <Button onAction="#exitButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Exit">
+                        <Button minHeight="100.0" minWidth="261.0" onAction="#exitButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Exit">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
@@ -82,12 +67,7 @@
         </AnchorPane>
         <StackPane layoutX="1552.0" layoutY="35.0" prefHeight="101.0" prefWidth="217.0">
             <children>
-                <ImageView fitHeight="152.0" fitWidth="346.0" layoutX="25.0" layoutY="209.0">
-                    <image>
-                        <Image url="@images/Button.png" />
-                    </image>
-                </ImageView>
-                <Button onAction="#profileButtonPressed" prefHeight="152.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Profile">
+                <Button minHeight="152.0" minWidth="346.0" onAction="#profileButtonPressed" prefHeight="152.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Profile">
                     <font>
                         <Font name="Press Start 2P Regular" size="32.0" />
                     </font>
@@ -96,12 +76,7 @@
         </StackPane>
         <StackPane layoutX="1553.0" layoutY="216.0" prefHeight="101.0" prefWidth="217.0">
             <children>
-                <ImageView fitHeight="100.0" fitWidth="346.0" layoutX="25.0" layoutY="209.0">
-                    <image>
-                        <Image url="@images/Button.png" />
-                    </image>
-                </ImageView>
-                <Button onAction="#leaderboardButtonPressed" prefHeight="100.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Leaderboards">
+                <Button minHeight="100.0" minWidth="346.0" onAction="#leaderboardButtonPressed" prefHeight="100.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Leaderboards">
                     <font>
                         <Font name="Press Start 2P Regular" size="22.0" />
                     </font>

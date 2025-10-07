@@ -35,6 +35,7 @@
 .combo-box .list-cell:filled:selected {
     -fx-background-color: rgba(229, 181, 20, 0.3);
     -fx-background-radius: 14;
+    -fx-text-fill: black;
 }
 
 /* Style dropdown popup */
