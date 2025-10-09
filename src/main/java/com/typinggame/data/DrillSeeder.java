@@ -1,11 +1,11 @@
 package com.typinggame.data;
 
 import java.sql.*;
-import java.util.Arrays;
-import java.util.HashSet;
 
 /**
- * Seeds baseline drills if missing. Idempotent (UPSERT).
+ * Seeds baseline drills (Levels 1–10, 3 drills per level).
+ * Fully hard-coded and idempotent (UPSERT on id).
+ * SAFE: only adds 'level' column if it doesn't already exist.
  */
 public final class DrillSeeder {
     private DrillSeeder() {}
@@ -13,82 +13,124 @@ public final class DrillSeeder {
     /** Ensure baseline drills exist (adds/updates rows). */
     public static void ensureBaselineDrills() {
         try (Connection c = Database.getConnection()) {
-            // Find column names that exist in the current schema.
-            String bodyCol = findExistingColumn(c, "drills",
-                    new String[]{"body", "sentence", "text", "content"});
-            String tierCol = findExistingColumnOrDefault(c, "drills",
-                    new String[]{"tier", "difficulty", "difficulty_tier", "difficultyTier"}, "tier");
-
-            // Add tier column if missing and we can call it "tier".
-            if (!columnExists(c, "drills", tierCol) && "tier".equals(tierCol)) {
+            // make sure 'level' exists, but only add it if missing
+            if (!columnExists(c, "drills", "level")) {
                 try (Statement st = c.createStatement()) {
-                    st.executeUpdate("ALTER TABLE drills ADD COLUMN tier INTEGER NOT NULL DEFAULT 1;");
+                    st.executeUpdate("ALTER TABLE drills ADD COLUMN level INTEGER DEFAULT 1;");
                 }
             }
 
-            // UPSERT: insert new or update existing drills by id.
-            String sql = "INSERT INTO drills(id, title, " + bodyCol + ", " + tierCol + ") VALUES(?,?,?,?) " +
-                    "ON CONFLICT(id) DO UPDATE SET " +
-                    "  title=excluded.title, " + bodyCol + "=excluded." + bodyCol + ", " + tierCol + "=excluded." + tierCol;
+            // also keep legacy 'tier' and 'level' aligned for existing rows
+            try (Statement st = c.createStatement()) {
+                st.executeUpdate("UPDATE drills SET level = COALESCE(level, tier, 1);");
+                st.executeUpdate("UPDATE drills SET tier  = COALESCE(tier,  level, 1);");
+            } catch (SQLException ignore) {}
+
+            final String sql = """
+                INSERT INTO drills(id, title, body, tier, level)
+                VALUES(?,?,?,?,?)
+                ON CONFLICT(id) DO UPDATE SET
+                  title = excluded.title,
+                  body  = excluded.body,
+                  tier  = excluded.tier,
+                  level = excluded.level
+                """;
 
             try (PreparedStatement ps = c.prepareStatement(sql)) {
-                // Easy
-                upsert(ps, 1,  "Easy 1", "the quick brown fox jumps over the lazy dog", 1);
-                upsert(ps, 2,  "Easy 2", "hello world practice letters and spaces with care", 1);
-                upsert(ps, 3,  "Easy 3", "type these easy words slowly to build rhythm and accuracy", 1);
+                // ---------- LEVEL 1 ----------
+                upsert(ps, 11, "Level 1 – Home Row A", "fff jjj fff jjj fjfj fjfj", 1);
+                upsert(ps, 12, "Level 1 – Home Row B", "asdf jkl; asdf jkl; aaaa ssss dddd ffff", 1);
+                upsert(ps, 13, "Level 1 – Words",      "sad flask dad salad ask fall desk", 1);
 
-                // Medium
-                upsert(ps, 10, "Medium 1", "now add punctuation: commas, full stops, and question marks?", 2);
-                upsert(ps, 11, "Medium 2", "mix CAPS and numbers: ABC 123 easy as one two three!", 2);
-                upsert(ps, 12, "Medium 3", "don't forget apostrophes, it's important to use them correctly", 2);
+                // ---------- LEVEL 2 ----------
+                upsert(ps, 21, "Level 2 – Numbers",     "123 456 789 0 12 34 56 78 90", 2);
+                upsert(ps, 22, "Level 2 – Punctuation", "Now, add commas, periods. Do you see?", 2);
+                upsert(ps, 23, "Level 2 – Capitals",    "CAPS Lock Practice: The Quick Brown Fox.", 2);
 
-                // Hard
-                upsert(ps, 20, "Hard 1", "speed and precision matter; minimise errors to maximise your score.", 3);
-                upsert(ps, 21, "Hard 2", "sphinx of black quartz, judge my vow: pack my box with five dozen liquor jugs.", 3);
-                upsert(ps, 22, "Hard 3", "encyclopaedia and manoeuvre are spelt the Australian way; practice until it feels natural.", 3);
+                // ---------- LEVEL 3 ----------
+                upsert(ps, 31, "Level 3 – Sentences",   "Typing practice improves both speed and accuracy.", 3);
+                upsert(ps, 32, "Level 3 – Mixed Case",  "Type These Words Exactly As You See Them.", 3);
+                upsert(ps, 33, "Level 3 – Challenge",   "Stay calm and keep typing under pressure!", 3);
+
+                // ---------- LEVEL 4 ----------
+                upsert(ps, 41, "Level 4 – Short Paragraph",
+                        "Typing steadily builds muscle memory and confidence. Focus on smooth keystrokes.", 4);
+                upsert(ps, 42, "Level 4 – Symbols",     "Try symbols: @#$%^&*()_+ =- [] {}", 4);
+                upsert(ps, 43, "Level 4 – Accuracy Drill",
+                        "Slow is smooth, smooth is fast. Type cleanly to reduce mistakes.", 4);
+
+                // ---------- LEVEL 5 ----------
+                upsert(ps, 51, "Level 5 – Long Words",
+                        "encyclopaedia manoeuvre miscellaneous acknowledgement responsibility", 5);
+                upsert(ps, 52, "Level 5 – Rhythm",
+                        "Tap the keys with rhythm and flow; maintain consistent finger motion.", 5);
+                upsert(ps, 53, "Level 5 – Sentences",
+                        "Accuracy first, speed second; both improve with daily deliberate practice.", 5);
+
+                // ---------- LEVEL 6 ----------
+                upsert(ps, 61, "Level 6 – Speed Burst",
+                        "Type faster now! Push your WPM beyond comfort but avoid chaos.", 6);
+                upsert(ps, 62, "Level 6 – Punctuation Practice",
+                        "Commas, semicolons; and full stops. Keep spacing neat.", 6);
+                upsert(ps, 63, "Level 6 – Numbers & Words",
+                        "I typed 50 words in 60 seconds with 98 percent accuracy.", 6);
+
+                // ---------- LEVEL 7 ----------
+                upsert(ps, 71, "Level 7 – Mixed Drill",
+                        "The quick brown fox jumps over 13 lazy dogs and 2 sleepy cats.", 7);
+                upsert(ps, 72, "Level 7 – Quotes",
+                        "\"Practice makes permanent,\" said the wise instructor.", 7);
+                upsert(ps, 73, "Level 7 – Balance",
+                        "Focus equally on speed, accuracy, and endurance.", 7);
+
+                // ---------- LEVEL 8 ----------
+                upsert(ps, 81, "Level 8 – Long Passage",
+                        "Typing is a skill developed through repetition and conscious correction of mistakes.", 8);
+                upsert(ps, 82, "Level 8 – Variety",
+                        "Switch between words, numbers, and punctuation for dynamic flow.", 8);
+                upsert(ps, 83, "Level 8 – Timing",
+                        "Keep a steady rhythm; avoid rushing or slowing excessively.", 8);
+
+                // ---------- LEVEL 9 ----------
+                upsert(ps, 91, "Level 9 – Complex Text",
+                        "While perfection is unattainable, consistent improvement defines mastery.", 9);
+                upsert(ps, 92, "Level 9 – Challenge Paragraph",
+                        "Students typing daily for ten minutes improve speed by twenty percent.", 9);
+                upsert(ps, 93, "Level 9 – Creative Writing",
+                        "Compose short creative sentences while maintaining proper technique.", 9);
+
+                // ---------- LEVEL 10 ----------
+                upsert(ps, 101, "Level 10 – Final Challenge",
+                        "This is your final typing test; deliver speed, precision, and confidence.", 10);
+                upsert(ps, 102, "Level 10 – Mastery",
+                        "Typing fluently allows ideas to flow freely from mind to screen.", 10);
+                upsert(ps, 103, "Level 10 – Endurance",
+                        "Sustain high WPM for a full minute without dropping accuracy.", 10);
             }
 
-            System.out.println("DrillSeeder: ensured baseline drills (upsert).");
-        } catch (Exception e) {
+            System.out.println("DrillSeeder: seeded 10 levels × 3 drills each (hard-coded).");
+        } catch (SQLException e) {
             throw new RuntimeException("DrillSeeder failed", e);
         }
     }
 
-    /** Insert or update one drill row. */
-    private static void upsert(PreparedStatement ps, int id, String title, String body, int tier) throws SQLException {
+    private static void upsert(PreparedStatement ps, int id, String title, String body, int level) throws SQLException {
         ps.setInt(1, id);
         ps.setString(2, title);
         ps.setString(3, body);
-        ps.setInt(4, tier);
+        ps.setInt(4, level); // tier (mirror for legacy)
+        ps.setInt(5, level); // level
         ps.executeUpdate();
     }
 
-    /** Return the first matching column name from candidates; fail if none found. */
-    private static String findExistingColumn(Connection c, String table, String[] candidates) throws SQLException {
-        HashSet<String> cols = tableColumns(c, table);
-        for (String cand : candidates) if (cols.contains(cand.toLowerCase())) return cand;
-        throw new SQLException("Table '" + table + "' missing expected columns " + Arrays.toString(candidates));
-    }
-
-    /** Return the first matching column name, or a default if none found. */
-    private static String findExistingColumnOrDefault(Connection c, String table, String[] candidates, String def) throws SQLException {
-        HashSet<String> cols = tableColumns(c, table);
-        for (String cand : candidates) if (cols.contains(cand.toLowerCase())) return cand;
-        return def;
-    }
-
-    /** True if the given column exists on the table. */
     private static boolean columnExists(Connection c, String table, String col) throws SQLException {
-        return tableColumns(c, table).contains(col.toLowerCase());
-    }
-
-    /** List all column names for a table (lowercased). */
-    private static HashSet<String> tableColumns(Connection c, String table) throws SQLException {
-        HashSet<String> set = new HashSet<>();
-        try (Statement st = c.createStatement();
-             ResultSet rs = st.executeQuery("PRAGMA table_info('" + table + "')")) {
-            while (rs.next()) set.add(rs.getString("name").toLowerCase());
+        try (PreparedStatement ps = c.prepareStatement("PRAGMA table_info('" + table + "')");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String name = rs.getString("name");
+                if (name != null && name.equalsIgnoreCase(col)) return true;
+            }
+            return false;
         }
-        return set;
     }
 }

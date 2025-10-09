@@ -26,10 +26,8 @@ public class SessionService {
      * - Persists the session and returns the saved copy (with id).
      */
     public Session recordSession(int userId, int drillId, String typed, double elapsedSeconds){
-        // Find the drill (simple scan; OK for small data sets)
-        Drill d = drills.findUpToTier(Integer.MAX_VALUE).stream()
-                .filter(dr -> dr.id == drillId)
-                .findFirst()
+        // Find the drill (direct by id; no full-table scan)
+        Drill d = drills.findById(drillId)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown drill id: " + drillId));
 
         // Calculate metrics

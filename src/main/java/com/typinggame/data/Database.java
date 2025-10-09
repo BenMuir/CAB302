@@ -13,7 +13,7 @@ public class Database {
         try { Class.forName("org.sqlite.JDBC"); } catch (ClassNotFoundException ignore) {}
 
         try (Connection c = getConnection(); Statement st = c.createStatement()) {
-            // Users
+            // --- Users (unchanged) ---
             st.execute("""
               CREATE TABLE IF NOT EXISTS users(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,7 +22,7 @@ public class Database {
               );
             """);
 
-            // Drills
+            // --- Drills (original shape with body/tier retained for compat) ---
             st.execute("""
               CREATE TABLE IF NOT EXISTS drills(
                 id    INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,7 +32,8 @@ public class Database {
               );
             """);
 
-            // --- NEW: additive migration for custom drills ---
+            // --- Additive migrations (idempotent) ---
+            // Custom-drill metadata (you already had these)
             try (Statement st2 = c.createStatement()) {
                 st2.execute("ALTER TABLE drills ADD COLUMN is_custom INTEGER DEFAULT 0");
             } catch (SQLException ignore) {}
@@ -43,7 +44,32 @@ public class Database {
                 st2.execute("ALTER TABLE drills ADD COLUMN created_at INTEGER");
             } catch (SQLException ignore) {}
 
-            // Sessions
+            // --- NEW: Levels migration ---
+            // 1) Add 'level' column if it doesn't exist
+            try (Statement st2 = c.createStatement()) {
+                // Keep it nullable with DEFAULT 1 for maximal compatibility in SQLite
+                st2.execute("ALTER TABLE drills ADD COLUMN level INTEGER DEFAULT 1");
+            } catch (SQLException ignore) {}
+
+            // 2) Backfill level from tier where sensible
+            try (Statement st2 = c.createStatement()) {
+                // If 'tier' exists/has data, copy it into 'level' when level is NULL or default
+                // (SQLite sets new column to DEFAULT; we still overwrite to mirror previous data)
+                st2.execute("""
+                    UPDATE drills
+                       SET level = CASE
+                           WHEN tier IS NOT NULL AND tier > 0 THEN tier
+                           ELSE 1
+                       END
+                """);
+            } catch (SQLException ignore) {}
+
+            // 3) Helpful index for level-based queries
+            try (Statement st2 = c.createStatement()) {
+                st2.execute("CREATE INDEX IF NOT EXISTS idx_drills_level_id ON drills(level, id)");
+            } catch (SQLException ignore) {}
+
+            // --- Sessions (unchanged; your columns preserved) ---
             st.execute("""
               CREATE TABLE IF NOT EXISTS sessions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,7 +86,7 @@ public class Database {
               );
             """);
 
-            // User settings
+            // --- User settings (unchanged) ---
             st.execute("""
               CREATE TABLE IF NOT EXISTS user_settings(
                 user_id      INTEGER PRIMARY KEY,
@@ -72,7 +98,7 @@ public class Database {
               );
             """);
 
-            // Seed demo
+            // --- Seed demo user/settings (unchanged) ---
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT OR IGNORE INTO users(username, password_hash) VALUES(?, ?)")) {
                 ps.setString(1, "demo");
@@ -86,7 +112,10 @@ public class Database {
                 ps.executeUpdate();
             }
 
+            // --- Seeder: update this class to create 10 levels × 3 drills each ---
+            // Keep your existing call; just ensure DrillSeeder writes 'level' (not 'tier').
             DrillSeeder.ensureBaselineDrills();
+
             inited = true;
             System.out.println("DB init OK -> typinggame.db");
         } catch (SQLException e) {
@@ -97,6 +126,7 @@ public class Database {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
     }
+
     public static synchronized void forceReinitForTests() {
         inited = false;
     }
