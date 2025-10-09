@@ -8,56 +8,57 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * Dynamically computes how far the user is unlocked, from Tier 1 up to whatever exists in DB.
- * Rule: must complete (≥1 session) ALL drills in each tier to unlock the next tier.
+ * Dynamically computes how far the user is unlocked, from Level 1 up to whatever exists in DB.
+ * Rule: user must complete (≥1 session) ALL drills in each level to unlock the next level.
  */
 public class ProgressService {
 
     /**
-     * Returns the highest tier number the user is allowed to access (inclusive).
-     * If DB has tiers up to 5 and user cleared tiers 1..3 fully, this returns 4 (so tier 4 shows up).
+     * Returns the highest level number the user is allowed to access (inclusive).
+     * Example: if DB has levels up to 10 and the user fully cleared levels 1..3,
+     * this returns 4 (so level 4 becomes available).
      */
     public int unlockedUpTo(int userId) {
-        int maxTierInDb = new DrillRepository().maxTier();
-        if (maxTierInDb < 1) return 1;
+        int maxLevelInDb = new DrillRepository().maxLevel();
+        if (maxLevelInDb < 1) return 1;
 
-        int unlocked = 1;  // by default the user can see tier 1
+        int unlocked = 1;  // by default the user can access level 1
 
         final String countDrillsSql =
-                "SELECT COUNT(*) FROM drills WHERE tier = ?";
+                "SELECT COUNT(*) FROM drills WHERE level = ?";
         final String countCompletedSql =
                 "SELECT COUNT(DISTINCT s.drill_id) " +
                         "FROM sessions s " +
                         "JOIN drills d ON d.id = s.drill_id " +
-                        "WHERE s.user_id = ? AND d.tier = ?";
+                        "WHERE s.user_id = ? AND d.level = ?";
 
         try (Connection c = Database.getConnection();
              PreparedStatement psDrills = c.prepareStatement(countDrillsSql);
              PreparedStatement psDone   = c.prepareStatement(countCompletedSql)) {
 
-            for (int tier = 1; tier <= maxTierInDb; tier++) {
-                // total drills in this tier
-                psDrills.setInt(1, tier);
+            for (int level = 1; level <= maxLevelInDb; level++) {
+                // total drills in this level
+                psDrills.setInt(1, level);
                 int total;
                 try (ResultSet rs = psDrills.executeQuery()) {
                     total = rs.next() ? rs.getInt(1) : 0;
                 }
 
-                // if no drills in this tier, skip as satisfied
+                // if no drills in this level, treat as satisfied and continue
                 if (total == 0) continue;
 
-                // completed at least once?
+                // how many of this level's drills has the user completed at least once?
                 psDone.setInt(1, userId);
-                psDone.setInt(2, tier);
+                psDone.setInt(2, level);
                 int completed;
                 try (ResultSet rs = psDone.executeQuery()) {
                     completed = rs.next() ? rs.getInt(1) : 0;
                 }
 
                 if (completed >= total) {
-                    unlocked = Math.min(maxTierInDb, tier + 1);
+                    unlocked = Math.min(maxLevelInDb, level + 1);
                 } else {
-                    break;
+                    break; // stop at the first level not fully completed
                 }
             }
         } catch (Exception e) {

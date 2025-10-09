@@ -9,69 +9,66 @@ import javafx.scene.control.Alert.AlertType;
 
 /**
  * CustomDrillController handles creation of user-defined drills.
- * Provides UI logic for saving/canceling custom drills and tier selection.
+ * Works with FXML using either fx:id="levelBox" or fx:id="tierBox".
  */
 public class CustomDrillController extends Controller {
 
     // --- UI components ---
-    @FXML private TextField titleField;   // Input for drill title
-    @FXML private ComboBox<Integer> tierBox; // Dropdown for selecting tier
-    @FXML private TextArea contentArea;   // Input for drill text/content
+    @FXML private TextField titleField;
+    @FXML private TextArea  contentArea;
 
-    /**
-     * Initialize UI state when the view loads.
-     * Always shows tiers 1–5 in the tierBox.
-     */
-    @FXML
-    private void initialize() {
-        final int VISIBLE_TIER_CAP = 5; // Max tiers user can ever see (hard cap)
+    // Support both old and new fx:id
+    @FXML private ComboBox<Integer> levelBox; // preferred new id
+    @FXML private ComboBox<Integer> tierBox;  // legacy id
 
-        // Always show 1..5, regardless of DB max
-        tierBox.getItems().clear();
-        for (int i = 1; i <= VISIBLE_TIER_CAP; i++) {
-            tierBox.getItems().add(i);
-        }
-        tierBox.getSelectionModel().selectFirst();
+    /** Helper: return whichever ComboBox is present in FXML. */
+    private ComboBox<Integer> levelChooser() {
+        return (levelBox != null) ? levelBox : tierBox;
     }
 
-    /**
-     * Handle Save button.
-     * Validates fields, inserts drill into DB, and returns to PlayMenu.
-     */
+    @FXML
+    private void initialize() {
+        final ComboBox<Integer> box = levelChooser();
+        if (box == null) {
+            // Defensive: give a clear error if neither fx:id exists
+            throw new IllegalStateException("Neither 'levelBox' nor 'tierBox' is defined in customdrillview.fxml");
+        }
+
+        final int MAX_LEVEL = 10;
+        box.getItems().clear();
+        for (int i = 1; i <= MAX_LEVEL; i++) {
+            box.getItems().add(i);
+        }
+        box.getSelectionModel().selectFirst();
+    }
+
     @FXML
     private void onSave(ActionEvent event) {
-        // Read and sanitize inputs
-        String title   = titleField.getText() == null ? "" : titleField.getText().trim();
-        Integer tier   = tierBox.getValue();
-        String content = contentArea.getText() == null ? "" : contentArea.getText().trim();
+        final ComboBox<Integer> box = levelChooser();
 
-        // Validation
-        if (title.isEmpty()) { toast("Please enter a title."); return; }
-        if (tier == null)    { toast("Please choose a tier."); return; }
-        if (content.isEmpty()){ toast("Please add some drill content."); return; }
+        String title   = titleField.getText()   == null ? "" : titleField.getText().trim();
+        String content = contentArea.getText()  == null ? "" : contentArea.getText().trim();
+        Integer level  = (box == null) ? null : box.getValue();
+
+        if (title.isEmpty())   { toast("Please enter a title."); return; }
+        if (level == null)     { toast("Please choose a level."); return; }
+        if (content.isEmpty()) { toast("Please add some drill content."); return; }
 
         try {
-            // Build Drill object and save
-            Drill d = new Drill(0, title, content, tier);
+            Drill d = new Drill(0, title, content, level);
             new DrillRepository().insertCustom(d);
-
             toast("Custom drill saved.");
-            displayScene("/playmenu.fxml", event); // Go back to PlayMenu
+            displayScene("/playmenu.fxml", event);
         } catch (Exception ex) {
             error("Failed to save the custom drill:\n" + ex.getMessage());
         }
     }
 
-    /**
-     * Handle Cancel button.
-     * Discards input and returns to PlayMenu.
-     */
     @FXML
     private void onCancel(ActionEvent event) {
         displayScene("/playmenu.fxml", event);
     }
 
-    /** Helper to show informational popup. */
     private void toast(String msg) {
         Alert a = new Alert(AlertType.INFORMATION);
         a.setHeaderText(null);
@@ -79,7 +76,6 @@ public class CustomDrillController extends Controller {
         a.showAndWait();
     }
 
-    /** Helper to show error popup. */
     private void error(String msg) {
         Alert a = new Alert(AlertType.ERROR);
         a.setHeaderText("Error");

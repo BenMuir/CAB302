@@ -4,7 +4,9 @@ import com.typinggame.model.Session;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Simple repository for typing sessions.
@@ -64,27 +66,59 @@ public class SessionRepository {
         }
     }
 
-    /** Count sessions by a user for drills in a specific tier. */
-    public int countSessionsInTier(int userId, int tier) {
+    // -------------------------------------------------
+    // Level-based helpers (new progression-compatible)
+    // -------------------------------------------------
+
+    /** Count sessions by a user for drills in a specific level. */
+    public int countSessionsInLevel(int userId, int level) {
         String sql = """
             SELECT COUNT(*) AS cnt
             FROM sessions s
             JOIN drills d ON d.id = s.drill_id
-            WHERE s.user_id = ? AND d.tier = ?
+            WHERE s.user_id = ? AND d.level = ?
             """;
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setInt(1, userId);
-            ps.setInt(2, tier);
+            ps.setInt(2, level);
 
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? rs.getInt("cnt") : 0;
             }
         } catch (SQLException e) {
-            throw new RuntimeException("countSessionsInTier failed", e);
+            throw new RuntimeException("countSessionsInLevel failed", e);
         }
     }
+
+    /**
+     * Set of drill ids the user has "completed".
+     * Define completion however your app intends. Here we treat **any recorded session** on a drill
+     * as completion; tweak WHERE if you need a threshold (e.g., accuracy >= 90).
+     */
+    public Set<Integer> findCompletedDrillIds(int userId) {
+        String sql = """
+            SELECT DISTINCT s.drill_id
+            FROM sessions s
+            WHERE s.user_id = ?
+            """;
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                Set<Integer> out = new HashSet<>();
+                while (rs.next()) out.add(rs.getInt(1));
+                return out;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("findCompletedDrillIds failed", e);
+        }
+    }
+
+    // ------------------------------------
+    // Leaderboard (fixed name resolution)
+    // ------------------------------------
 
     /** Simple DTO for leaderboard rows. */
     public static class LeaderboardRow {
@@ -100,6 +134,7 @@ public class SessionRepository {
     /**
      * Best single session per user (global), sorted by score.
      * Uses a CTE to pick each user's max score.
+     * Name comes from user_settings.display_name if present, else users.username.
      */
     public List<LeaderboardRow> topByBestScore(int limit) {
         String sql = """
@@ -108,10 +143,11 @@ public class SessionRepository {
               FROM sessions
               GROUP BY user_id
             )
-            SELECT u.display_name AS name, s.wpm, s.accuracy, s.score
+            SELECT COALESCE(us.display_name, u.username) AS name, s.wpm, s.accuracy, s.score
             FROM best b
-            JOIN sessions s ON s.user_id = b.user_id AND s.score = b.best_score
-            JOIN users u    ON u.id = b.user_id
+            JOIN sessions s       ON s.user_id = b.user_id AND s.score = b.best_score
+            JOIN users u          ON u.id = b.user_id
+            LEFT JOIN user_settings us ON us.user_id = u.id
             ORDER BY s.score DESC
             LIMIT ?
             """;
@@ -135,5 +171,15 @@ public class SessionRepository {
         } catch (SQLException e) {
             throw new RuntimeException("topByBestScore failed", e);
         }
+    }
+
+    // ------------------------------------
+    // Back-compat (tier) — delegates to level
+    // ------------------------------------
+
+    /** Deprecated: use countSessionsInLevel(...) */
+    @Deprecated
+    public int countSessionsInTier(int userId, int tier) {
+        return countSessionsInLevel(userId, tier);
     }
 }
