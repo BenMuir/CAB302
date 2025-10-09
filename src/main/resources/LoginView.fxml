@@ -17,7 +17,7 @@
     <children>
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
             <image>
-                <Image url="@images/LoginBackground.png" />
+                <Image url="@images/login-sea-type.png" />
             </image>
         </ImageView>
         <Pane layoutX="1180.0" layoutY="6.0" prefHeight="701.0" prefWidth="731.0">

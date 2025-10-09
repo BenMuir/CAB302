@@ -18,6 +18,8 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -25,17 +27,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 //keyboard
 
+
+import javafx.geometry.Insets;
+
+
+
 import javafx.scene.input.KeyCode;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.Node;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -186,11 +194,38 @@ public class TypingGameController extends Controller {
         return 0;
     }
 
+
+// Welcome popup appears on game start
+    private void showWelcomePopup(Window owner) {
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initOwner(owner);
+        popup.setTitle("Welcome to Sea Type");
+
+        Label message = new Label("Start typing the sentence on the screen without looking at your keyboard, use the keyboard onscreen to find the keys!");
+        Button okButton = new Button("Let's Type");
+        okButton.setOnAction(e -> popup.close());
+
+        VBox layout = new VBox(15, message, okButton);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+        popup.setScene(new Scene(layout));
+        popup.showAndWait();
+    }
+
+
     /**
      * Initializes game state and input handling
      */
     @FXML
     public void initialize() {
+
+        Platform.runLater(() -> showWelcomePopup(wpmChart.getScene().getWindow()));
+
+
+
+
+
 
         // Chart setup
         wpmSeries.setName("WPM");
