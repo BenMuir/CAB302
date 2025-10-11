@@ -1,5 +1,6 @@
 package com.typinggame.controller;
 
+import com.typinggame.config.AppContext;
 import com.typinggame.data.Database;
 import com.typinggame.data.DrillRepository;
 import com.typinggame.data.SessionRepository;
@@ -10,6 +11,8 @@ import com.typinggame.model.Drill;
 import com.typinggame.model.Session;
 import com.typinggame.model.TypingStats;
 import com.typinggame.service.ProgressService;
+import com.typinggame.util.Rank;
+import com.typinggame.util.RankLoader;
 import com.typinggame.util.SentenceProvider;
 
 import javafx.animation.Animation;
@@ -44,7 +47,13 @@ import javafx.geometry.Insets;
 
 
 import javafx.scene.input.KeyCode;
-
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -61,97 +70,158 @@ import java.time.Instant;
 public class TypingGameController extends Controller {
 
     // UI Components
-    @FXML private TextFlow displayFlow;
-    @FXML private TextField inputField;
-    @FXML private Label timerLabel;
-    @FXML private Label accuracyLabel;
-    @FXML private Label wpmLabel;
-    @FXML private Label streakLabel;
-    @FXML private ComboBox<Drill> drillSelect;
-    @FXML private Button startButton;
+    @FXML
+    private TextFlow displayFlow;
+    @FXML
+    private TextField inputField;
+    @FXML
+    private Label timerLabel;
+    @FXML
+    private Label accuracyLabel;
+    @FXML
+    private Label wpmLabel;
+    @FXML
+    private Label streakLabel;
+    @FXML
+    private ComboBox<Drill> drillSelect;
+    @FXML
+    private Button startButton;
     //keyboard
     private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
 
     //keyboard row 0
 
-    @FXML private Button keyBACKQUOTE;
-    @FXML private Button key1;
-    @FXML private Button key2;
-    @FXML private Button key3;
-    @FXML private Button key4;
-    @FXML private Button key5;
-    @FXML private Button key6;
-    @FXML private Button key7;
-    @FXML private Button key8;
-    @FXML private Button key9;
-    @FXML private Button key0;
-    @FXML private Button keyMINUS;
-    @FXML private Button keyEQUALS;
-    @FXML private Button keyBACKSPACE;
+    @FXML
+    private Button keyBACKQUOTE;
+    @FXML
+    private Button key1;
+    @FXML
+    private Button key2;
+    @FXML
+    private Button key3;
+    @FXML
+    private Button key4;
+    @FXML
+    private Button key5;
+    @FXML
+    private Button key6;
+    @FXML
+    private Button key7;
+    @FXML
+    private Button key8;
+    @FXML
+    private Button key9;
+    @FXML
+    private Button key0;
+    @FXML
+    private Button keyMINUS;
+    @FXML
+    private Button keyEQUALS;
+    @FXML
+    private Button keyBACKSPACE;
 
     //row 1
-    @FXML private Button keyTAB;
-    @FXML private Button keyQ;
-    @FXML private Button keyW;
-    @FXML private Button keyE;
-    @FXML private Button keyR;
-    @FXML private Button keyT;
-    @FXML private Button keyY;
-    @FXML private Button keyU;
-    @FXML private Button keyI;
-    @FXML private Button keyO;
-    @FXML private Button keyP;
-    @FXML private Button keyLBRACKET;
-    @FXML private Button keyRBRACKET;
-    @FXML private Button keyBACKSLASH;
+    @FXML
+    private Button keyTAB;
+    @FXML
+    private Button keyQ;
+    @FXML
+    private Button keyW;
+    @FXML
+    private Button keyE;
+    @FXML
+    private Button keyR;
+    @FXML
+    private Button keyT;
+    @FXML
+    private Button keyY;
+    @FXML
+    private Button keyU;
+    @FXML
+    private Button keyI;
+    @FXML
+    private Button keyO;
+    @FXML
+    private Button keyP;
+    @FXML
+    private Button keyLBRACKET;
+    @FXML
+    private Button keyRBRACKET;
+    @FXML
+    private Button keyBACKSLASH;
 
     //row 2
-    @FXML private Button keyCAPS;
-    @FXML private Button keyA;
-    @FXML private Button keyS;
-    @FXML private Button keyD;
-    @FXML private Button keyF;
-    @FXML private Button keyG;
-    @FXML private Button keyH;
-    @FXML private Button keyJ;
-    @FXML private Button keyK;
-    @FXML private Button keyL;
-    @FXML private Button keySEMICOLON;
-    @FXML private Button keyQUOTE;
-    @FXML private Button keyENTER;
+    @FXML
+    private Button keyCAPS;
+    @FXML
+    private Button keyA;
+    @FXML
+    private Button keyS;
+    @FXML
+    private Button keyD;
+    @FXML
+    private Button keyF;
+    @FXML
+    private Button keyG;
+    @FXML
+    private Button keyH;
+    @FXML
+    private Button keyJ;
+    @FXML
+    private Button keyK;
+    @FXML
+    private Button keyL;
+    @FXML
+    private Button keySEMICOLON;
+    @FXML
+    private Button keyQUOTE;
+    @FXML
+    private Button keyENTER;
 
     //row 3
-    @FXML private Button keyLSHIFT;
-    @FXML private Button keyZ;
-    @FXML private Button keyX;
-    @FXML private Button keyC;
-    @FXML private Button keyV;
-    @FXML private Button keyB;
-    @FXML private Button keyN;
-    @FXML private Button keyM;
-    @FXML private Button keyCOMMA;
-    @FXML private Button keyPERIOD;
-    @FXML private Button keySLASH;
-    @FXML private Button keyRSHIFT;
+    @FXML
+    private Button keyLSHIFT;
+    @FXML
+    private Button keyZ;
+    @FXML
+    private Button keyX;
+    @FXML
+    private Button keyC;
+    @FXML
+    private Button keyV;
+    @FXML
+    private Button keyB;
+    @FXML
+    private Button keyN;
+    @FXML
+    private Button keyM;
+    @FXML
+    private Button keyCOMMA;
+    @FXML
+    private Button keyPERIOD;
+    @FXML
+    private Button keySLASH;
+    @FXML
+    private Button keyRSHIFT;
 
     //row 4
-    @FXML private Button keySPACE;
+    @FXML
+    private Button keySPACE;
 
 
     // Modifier state
     private boolean[] capsActive = {false};
     private boolean leftShiftActive = false;
     private boolean rightShiftActive = false;
-// WPM
+    // WPM
     private final Deque<Integer> wpmHistory = new ArrayDeque<>();
-    @FXML private LineChart<Number, Number> wpmChart;
-    private final XYChart.Series<Number, Number> wpmSeries = new XYChart.Series<>();
+    @FXML
+    private LineChart<Number, Number> wpmChart;
 
-    // ACCURACY
-    private final XYChart.Series<Number, Number> accuracySeries = new XYChart.Series<>();
-
-
+    private XYChart.Series<Number, Number> wpmSeries;
+    private XYChart.Series<Number, Number> accuracySeries;
+    private XYChart.Series<Number, Number> streakSeries;
 
     // Game State
     private String targetText;
@@ -162,10 +232,10 @@ public class TypingGameController extends Controller {
 
     // Data access
     private final SessionRepository sessionRepo = new SessionRepository();
-    private final DrillRepository   drillRepo   = new DrillRepository();
+    private final DrillRepository drillRepo = new DrillRepository();
 
     // User Context
-    private UserManager userManager;
+    private UserManager userManager = AppContext.userManager;
     @SuppressWarnings("unused")
     private User currentUser;
 
@@ -178,24 +248,27 @@ public class TypingGameController extends Controller {
         try {
             if (userManager != null && userManager.getCurrentUser() != null)
                 return userManager.getCurrentUser().getUserID();
-        } catch (Throwable ignore) {}
+        } catch (Throwable ignore) {
+        }
 
         try {
             if (com.typinggame.config.AppContext.userManager != null &&
                     com.typinggame.config.AppContext.userManager.getCurrentUser() != null)
                 return com.typinggame.config.AppContext.userManager.getCurrentUser().getUserID();
-        } catch (Throwable ignore) {}
+        } catch (Throwable ignore) {
+        }
 
         try {
             UserManager um = new UserManager(new SqliteUserRepository());
             if (um.getCurrentUser() != null) return um.getCurrentUser().getUserID();
-        } catch (Throwable ignore) {}
+        } catch (Throwable ignore) {
+        }
 
         return 0;
     }
 
 
-// Welcome popup appears on game start
+    // Welcome popup appears on game start
     private void showWelcomePopup(Window owner) {
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
@@ -214,30 +287,55 @@ public class TypingGameController extends Controller {
     }
 
 
-    /**
-     * Initializes game state and input handling
-     */
+// rank image
     @FXML
-    public void initialize() {
-
-        Platform.runLater(() -> showWelcomePopup(wpmChart.getScene().getWindow()));
+    private ImageView rankBadgeImageView;
 
 
+// username display
+    @FXML
+    private Label usernameLabel;
+    private boolean usernameApplied = false;
 
 
+    private User user;
+    @FXML
+    private void initialize() {
+        user = AppContext.userManager.getCurrentUser(); // fallback
+        System.out.println("[Controller] Instance hash: " + System.identityHashCode(this));
 
+        // Initialize chart series before UI
+        wpmSeries = new XYChart.Series<>();
+        accuracySeries = new XYChart.Series<>();
+        streakSeries = new XYChart.Series<>();
 
-        // Chart setup
         wpmSeries.setName("WPM");
         accuracySeries.setName("Accuracy");
-        XYChart.Series<Number, Number> streakSeries = new XYChart.Series<>();
         streakSeries.setName("Streak");
+
+        Platform.runLater(() -> {
+            System.out.println("[Controller] TypingGameController initialized");
+
+            setupChart();
+            setupUserDisplay();
+            setupInputField();
+        });
+    }
+        //set up chart
+    private void setupChart() {
+        if (wpmChart == null) {
+            System.out.println("[Controller] wpmChart is null");
+            return;
+        }
+
+        System.out.println("[Controller] wpmChart injected");
 
         wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
         wpmChart.setCreateSymbols(false); // disables dot markers
 
         NumberAxis xAxis = (NumberAxis) wpmChart.getXAxis();
         NumberAxis yAxis = (NumberAxis) wpmChart.getYAxis();
+
         xAxis.setLabel("");
         yAxis.setLabel("");
 
@@ -246,9 +344,54 @@ public class TypingGameController extends Controller {
         yAxis.setTickLabelsVisible(false);
         yAxis.setTickMarkVisible(false);
 
+        if (wpmChart.getScene() != null) {
+            System.out.println("[Controller] wpmChart scene is ready");
+            showWelcomePopup(wpmChart.getScene().getWindow());
+        } else {
+            System.out.println("[Controller] wpmChart scene is null");
+        }
+    }
+    //user display - name,rank,badge
+    private void setupUserDisplay() {
+        if (user == null) {
+            System.out.println("[Controller] No user found in AppContext");
+            return;
+        }
+
+        String username = user.getUsername();
+        double bestWPM = user.getBestWPM();
+        Rank rank = Rank.forTypingSpeed(bestWPM);
+
+        System.out.println("[Controller] Retrieved username: " + username);
+        System.out.println("[Controller] Best WPM: " + bestWPM);
+        System.out.println("[Controller] Resolved rank: " + rank.name());
+
+        if (usernameLabel != null && !usernameApplied) {
+            usernameLabel.setText(user.getDisplayName() + "\nRank: " + rank.name());
+            usernameApplied = true;
+            System.out.println("[Controller] Username and rank applied to label");
+        } else if (usernameLabel == null) {
+            System.out.println("[Controller] usernameLabel is null in setupUserDisplay");
+        }
+
+        if (rankBadgeImageView != null) {
+            try {
+                Image badge = RankLoader.load(rank);
+                rankBadgeImageView.setImage(badge);
+                System.out.println("[Controller] Rank badge loaded: " + rank.resourcePath);
+            } catch (Exception e) {
+                System.err.println("[Controller] Failed to load rank badge: " + e.getMessage());
+            }
+        } else {
+            System.out.println("[Controller] rankBadgeImageView is null");
+        }
+    }
+    // input field - where the user types
+    private void setupInputField() {
         inputField.setEditable(true);
         inputField.setDisable(false);
         Platform.runLater(() -> inputField.requestFocus());
+
         inputField.setStyle(
                 "-fx-font-family: 'Press Start 2P'; " +
                         "-fx-font-size: 24px; " +
@@ -261,7 +404,7 @@ public class TypingGameController extends Controller {
         try {
             Database.init();
 
-            int userId   = resolveUserId();
+            int userId = resolveUserId();
             int unlocked = new ProgressService().unlockedUpTo(userId);
 
             var options = drillRepo.findUpToTier(unlocked);
@@ -305,27 +448,23 @@ public class TypingGameController extends Controller {
             double elapsedMinutes = elapsedMillis / 60000.0;
             double accuracy = stats.getAccuracy();
 
-            if (elapsedMillis >= 3000) {
-                int liveWPM = stats.calculateWPM(elapsedMinutes);
-                wpmHistory.addLast(liveWPM);
-                if (wpmHistory.size() > 5) wpmHistory.removeFirst();
+            int liveWPM = stats.calculateWPM(elapsedMinutes);
+            wpmHistory.addLast(liveWPM);
+            if (wpmHistory.size() > 5) wpmHistory.removeFirst();
 
-                int avgWPM = wpmHistory.stream().mapToInt(Integer::intValue).sum() / wpmHistory.size();
-                wpmLabel.setText("WPM: " + avgWPM);
+            int avgWPM = wpmHistory.stream().mapToInt(Integer::intValue).sum() / wpmHistory.size();
+            wpmLabel.setText("WPM: " + avgWPM);
 
-                int elapsedSeconds = (int) (elapsedMillis / 1000);
-                int currentStreak = stats.getCurrentStreak();
+            int elapsedSeconds = (int) (elapsedMillis / 1000);
+            int currentStreak = stats.getCurrentStreak();
 
-                wpmSeries.getData().add(new XYChart.Data<>(elapsedSeconds, avgWPM));
-                accuracySeries.getData().add(new XYChart.Data<>(elapsedSeconds, accuracy));
-                streakSeries.getData().add(new XYChart.Data<>(elapsedSeconds, currentStreak));
+            wpmSeries.getData().add(new XYChart.Data<>(elapsedSeconds, avgWPM));
+            accuracySeries.getData().add(new XYChart.Data<>(elapsedSeconds, accuracy));
+            streakSeries.getData().add(new XYChart.Data<>(elapsedSeconds, currentStreak));
 
-                if (wpmSeries.getData().size() > 50) wpmSeries.getData().remove(0);
-                if (accuracySeries.getData().size() > 50) accuracySeries.getData().remove(0);
-                if (streakSeries.getData().size() > 50) streakSeries.getData().remove(0);
-            } else {
-                wpmLabel.setText("WPM: ...");
-            }
+            if (wpmSeries.getData().size() > 50) wpmSeries.getData().remove(0);
+            if (accuracySeries.getData().size() > 50) accuracySeries.getData().remove(0);
+            if (streakSeries.getData().size() > 50) streakSeries.getData().remove(0);
 
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
 
@@ -337,7 +476,9 @@ public class TypingGameController extends Controller {
             }
 
             if (stats.isComplete()) {
-                try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+                try {
+                    if (timer != null) timer.stop();
+                } catch (Exception ignore) {}
                 inputField.setEditable(false);
                 inputField.setDisable(true);
                 saveSession();
@@ -347,65 +488,65 @@ public class TypingGameController extends Controller {
 
 
         Platform.runLater(() -> {
-                    // Key mapping
-                    keyMap.put(KeyCode.BACK_QUOTE, keyBACKQUOTE);
-                    keyMap.put(KeyCode.DIGIT1, key1);
-                    keyMap.put(KeyCode.DIGIT2, key2);
-                    keyMap.put(KeyCode.DIGIT3, key3);
-                    keyMap.put(KeyCode.DIGIT4, key4);
-                    keyMap.put(KeyCode.DIGIT5, key5);
-                    keyMap.put(KeyCode.DIGIT6, key6);
-                    keyMap.put(KeyCode.DIGIT7, key7);
-                    keyMap.put(KeyCode.DIGIT8, key8);
-                    keyMap.put(KeyCode.DIGIT9, key9);
-                    keyMap.put(KeyCode.DIGIT0, key0);
-                    keyMap.put(KeyCode.MINUS, keyMINUS);
-                    keyMap.put(KeyCode.EQUALS, keyEQUALS);
-                    keyMap.put(KeyCode.BACK_SPACE, keyBACKSPACE);
+            // Key mapping
+            keyMap.put(KeyCode.BACK_QUOTE, keyBACKQUOTE);
+            keyMap.put(KeyCode.DIGIT1, key1);
+            keyMap.put(KeyCode.DIGIT2, key2);
+            keyMap.put(KeyCode.DIGIT3, key3);
+            keyMap.put(KeyCode.DIGIT4, key4);
+            keyMap.put(KeyCode.DIGIT5, key5);
+            keyMap.put(KeyCode.DIGIT6, key6);
+            keyMap.put(KeyCode.DIGIT7, key7);
+            keyMap.put(KeyCode.DIGIT8, key8);
+            keyMap.put(KeyCode.DIGIT9, key9);
+            keyMap.put(KeyCode.DIGIT0, key0);
+            keyMap.put(KeyCode.MINUS, keyMINUS);
+            keyMap.put(KeyCode.EQUALS, keyEQUALS);
+            keyMap.put(KeyCode.BACK_SPACE, keyBACKSPACE);
 
-                    keyMap.put(KeyCode.TAB, keyTAB);
-                    keyMap.put(KeyCode.Q, keyQ);
-                    keyMap.put(KeyCode.W, keyW);
-                    keyMap.put(KeyCode.E, keyE);
-                    keyMap.put(KeyCode.R, keyR);
-                    keyMap.put(KeyCode.T, keyT);
-                    keyMap.put(KeyCode.Y, keyY);
-                    keyMap.put(KeyCode.U, keyU);
-                    keyMap.put(KeyCode.I, keyI);
-                    keyMap.put(KeyCode.O, keyO);
-                    keyMap.put(KeyCode.P, keyP);
-                    keyMap.put(KeyCode.OPEN_BRACKET, keyLBRACKET);
-                    keyMap.put(KeyCode.CLOSE_BRACKET, keyRBRACKET);
-                    keyMap.put(KeyCode.BACK_SLASH, keyBACKSLASH);
+            keyMap.put(KeyCode.TAB, keyTAB);
+            keyMap.put(KeyCode.Q, keyQ);
+            keyMap.put(KeyCode.W, keyW);
+            keyMap.put(KeyCode.E, keyE);
+            keyMap.put(KeyCode.R, keyR);
+            keyMap.put(KeyCode.T, keyT);
+            keyMap.put(KeyCode.Y, keyY);
+            keyMap.put(KeyCode.U, keyU);
+            keyMap.put(KeyCode.I, keyI);
+            keyMap.put(KeyCode.O, keyO);
+            keyMap.put(KeyCode.P, keyP);
+            keyMap.put(KeyCode.OPEN_BRACKET, keyLBRACKET);
+            keyMap.put(KeyCode.CLOSE_BRACKET, keyRBRACKET);
+            keyMap.put(KeyCode.BACK_SLASH, keyBACKSLASH);
 
-                    keyMap.put(KeyCode.CAPS, keyCAPS);
-                    keyMap.put(KeyCode.A, keyA);
-                    keyMap.put(KeyCode.S, keyS);
-                    keyMap.put(KeyCode.D, keyD);
-                    keyMap.put(KeyCode.F, keyF);
-                    keyMap.put(KeyCode.G, keyG);
-                    keyMap.put(KeyCode.H, keyH);
-                    keyMap.put(KeyCode.J, keyJ);
-                    keyMap.put(KeyCode.K, keyK);
-                    keyMap.put(KeyCode.L, keyL);
-                    keyMap.put(KeyCode.SEMICOLON, keySEMICOLON);
-                    keyMap.put(KeyCode.QUOTE, keyQUOTE);
-                    keyMap.put(KeyCode.ENTER, keyENTER);
+            keyMap.put(KeyCode.CAPS, keyCAPS);
+            keyMap.put(KeyCode.A, keyA);
+            keyMap.put(KeyCode.S, keyS);
+            keyMap.put(KeyCode.D, keyD);
+            keyMap.put(KeyCode.F, keyF);
+            keyMap.put(KeyCode.G, keyG);
+            keyMap.put(KeyCode.H, keyH);
+            keyMap.put(KeyCode.J, keyJ);
+            keyMap.put(KeyCode.K, keyK);
+            keyMap.put(KeyCode.L, keyL);
+            keyMap.put(KeyCode.SEMICOLON, keySEMICOLON);
+            keyMap.put(KeyCode.QUOTE, keyQUOTE);
+            keyMap.put(KeyCode.ENTER, keyENTER);
 
-                    keyMap.put(KeyCode.SHIFT, keyLSHIFT); // Left Shift and Right shift light up at same time
-                    keyMap.put(KeyCode.Z, keyZ);
-                    keyMap.put(KeyCode.X, keyX);
-                    keyMap.put(KeyCode.C, keyC);
-                    keyMap.put(KeyCode.V, keyV);
-                    keyMap.put(KeyCode.B, keyB);
-                    keyMap.put(KeyCode.N, keyN);
-                    keyMap.put(KeyCode.M, keyM);
-                    keyMap.put(KeyCode.COMMA, keyCOMMA);
-                    keyMap.put(KeyCode.PERIOD, keyPERIOD);
-                    keyMap.put(KeyCode.SLASH, keySLASH);
+            keyMap.put(KeyCode.SHIFT, keyLSHIFT); // Left Shift and Right shift light up at same time
+            keyMap.put(KeyCode.Z, keyZ);
+            keyMap.put(KeyCode.X, keyX);
+            keyMap.put(KeyCode.C, keyC);
+            keyMap.put(KeyCode.V, keyV);
+            keyMap.put(KeyCode.B, keyB);
+            keyMap.put(KeyCode.N, keyN);
+            keyMap.put(KeyCode.M, keyM);
+            keyMap.put(KeyCode.COMMA, keyCOMMA);
+            keyMap.put(KeyCode.PERIOD, keyPERIOD);
+            keyMap.put(KeyCode.SLASH, keySLASH);
 
 
-                    keyMap.put(KeyCode.SPACE, keySPACE);
+            keyMap.put(KeyCode.SPACE, keySPACE);
 
 
             inputField.setOnKeyPressed(event -> {
@@ -514,7 +655,8 @@ public class TypingGameController extends Controller {
                 unhighlightKey(code);
             });
         });
-        ;}
+        ;
+    }
 
     // Keyboard
     private void highlightKey(KeyCode code, boolean isCorrect) {
@@ -545,7 +687,6 @@ public class TypingGameController extends Controller {
             key.setStyle(""); // Reset to default
         }
     }
-
 
 
     /**
@@ -580,7 +721,9 @@ public class TypingGameController extends Controller {
      */
     @FXML
     private void restartGame() {
-        try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+        try {
+            if (timer != null) timer.stop();
+        } catch (Exception ignore) {}
 
         // Reset UI stats
         accuracyLabel.setText("Accuracy: 0%");
@@ -593,11 +736,17 @@ public class TypingGameController extends Controller {
         inputField.clear();
         inputField.setEditable(true);
         inputField.setDisable(false);
-
-        // Ensure input field is focused immediately
         Platform.runLater(() -> inputField.requestFocus());
 
-        // Restart the current drill (preferred), else selected, else first, else random
+        // Reset chart lines and force refresh
+        wpmSeries.getData().clear();
+        accuracySeries.getData().clear();
+        streakSeries.getData().clear();
+
+        wpmChart.getData().clear(); // remove all series
+        wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries); // re-add empty series
+
+        // Restart the current drill
         Drill d = (currentDrill != null)
                 ? currentDrill
                 : (drillSelect != null ? drillSelect.getSelectionModel().getSelectedItem() : null);
@@ -607,9 +756,9 @@ public class TypingGameController extends Controller {
             drillSelect.getSelectionModel().selectFirst();
         }
 
-        if (d != null) loadDrill(d); else loadRandomDrill();
+        if (d != null) loadDrill(d);
+        else loadRandomDrill();
     }
-
     @FXML
     private void ToProfile(ActionEvent event) {
         displayScene("/playmenu.fxml", event);
@@ -621,7 +770,10 @@ public class TypingGameController extends Controller {
      */
     private void loadDrill(Drill d) {
         currentDrill = d;
-        try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+        try {
+            if (timer != null) timer.stop();
+        } catch (Exception ignore) {
+        }
 
         inputField.clear();
         inputField.setEditable(true);
@@ -649,13 +801,13 @@ public class TypingGameController extends Controller {
             int userId = resolveUserId();
             System.out.println("[GameView] resolveUserId() = " + userId);
 
-            double accuracyPct     = stats.getAccuracy(); // 0..100
-            long elapsedMillis     = System.currentTimeMillis() - startTime;
-            double elapsedMinutes  = elapsedMillis / 60000.0;
-            int wpm                = stats.calculateWPM(elapsedMinutes);
-            int typed              = inputField.getText().length();
+            double accuracyPct = stats.getAccuracy(); // 0..100
+            long elapsedMillis = System.currentTimeMillis() - startTime;
+            double elapsedMinutes = elapsedMillis / 60000.0;
+            int wpm = stats.calculateWPM(elapsedMinutes);
+            int typed = inputField.getText().length();
             double durationSeconds = elapsedMillis / 1000.0;
-            int drillId            = (currentDrill != null) ? currentDrill.id : 1;
+            int drillId = (currentDrill != null) ? currentDrill.id : 1;
 
             Session s = new Session(
                     null,               // id (auto)
@@ -674,7 +826,7 @@ public class TypingGameController extends Controller {
 
             // Refresh dropdown if a new tier unlocked
             int unlocked = new ProgressService().unlockedUpTo(userId);
-            var options  = drillRepo.findUpToTier(unlocked);
+            var options = drillRepo.findUpToTier(unlocked);
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);
                 // keep current drill selected if still present; otherwise select first
@@ -733,12 +885,12 @@ public class TypingGameController extends Controller {
      * Displays final results and updates user profile
      */
     private void showResults() {
-        long elapsedMillis  = System.currentTimeMillis() - startTime;
-        double elapsedMin   = elapsedMillis / 60000.0;
+        long elapsedMillis = System.currentTimeMillis() - startTime;
+        double elapsedMin = elapsedMillis / 60000.0;
 
-        int wpm         = stats.calculateWPM(elapsedMin);
+        int wpm = stats.calculateWPM(elapsedMin);
         double accuracy = stats.getAccuracy();
-        int bestStreak  = stats.getBestStreak();
+        int bestStreak = stats.getBestStreak();
 
         // Bottom labels already show live info; no top-left result label used.
         wpmLabel.setText("WPM: " + wpm);
@@ -746,5 +898,3 @@ public class TypingGameController extends Controller {
         streakLabel.setText("Streak: " + bestStreak);
     }
 }
-
-
