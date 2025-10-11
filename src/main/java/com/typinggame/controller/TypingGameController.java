@@ -386,7 +386,7 @@ public class TypingGameController extends Controller {
             System.out.println("[Controller] rankBadgeImageView is null");
         }
     }
-    // input field - where the user types
+    // input field - user types here
     private void setupInputField() {
         inputField.setEditable(true);
         inputField.setDisable(false);
@@ -708,6 +708,14 @@ public class TypingGameController extends Controller {
         } else {
             loadRandomDrill();
         }
+
+        // Reset chart lines
+        wpmSeries.getData().clear();
+        accuracySeries.getData().clear();
+        streakSeries.getData().clear();
+
+        wpmChart.getData().clear();
+        wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
 
         // Reset and focus input field -Ben
         inputField.clear();
