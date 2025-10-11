@@ -14,10 +14,10 @@ public enum Rank {
     }
 
     public static Rank forTypingSpeed(double WPM) {
-        if (WPM >= 120) return WHALE;
-        if (WPM >= 90)  return SWORDFISH;
-        if (WPM >= 60)  return TUNA;
-        if (WPM >= 30)  return CLOWNFISH;
+        if (WPM >= 50) return WHALE;
+        if (WPM >= 40)  return SWORDFISH;
+        if (WPM >= 30)  return TUNA;
+        if (WPM >= 20)  return CLOWNFISH;
         return KRILL;
     }
 }

@@ -20,7 +20,7 @@
     <!-- Fullscreen Background Image -->
     <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutX="0.0" layoutY="0.0" mouseTransparent="true" pickOnBounds="false">
         <image>
-            <Image url="@images/Gamescreen-BG-WIP-B-v3.png" />
+            <Image url="@images/BG-unlocks/default-rank-bg.png" />
         </image>
     </ImageView>
 
