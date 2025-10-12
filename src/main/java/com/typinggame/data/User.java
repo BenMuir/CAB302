@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a user profile with gameplay statistics and login credentials.
@@ -179,6 +181,18 @@ public class User implements Serializable {
             System.err.println("Retreive ID failed: " + e.getMessage());
             return null;
         }
+    }
+
+    public String themePath() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("KRILL", "/images/BG-unlocks/default-rank-bg.png");
+        map.put("CLOWNFISH", "/images/BG-unlocks/clownfish-rank-bg.png");
+        map.put("TUNA", "/images/BG-unlocks/tuna-rank-bg.png");
+        map.put("SWORDFISH", "/images/BG-unlocks/swordfish-rank-bg.png");
+        map.put("WHALE", "/images/BG-unlocks/whale-rank-bg.png");
+        String theme = getTheme();
+        return map.get(theme);
+
     }
 
     public void updateAllSettings(String displayName, String font, int fontSize, String theme) {

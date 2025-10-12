@@ -50,6 +50,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.awt.*;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +71,8 @@ import java.time.Instant;
 public class TypingGameController extends Controller {
 
     // UI Components
+    @FXML
+    private ImageView bgImage;
     @FXML
     private TextFlow displayFlow;
     @FXML
@@ -315,13 +318,18 @@ public class TypingGameController extends Controller {
 
         Platform.runLater(() -> {
             System.out.println("[Controller] TypingGameController initialized");
-
+            setupBG();
             setupChart();
             setupUserDisplay();
             setupInputField();
         });
     }
         //set up chart
+    private void setupBG() {
+        String resourcePath = user.themePath();
+        Image image = new Image(getClass().getResourceAsStream(resourcePath));
+        bgImage.setImage(image);
+    }
     private void setupChart() {
         if (wpmChart == null) {
             System.out.println("[Controller] wpmChart is null");
