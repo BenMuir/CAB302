@@ -27,8 +27,20 @@
 
 
 
-    <!-- Drill Select -->
+    <!-- Drill Navigation -->
+    <Button fx:id="btnPrev" layoutX="1360.0" layoutY="789.0" onAction="#onPrevDrill" prefHeight="80.0" prefWidth="90.0" styleClass="menu-button" text="&lt;">
+        <font>
+            <Font name="Press Start 2P Regular" size="20.0" />
+        </font>
+    </Button>
+
     <ComboBox fx:id="drillSelect" layoutX="1468.0" layoutY="789.0" prefWidth="320.0" promptText="Select a drill" />
+
+    <Button fx:id="btnNext" layoutX="1800.0" layoutY="789.0" onAction="#onNextDrill" prefHeight="80.0" prefWidth="90.0" styleClass="menu-button" text="&gt;">
+        <font>
+            <Font name="Press Start 2P Regular" size="20.0" />
+        </font>
+    </Button>
 
     <!-- Start Button -->
     <Button fx:id="startButton" layoutX="1443.0" layoutY="683.0" onAction="#startSelectedDrill" prefHeight="101.0" prefWidth="392.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Start Drill">
@@ -65,21 +77,21 @@
 
 
 
-        <!-- On-screen Keyboard (Row 0) -->
-        <Button fx:id="keyBACKQUOTE" layoutX="29.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="`" />
-        <Button fx:id="key1" layoutX="121.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="1" />
-        <Button fx:id="key2" layoutX="213.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="2" />
-        <Button fx:id="key3" layoutX="305.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="3" />
-        <Button fx:id="key4" layoutX="397.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="4" />
-        <Button fx:id="key5" layoutX="489.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="5" />
-        <Button fx:id="key6" layoutX="581.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="6" />
-        <Button fx:id="key7" layoutX="673.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="7" />
-        <Button fx:id="key8" layoutX="765.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="8" />
-        <Button fx:id="key9" layoutX="857.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="9" />
-        <Button fx:id="key0" layoutX="949.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="0" />
-        <Button fx:id="keyMINUS" layoutX="1041.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="-" />
-        <Button fx:id="keyEQUALS" layoutX="1133.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="=" />
-        <Button fx:id="keyBACKSPACE" layoutX="1225.0" layoutY="620.0" prefHeight="80.0" prefWidth="120.0" styleClass="keyboard-button" text="&lt;-" />
+    <!-- On-screen Keyboard (Row 0) -->
+    <Button fx:id="keyBACKQUOTE" layoutX="29.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="`" />
+    <Button fx:id="key1" layoutX="121.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="1" />
+    <Button fx:id="key2" layoutX="213.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="2" />
+    <Button fx:id="key3" layoutX="305.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="3" />
+    <Button fx:id="key4" layoutX="397.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="4" />
+    <Button fx:id="key5" layoutX="489.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="5" />
+    <Button fx:id="key6" layoutX="581.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="6" />
+    <Button fx:id="key7" layoutX="673.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="7" />
+    <Button fx:id="key8" layoutX="765.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="8" />
+    <Button fx:id="key9" layoutX="857.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="9" />
+    <Button fx:id="key0" layoutX="949.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="0" />
+    <Button fx:id="keyMINUS" layoutX="1041.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="-" />
+    <Button fx:id="keyEQUALS" layoutX="1133.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="=" />
+    <Button fx:id="keyBACKSPACE" layoutX="1225.0" layoutY="620.0" prefHeight="80.0" prefWidth="120.0" styleClass="keyboard-button" text="&lt;-" />
 
 
 
@@ -90,74 +102,74 @@
 
 
 
-        <!-- (Row 1) -->
-        <Button fx:id="keyTAB" layoutX="29.0" layoutY="712.0" prefHeight="80.0" prefWidth="120.0" styleClass="keyboard-button" text="Tab" />
-        <Button fx:id="keyQ" layoutX="159.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Q" />
-        <Button fx:id="keyW" layoutX="251.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="W" />
-        <Button fx:id="keyE" layoutX="343.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="E" />
-        <Button fx:id="keyR" layoutX="435.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="R" />
-        <Button fx:id="keyT" layoutX="527.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="T" />
-        <Button fx:id="keyY" layoutX="619.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Y" />
-        <Button fx:id="keyU" layoutX="711.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="U" />
-        <Button fx:id="keyI" layoutX="803.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="I" />
-        <Button fx:id="keyO" layoutX="895.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="O" />
-        <Button fx:id="keyP" layoutX="987.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="P" />
-        <Button fx:id="keyLBRACKET" layoutX="1079.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="[" />
-        <Button fx:id="keyRBRACKET" layoutX="1171.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="]" />
-        <Button fx:id="keyBACKSLASH" layoutX="1263.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="\\" />
+    <!-- (Row 1) -->
+    <Button fx:id="keyTAB" layoutX="29.0" layoutY="712.0" prefHeight="80.0" prefWidth="120.0" styleClass="keyboard-button" text="Tab" />
+    <Button fx:id="keyQ" layoutX="159.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Q" />
+    <Button fx:id="keyW" layoutX="251.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="W" />
+    <Button fx:id="keyE" layoutX="343.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="E" />
+    <Button fx:id="keyR" layoutX="435.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="R" />
+    <Button fx:id="keyT" layoutX="527.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="T" />
+    <Button fx:id="keyY" layoutX="619.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Y" />
+    <Button fx:id="keyU" layoutX="711.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="U" />
+    <Button fx:id="keyI" layoutX="803.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="I" />
+    <Button fx:id="keyO" layoutX="895.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="O" />
+    <Button fx:id="keyP" layoutX="987.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="P" />
+    <Button fx:id="keyLBRACKET" layoutX="1079.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="[" />
+    <Button fx:id="keyRBRACKET" layoutX="1171.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="]" />
+    <Button fx:id="keyBACKSLASH" layoutX="1263.0" layoutY="712.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="\\" />
 
 
-        <!-- Row 2 -->
-        <Button fx:id="keyCAPS" layoutX="29.0" layoutY="804.0" prefHeight="80.0" prefWidth="140.0" styleClass="keyboard-button" text="Caps" />
-        <Button fx:id="keyA" layoutX="179.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="A" />
-        <Button fx:id="keyS" layoutX="271.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="S" />
-        <Button fx:id="keyD" layoutX="363.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="D" />
-        <Button fx:id="keyF" layoutX="455.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="F" />
-        <Button fx:id="keyG" layoutX="547.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="G" />
-        <Button fx:id="keyH" layoutX="639.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="H" />
-        <Button fx:id="keyJ" layoutX="731.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="J" />
-        <Button fx:id="keyK" layoutX="823.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="K" />
-        <Button fx:id="keyL" layoutX="915.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="L" />
-        <Button fx:id="keySEMICOLON" layoutX="1007.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text=";" />
-        <Button fx:id="keyQUOTE" layoutX="1099.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="'" />
-        <Button fx:id="keyENTER" layoutX="1191.0" layoutY="804.0" prefHeight="80.0" prefWidth="152.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="Enter" />
+    <!-- Row 2 -->
+    <Button fx:id="keyCAPS" layoutX="29.0" layoutY="804.0" prefHeight="80.0" prefWidth="140.0" styleClass="keyboard-button" text="Caps" />
+    <Button fx:id="keyA" layoutX="179.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="A" />
+    <Button fx:id="keyS" layoutX="271.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="S" />
+    <Button fx:id="keyD" layoutX="363.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="D" />
+    <Button fx:id="keyF" layoutX="455.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="F" />
+    <Button fx:id="keyG" layoutX="547.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="G" />
+    <Button fx:id="keyH" layoutX="639.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="H" />
+    <Button fx:id="keyJ" layoutX="731.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="J" />
+    <Button fx:id="keyK" layoutX="823.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="K" />
+    <Button fx:id="keyL" layoutX="915.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="L" />
+    <Button fx:id="keySEMICOLON" layoutX="1007.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text=";" />
+    <Button fx:id="keyQUOTE" layoutX="1099.0" layoutY="804.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="'" />
+    <Button fx:id="keyENTER" layoutX="1191.0" layoutY="804.0" prefHeight="80.0" prefWidth="152.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="Enter" />
 
-        <!-- Row 3 continued -->
-        <Button fx:id="keyLSHIFT" layoutX="29.0" layoutY="896.0" prefHeight="80.0" prefWidth="160.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="Shift" />
-        <Button fx:id="keyZ" layoutX="199.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Z" />
-        <Button fx:id="keyX" layoutX="291.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="X" />
-        <Button fx:id="keyC" layoutX="383.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="C" />
-        <Button fx:id="keyV" layoutX="475.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="V" />
-        <Button fx:id="keyB" layoutX="567.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="B" />
-        <Button fx:id="keyN" layoutX="659.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="N" />
-        <Button fx:id="keyM" layoutX="751.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="M" />
-        <Button fx:id="keyCOMMA" layoutX="843.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="," />
-        <Button fx:id="keyPERIOD" layoutX="935.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="." />
-        <Button fx:id="keySLASH" layoutX="1027.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="/" />
-        <Button fx:id="keyRSHIFT" layoutX="1119.0" layoutY="896.0" prefHeight="80.0" prefWidth="224.0" styleClass="keyboard-button" text="Shift" />
+    <!-- Row 3 continued -->
+    <Button fx:id="keyLSHIFT" layoutX="29.0" layoutY="896.0" prefHeight="80.0" prefWidth="160.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="Shift" />
+    <Button fx:id="keyZ" layoutX="199.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="Z" />
+    <Button fx:id="keyX" layoutX="291.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="X" />
+    <Button fx:id="keyC" layoutX="383.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="C" />
+    <Button fx:id="keyV" layoutX="475.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="V" />
+    <Button fx:id="keyB" layoutX="567.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="B" />
+    <Button fx:id="keyN" layoutX="659.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="N" />
+    <Button fx:id="keyM" layoutX="751.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="M" />
+    <Button fx:id="keyCOMMA" layoutX="843.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="," />
+    <Button fx:id="keyPERIOD" layoutX="935.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="." />
+    <Button fx:id="keySLASH" layoutX="1027.0" layoutY="896.0" prefHeight="80.0" prefWidth="80.0" styleClass="keyboard-button" text="/" />
+    <Button fx:id="keyRSHIFT" layoutX="1119.0" layoutY="896.0" prefHeight="80.0" prefWidth="224.0" styleClass="keyboard-button" text="Shift" />
 
 
-        <!-- Spacebar -->
-        <Button fx:id="keySPACE" layoutX="332.0" layoutY="987.0" prefHeight="80.0" prefWidth="563.0" styleClass="keyboard-button" text="SPACE" />
-          <Button layoutX="1663.0" layoutY="953.0" onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
-              <font>
+    <!-- Spacebar -->
+    <Button fx:id="keySPACE" layoutX="332.0" layoutY="987.0" prefHeight="80.0" prefWidth="563.0" styleClass="keyboard-button" text="SPACE" />
+    <Button layoutX="1663.0" layoutY="953.0" onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
+        <font>
             <Font name="Press Start 2P Regular" size="22.0" />
-         </font>
-          </Button>
-          <Button layoutX="1433.0" layoutY="954.0" onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Restart">
-              <font>
+        </font>
+    </Button>
+    <Button layoutX="1433.0" layoutY="954.0" onAction="#restartGame" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Restart">
+        <font>
             <Font name="Press Start 2P Regular" size="22.0" />
-         </font>
-          </Button>
+        </font>
+    </Button>
 
-          <!-- Typing Input -->
+    <!-- Typing Input -->
     <TextField fx:id="inputField" layoutX="169.0" layoutY="444.0" prefHeight="80.0" prefWidth="966.0" promptText="Type here..." style="-fx-background-color: transparent; -fx-background-radius: 14; -fx-font-size: 24;">
         <font>
             <Font name="Press Start 2P Regular" size="24.0" />
         </font>
     </TextField>
 
-          <LineChart fx:id="wpmChart" animated="false" layoutX="1386.0" layoutY="210.0" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="449.0">
+    <LineChart fx:id="wpmChart" animated="false" layoutX="1386.0" layoutY="210.0" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="449.0">
         <xAxis>
             <NumberAxis label="Time (s)" />
         </xAxis>
@@ -168,4 +180,4 @@
 
 
 
-    </AnchorPane>
+</AnchorPane>

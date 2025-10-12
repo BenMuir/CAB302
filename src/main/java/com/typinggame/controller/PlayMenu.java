@@ -6,20 +6,24 @@ import javafx.fxml.FXML;
 public class PlayMenu extends Controller {
 
     @FXML
-    private void onAddCustomDrill(ActionEvent e) {
-        // Use the base Controller helper, like your other handlers do
+    public void onAddCustomDrill(ActionEvent e) {
+        // Opens the Custom Drill view
         displayScene("/customdrillview.fxml", e); // make sure filename matches exactly
     }
 
-    // existing handlers (examples)
+    @FXML
     public void learnModeButtonPressed(ActionEvent event) {
-        displayScene("/GameView.fxml", event);
+        // Go to the new Difficulty Select page instead of directly to GameView
+        displayScene("/DifficultySelectView.fxml", event);
     }
 
+    @FXML
     public void raceModeButtonPressed(ActionEvent event) {
     }
 
+    @FXML
     public void backButtonPressed(ActionEvent event) {
-        displayScene("/mainmenu.fxml", event); // fix any typos in filename
+        // Return to main menu
+        displayScene("/mainmenu.fxml", event);
     }
 }

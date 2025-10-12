@@ -56,6 +56,7 @@ public class RegisterController extends Controller {
         } else {
             errorResponse.setText("Email in use");
         }
+
     }
 
     @FXML

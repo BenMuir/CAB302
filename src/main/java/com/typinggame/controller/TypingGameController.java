@@ -31,9 +31,8 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
 //keyboard
-
 import javafx.scene.input.KeyCode;
-import javafx.scene.control.Button;
+// (You already import Button above; keep only one import)
 import javafx.scene.layout.GridPane;
 import javafx.scene.Node;
 
@@ -43,6 +42,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.time.Instant;
+
+// ✅ NEW: read selected level/drill from the difficulty picker
+import com.typinggame.config.AppContext;
 
 /**
  * TypingGameController handles gameplay logic, UI updates, and user stat tracking.
@@ -61,12 +63,11 @@ public class TypingGameController extends Controller {
     @FXML private Label streakLabel;
     @FXML private ComboBox<Drill> drillSelect;
     @FXML private Button startButton;
+
     //keyboard
     private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
-
     //keyboard row 0
-
     @FXML private Button keyBACKQUOTE;
     @FXML private Button key1;
     @FXML private Button key2;
@@ -130,20 +131,18 @@ public class TypingGameController extends Controller {
     //row 4
     @FXML private Button keySPACE;
 
-
     // Modifier state
     private boolean[] capsActive = {false};
     private boolean leftShiftActive = false;
     private boolean rightShiftActive = false;
-// WPM
+
+    // WPM
     private final Deque<Integer> wpmHistory = new ArrayDeque<>();
     @FXML private LineChart<Number, Number> wpmChart;
     private final XYChart.Series<Number, Number> wpmSeries = new XYChart.Series<>();
 
     // ACCURACY
     private final XYChart.Series<Number, Number> accuracySeries = new XYChart.Series<>();
-
-
 
     // Game State
     private String targetText;
@@ -185,6 +184,7 @@ public class TypingGameController extends Controller {
 
         return 0;
     }
+
 
     /**
      * Initializes game state and input handling
@@ -229,7 +229,7 @@ public class TypingGameController extends Controller {
             int userId   = resolveUserId();
             int unlocked = new ProgressService().unlockedUpTo(userId);
 
-            var options = drillRepo.findUpToTier(unlocked);
+            var options = drillRepo.findUpToTier(unlocked); // (compat: maps to level)
 
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);
@@ -247,6 +247,30 @@ public class TypingGameController extends Controller {
                 currentDrill = options.isEmpty() ? null : options.get(0);
                 targetText = (currentDrill != null) ? currentDrill.body : SentenceProvider.getSentence();
             }
+
+            // ✅ NEW: if a level or drill was chosen on the Difficulty screen, honour it here.
+            try {
+                Integer forcedDrillId = AppContext.get().getSelectedDrillId();
+                Integer forcedLevel   = AppContext.get().getSelectedTier(); // name kept for compat
+
+                if (forcedDrillId != null) {
+                    drillRepo.findById(forcedDrillId).ifPresent(d -> {
+                        currentDrill = d;
+                        targetText   = d.body;
+                        if (drillSelect != null) drillSelect.getSelectionModel().select(d);
+                    });
+                } else if (forcedLevel != null) {
+                    drillRepo.findFirstDrillInLevel(forcedLevel).ifPresent(d -> {
+                        currentDrill = d;
+                        targetText   = d.body;
+                        if (drillSelect != null) drillSelect.getSelectionModel().select(d);
+                    });
+                }
+
+                // Clear forced selection so future entries behave normally
+                AppContext.get().setSelectedDrillId(null);
+                AppContext.get().setSelectedTier(null);
+            } catch (Throwable ignore) {}
         } catch (Exception ex) {
             System.err.println("[GameView] drill init skipped: " + ex.getMessage());
             currentDrill = null;
@@ -310,68 +334,65 @@ public class TypingGameController extends Controller {
             }
         });
 
-
         Platform.runLater(() -> {
-                    // Key mapping
-                    keyMap.put(KeyCode.BACK_QUOTE, keyBACKQUOTE);
-                    keyMap.put(KeyCode.DIGIT1, key1);
-                    keyMap.put(KeyCode.DIGIT2, key2);
-                    keyMap.put(KeyCode.DIGIT3, key3);
-                    keyMap.put(KeyCode.DIGIT4, key4);
-                    keyMap.put(KeyCode.DIGIT5, key5);
-                    keyMap.put(KeyCode.DIGIT6, key6);
-                    keyMap.put(KeyCode.DIGIT7, key7);
-                    keyMap.put(KeyCode.DIGIT8, key8);
-                    keyMap.put(KeyCode.DIGIT9, key9);
-                    keyMap.put(KeyCode.DIGIT0, key0);
-                    keyMap.put(KeyCode.MINUS, keyMINUS);
-                    keyMap.put(KeyCode.EQUALS, keyEQUALS);
-                    keyMap.put(KeyCode.BACK_SPACE, keyBACKSPACE);
+            // Key mapping
+            keyMap.put(KeyCode.BACK_QUOTE, keyBACKQUOTE);
+            keyMap.put(KeyCode.DIGIT1, key1);
+            keyMap.put(KeyCode.DIGIT2, key2);
+            keyMap.put(KeyCode.DIGIT3, key3);
+            keyMap.put(KeyCode.DIGIT4, key4);
+            keyMap.put(KeyCode.DIGIT5, key5);
+            keyMap.put(KeyCode.DIGIT6, key6);
+            keyMap.put(KeyCode.DIGIT7, key7);
+            keyMap.put(KeyCode.DIGIT8, key8);
+            keyMap.put(KeyCode.DIGIT9, key9);
+            keyMap.put(KeyCode.DIGIT0, key0);
+            keyMap.put(KeyCode.MINUS, keyMINUS);
+            keyMap.put(KeyCode.EQUALS, keyEQUALS);
+            keyMap.put(KeyCode.BACK_SPACE, keyBACKSPACE);
 
-                    keyMap.put(KeyCode.TAB, keyTAB);
-                    keyMap.put(KeyCode.Q, keyQ);
-                    keyMap.put(KeyCode.W, keyW);
-                    keyMap.put(KeyCode.E, keyE);
-                    keyMap.put(KeyCode.R, keyR);
-                    keyMap.put(KeyCode.T, keyT);
-                    keyMap.put(KeyCode.Y, keyY);
-                    keyMap.put(KeyCode.U, keyU);
-                    keyMap.put(KeyCode.I, keyI);
-                    keyMap.put(KeyCode.O, keyO);
-                    keyMap.put(KeyCode.P, keyP);
-                    keyMap.put(KeyCode.OPEN_BRACKET, keyLBRACKET);
-                    keyMap.put(KeyCode.CLOSE_BRACKET, keyRBRACKET);
-                    keyMap.put(KeyCode.BACK_SLASH, keyBACKSLASH);
+            keyMap.put(KeyCode.TAB, keyTAB);
+            keyMap.put(KeyCode.Q, keyQ);
+            keyMap.put(KeyCode.W, keyW);
+            keyMap.put(KeyCode.E, keyE);
+            keyMap.put(KeyCode.R, keyR);
+            keyMap.put(KeyCode.T, keyT);
+            keyMap.put(KeyCode.Y, keyY);
+            keyMap.put(KeyCode.U, keyU);
+            keyMap.put(KeyCode.I, keyI);
+            keyMap.put(KeyCode.O, keyO);
+            keyMap.put(KeyCode.P, keyP);
+            keyMap.put(KeyCode.OPEN_BRACKET, keyLBRACKET);
+            keyMap.put(KeyCode.CLOSE_BRACKET, keyRBRACKET);
+            keyMap.put(KeyCode.BACK_SLASH, keyBACKSLASH);
 
-                    keyMap.put(KeyCode.CAPS, keyCAPS);
-                    keyMap.put(KeyCode.A, keyA);
-                    keyMap.put(KeyCode.S, keyS);
-                    keyMap.put(KeyCode.D, keyD);
-                    keyMap.put(KeyCode.F, keyF);
-                    keyMap.put(KeyCode.G, keyG);
-                    keyMap.put(KeyCode.H, keyH);
-                    keyMap.put(KeyCode.J, keyJ);
-                    keyMap.put(KeyCode.K, keyK);
-                    keyMap.put(KeyCode.L, keyL);
-                    keyMap.put(KeyCode.SEMICOLON, keySEMICOLON);
-                    keyMap.put(KeyCode.QUOTE, keyQUOTE);
-                    keyMap.put(KeyCode.ENTER, keyENTER);
+            keyMap.put(KeyCode.CAPS, keyCAPS);
+            keyMap.put(KeyCode.A, keyA);
+            keyMap.put(KeyCode.S, keyS);
+            keyMap.put(KeyCode.D, keyD);
+            keyMap.put(KeyCode.F, keyF);
+            keyMap.put(KeyCode.G, keyG);
+            keyMap.put(KeyCode.H, keyH);
+            keyMap.put(KeyCode.J, keyJ);
+            keyMap.put(KeyCode.K, keyK);
+            keyMap.put(KeyCode.L, keyL);
+            keyMap.put(KeyCode.SEMICOLON, keySEMICOLON);
+            keyMap.put(KeyCode.QUOTE, keyQUOTE);
+            keyMap.put(KeyCode.ENTER, keyENTER);
 
-                    keyMap.put(KeyCode.SHIFT, keyLSHIFT); // Left Shift and Right shift light up at same time
-                    keyMap.put(KeyCode.Z, keyZ);
-                    keyMap.put(KeyCode.X, keyX);
-                    keyMap.put(KeyCode.C, keyC);
-                    keyMap.put(KeyCode.V, keyV);
-                    keyMap.put(KeyCode.B, keyB);
-                    keyMap.put(KeyCode.N, keyN);
-                    keyMap.put(KeyCode.M, keyM);
-                    keyMap.put(KeyCode.COMMA, keyCOMMA);
-                    keyMap.put(KeyCode.PERIOD, keyPERIOD);
-                    keyMap.put(KeyCode.SLASH, keySLASH);
+            keyMap.put(KeyCode.SHIFT, keyLSHIFT); // Left Shift and Right shift light up at same time
+            keyMap.put(KeyCode.Z, keyZ);
+            keyMap.put(KeyCode.X, keyX);
+            keyMap.put(KeyCode.C, keyC);
+            keyMap.put(KeyCode.V, keyV);
+            keyMap.put(KeyCode.B, keyB);
+            keyMap.put(KeyCode.N, keyN);
+            keyMap.put(KeyCode.M, keyM);
+            keyMap.put(KeyCode.COMMA, keyCOMMA);
+            keyMap.put(KeyCode.PERIOD, keyPERIOD);
+            keyMap.put(KeyCode.SLASH, keySLASH);
 
-
-                    keyMap.put(KeyCode.SPACE, keySPACE);
-
+            keyMap.put(KeyCode.SPACE, keySPACE);
 
             inputField.setOnKeyPressed(event -> {
                 KeyCode code = event.getCode();
@@ -475,11 +496,11 @@ public class TypingGameController extends Controller {
                     return;
                 }
 
-
                 unhighlightKey(code);
             });
         });
-        ;}
+        ;
+    }
 
     // Keyboard
     private void highlightKey(KeyCode code, boolean isCorrect) {
@@ -489,18 +510,12 @@ public class TypingGameController extends Controller {
             if (code == KeyCode.CAPS) return;
             // Wren - Testing the text fill with the newly styled keycaps
             if (isCorrect) {
-                key.setStyle("-fx-text-fill: #00ff00;"); //-fx-text-fill: black;"); - old line
+                key.setStyle("-fx-text-fill: #00ff00;");
             } else {
-                key.setStyle("-fx-text-fill: #ff4444;"); // -fx-text-fill: white;"); - old line
+                key.setStyle("-fx-text-fill: #ff4444;");
             }
         }
     }
-    //              Original Change the Button background Colout for above
-    //                key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
-    //            } else {
-    //                key.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
-    //            }
-    //        }
 
     private void unhighlightKey(KeyCode code) {
         Button key = keyMap.get(code);
@@ -510,8 +525,6 @@ public class TypingGameController extends Controller {
             key.setStyle(""); // Reset to default
         }
     }
-
-
 
     /**
      * starts selected drill
@@ -579,7 +592,6 @@ public class TypingGameController extends Controller {
     private void ToProfile(ActionEvent event) {
         displayScene("/playmenu.fxml", event);
     }
-
 
     /**
      * Load a specific drill and (re)start the game.
@@ -710,6 +722,35 @@ public class TypingGameController extends Controller {
         accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
         streakLabel.setText("Streak: " + bestStreak);
     }
+
+    /**
+     * Go to the previous drill in the list
+     */
+    @FXML
+    private void onPrevDrill(ActionEvent event) {
+        if (drillSelect != null && !drillSelect.getItems().isEmpty()) {
+            int index = drillSelect.getSelectionModel().getSelectedIndex();
+            if (index > 0) {
+                drillSelect.getSelectionModel().select(index - 1);
+                loadDrill(drillSelect.getSelectionModel().getSelectedItem());
+            }
+        }
+    }
+
+    /**
+     * Go to the next drill in the list
+     */
+    @FXML
+    private void onNextDrill(ActionEvent event) {
+        if (drillSelect != null && !drillSelect.getItems().isEmpty()) {
+            int index = drillSelect.getSelectionModel().getSelectedIndex();
+            if (index < drillSelect.getItems().size() - 1) {
+                drillSelect.getSelectionModel().select(index + 1);
+                loadDrill(drillSelect.getSelectionModel().getSelectedItem());
+            }
+        }
+    }
 }
+
 
 

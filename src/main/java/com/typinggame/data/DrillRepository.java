@@ -43,7 +43,7 @@ public class DrillRepository {
         }
     }
 
-    /** Get exactly the drills for a specific level (expected 3). */
+    /** Get exactly the drills for a specific level. */
     public List<Drill> findByLevel(int level) {
         final String sql = "SELECT id, title, body, level FROM drills WHERE level = ? ORDER BY id";
         try (Connection c = Database.getConnection();
@@ -86,16 +86,35 @@ public class DrillRepository {
         }
     }
 
+    // -------------------------------------------------
+    // Helpers for new difficulty selection / flow
+    // -------------------------------------------------
+
+    /** Get the first drill in a level (lowest id). */
+    public Optional<Drill> findFirstDrillInLevel(int level) {
+        final String sql = "SELECT id, title, body, level FROM drills WHERE level = ? ORDER BY id ASC LIMIT 1";
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, level);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return Optional.of(row(rs));
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("findFirstDrillInLevel failed", e);
+        }
+    }
+
     // -----------------------------
     // Custom drill operations
     // -----------------------------
 
-    /** Insert a custom drill. Sets both 'level' and legacy 'tier' for compatibility. */
+    /** Insert a custom drill. */
     public int insertCustom(Drill d) {
         String title = d.title == null ? "" : d.title.trim();
         String body = d.body == null ? "" : d.body.trim();
-        int level = Math.max(1, d.level);              // prefer new field
-        int tierCompat = Math.max(1, d.tier);          // mirror old field if used
+        int level = Math.max(1, d.level);
+        int tierCompat = Math.max(1, d.tier); // mirror old field if still present
 
         if (title.isEmpty()) throw new IllegalArgumentException("title must not be empty");
         if (body.isEmpty()) throw new IllegalArgumentException("content must not be empty");
@@ -105,9 +124,9 @@ public class DrillRepository {
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, title);
             ps.setString(2, body);
-            ps.setInt(3, tierCompat); // keep tier in sync for any legacy code/queries
+            ps.setInt(3, tierCompat);
             ps.setInt(4, level);
-            ps.setInt(5, 1);          // is_custom
+            ps.setInt(5, 1);
             ps.setString(6, "local");
             ps.setLong(7, System.currentTimeMillis());
             ps.executeUpdate();
@@ -180,7 +199,6 @@ public class DrillRepository {
     // Row mapper
     // -----------------------------
     private static Drill row(ResultSet rs) throws SQLException {
-        // Uses the new Drill constructor that takes (id, title, body, level).
         return new Drill(
                 rs.getInt("id"),
                 rs.getString("title"),
