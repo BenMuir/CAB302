@@ -52,6 +52,7 @@ import javafx.scene.image.Image;
 
 import javafx.scene.media.AudioClip;
 import java.awt.*;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,6 +73,8 @@ import java.time.Instant;
 public class TypingGameController extends Controller {
 
     // UI Components
+    @FXML
+    private ImageView bgImage;
     @FXML
     private TextFlow displayFlow;
     @FXML
@@ -344,13 +347,18 @@ public class TypingGameController extends Controller {
 
         Platform.runLater(() -> {
             System.out.println("[Controller] TypingGameController initialized");
-
+            setupBG();
             setupChart();
             setupUserDisplay();
             setupInputField();
         });
     }
         //set up chart
+    private void setupBG() {
+        String resourcePath = user.themePath();
+        Image image = new Image(getClass().getResourceAsStream(resourcePath));
+        bgImage.setImage(image);
+    }
     private void setupChart() {
         if (wpmChart == null) {
             System.out.println("[Controller] wpmChart is null");
@@ -405,7 +413,7 @@ public class TypingGameController extends Controller {
 
         if (rankBadgeImageView != null) {
             try {
-                Image badge = RankLoader.load(rank);
+                Image badge = RankLoader.loadIcon(rank);
                 rankBadgeImageView.setImage(badge);
                 System.out.println("[Controller] Rank badge loaded: " + rank.resourcePath);
             } catch (Exception e) {

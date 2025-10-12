@@ -8,6 +8,7 @@ import com.typinggame.data.UserManager;
 import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
+import com.typinggame.util.Rank;
 import com.typinggame.util.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * OptionsMenuController handles navigation from the options menu
@@ -39,17 +42,47 @@ public class OptionsMenuController extends Controller{
     @FXML private ComboBox<String> themeCombo;
     private UserManager userManager;
     private User user;
+    private Rank userRank;
+
 
     /**
      * Hard coding the options for now. Will make a better solution probably
      */
+    public List<String> lowerRanksHelper(Rank rank) {
+        List<String> ranks = new ArrayList<String>();
+        if (rank.name().equals("WHALE")) {
+            ranks.add("WHALE");
+            ranks.add("SWORDFISH");
+            ranks.add("TUNA");
+            ranks.add("CLOWNFISH");
+            ranks.add("KRILL");
+        } else if (rank.name().equals("SWORDFISH")) {
+            ranks.add("SWORDFISH");
+            ranks.add("TUNA");
+            ranks.add("CLOWNFISH");
+            ranks.add("KRILL");
+        } else if (rank.name().equals("TUNA")) {
+            ranks.add("TUNA");
+            ranks.add("CLOWNFISH");
+            ranks.add("KRILL");
+        } else if (rank.name().equals("CLOWNFISH")) {
+            ranks.add("CLOWNFISH");
+            ranks.add("KRILL");
+        } else {
+            ranks.add("KRILL");
+        }
+        return ranks;
+    }
+
     @FXML
     public void initialize() {
         this.userManager = AppContext.userManager;
         this.user = userManager.getCurrentUser();
+        this.userRank = Rank.forTypingSpeed(user.getBestWPM());
         ObservableList<String> fontOptions = FXCollections.observableArrayList("Pixels", "System", "Fortnite or something idk");
         ObservableList<String> fontSizeOptions = FXCollections.observableArrayList("8", "16", "32");
-        ObservableList<String> themeOptions = FXCollections.observableArrayList("Ocean", "Light", "Dark");
+        //ObservableList<String> themeOptions = FXCollections.observableArrayList("Ocean", "Light", "Dark");
+        ObservableList<String> themeOptions = FXCollections.observableArrayList(lowerRanksHelper(userRank));
         fontCombo.setItems(fontOptions);
         fontSizeCombo.setItems(fontSizeOptions);
         themeCombo.setItems(themeOptions);
