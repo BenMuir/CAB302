@@ -40,17 +40,12 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 
 //keyboard
-
-
 import javafx.geometry.Insets;
-
-
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
 import javafx.scene.media.AudioClip;
+
 import java.awt.*;
 import java.net.URL;
 import java.sql.Connection;
@@ -61,7 +56,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;            // --- NEW
+import java.util.ArrayList;       // --- NEW
+import java.util.Objects;         // --- NEW
 import java.time.Instant;
 
 /**
@@ -91,129 +88,77 @@ public class TypingGameController extends Controller {
     private ComboBox<Drill> drillSelect;
     @FXML
     private Button startButton;
+
+    // --- NEW: Drill navigation buttons (wire these in FXML)
+    @FXML private Button prevBtn; // fx:id="prevBtn"
+    @FXML private Button nextBtn; // fx:id="nextBtn"
+
     //keyboard
     private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
-
     //keyboard row 0
-
-    @FXML
-    private Button keyBACKQUOTE;
-    @FXML
-    private Button key1;
-    @FXML
-    private Button key2;
-    @FXML
-    private Button key3;
-    @FXML
-    private Button key4;
-    @FXML
-    private Button key5;
-    @FXML
-    private Button key6;
-    @FXML
-    private Button key7;
-    @FXML
-    private Button key8;
-    @FXML
-    private Button key9;
-    @FXML
-    private Button key0;
-    @FXML
-    private Button keyMINUS;
-    @FXML
-    private Button keyEQUALS;
-    @FXML
-    private Button keyBACKSPACE;
+    @FXML private Button keyBACKQUOTE;
+    @FXML private Button key1;
+    @FXML private Button key2;
+    @FXML private Button key3;
+    @FXML private Button key4;
+    @FXML private Button key5;
+    @FXML private Button key6;
+    @FXML private Button key7;
+    @FXML private Button key8;
+    @FXML private Button key9;
+    @FXML private Button key0;
+    @FXML private Button keyMINUS;
+    @FXML private Button keyEQUALS;
+    @FXML private Button keyBACKSPACE;
 
     //row 1
-    @FXML
-    private Button keyTAB;
-    @FXML
-    private Button keyQ;
-    @FXML
-    private Button keyW;
-    @FXML
-    private Button keyE;
-    @FXML
-    private Button keyR;
-    @FXML
-    private Button keyT;
-    @FXML
-    private Button keyY;
-    @FXML
-    private Button keyU;
-    @FXML
-    private Button keyI;
-    @FXML
-    private Button keyO;
-    @FXML
-    private Button keyP;
-    @FXML
-    private Button keyLBRACKET;
-    @FXML
-    private Button keyRBRACKET;
-    @FXML
-    private Button keyBACKSLASH;
+    @FXML private Button keyTAB;
+    @FXML private Button keyQ;
+    @FXML private Button keyW;
+    @FXML private Button keyE;
+    @FXML private Button keyR;
+    @FXML private Button keyT;
+    @FXML private Button keyY;
+    @FXML private Button keyU;
+    @FXML private Button keyI;
+    @FXML private Button keyO;
+    @FXML private Button keyP;
+    @FXML private Button keyLBRACKET;
+    @FXML private Button keyRBRACKET;
+    @FXML private Button keyBACKSLASH;
 
     //row 2
-    @FXML
-    private Button keyCAPS;
-    @FXML
-    private Button keyA;
-    @FXML
-    private Button keyS;
-    @FXML
-    private Button keyD;
-    @FXML
-    private Button keyF;
-    @FXML
-    private Button keyG;
-    @FXML
-    private Button keyH;
-    @FXML
-    private Button keyJ;
-    @FXML
-    private Button keyK;
-    @FXML
-    private Button keyL;
-    @FXML
-    private Button keySEMICOLON;
-    @FXML
-    private Button keyQUOTE;
-    @FXML
-    private Button keyENTER;
+    @FXML private Button keyCAPS;
+    @FXML private Button keyA;
+    @FXML private Button keyS;
+    @FXML private Button keyD;
+    @FXML private Button keyF;
+    @FXML private Button keyG;
+    @FXML private Button keyH;
+    @FXML private Button keyJ;
+    @FXML private Button keyK;
+    @FXML private Button keyL;
+    @FXML private Button keySEMICOLON;
+    @FXML private Button keyQUOTE;
+    @FXML private Button keyENTER;
 
     //row 3
-    @FXML
-    private Button keyLSHIFT;
-    @FXML
-    private Button keyZ;
-    @FXML
-    private Button keyX;
-    @FXML
-    private Button keyC;
-    @FXML
-    private Button keyV;
-    @FXML
-    private Button keyB;
-    @FXML
-    private Button keyN;
-    @FXML
-    private Button keyM;
-    @FXML
-    private Button keyCOMMA;
-    @FXML
-    private Button keyPERIOD;
-    @FXML
-    private Button keySLASH;
-    @FXML
-    private Button keyRSHIFT;
+    @FXML private Button keyLSHIFT;
+    @FXML private Button keyZ;
+    @FXML private Button keyX;
+    @FXML private Button keyC;
+    @FXML private Button keyV;
+    @FXML private Button keyB;
+    @FXML private Button keyN;
+    @FXML private Button keyM;
+    @FXML private Button keyCOMMA;
+    @FXML private Button keyPERIOD;
+    @FXML private Button keySLASH;
+    @FXML private Button keyRSHIFT;
 
     //row 4
-    @FXML
-    private Button keySPACE;
-
+    @FXML private Button keySPACE;
 
     // Modifier state
     private boolean[] capsActive = {false};
@@ -235,6 +180,10 @@ public class TypingGameController extends Controller {
     private TypingStats stats;
     private Drill currentDrill;
 
+    // --- NEW: Navigation state
+    private final List<Drill> navDrills = new ArrayList<>();
+    private int currentIndex = -1;
+
     // Data access
     private final SessionRepository sessionRepo = new SessionRepository();
     private final DrillRepository drillRepo = new DrillRepository();
@@ -248,10 +197,6 @@ public class TypingGameController extends Controller {
         this.userManager = manager;
         this.currentUser = (manager != null) ? manager.getCurrentUser() : null;
     }
-
-
-
-
 
     private int resolveUserId() {
         try {
@@ -276,7 +221,6 @@ public class TypingGameController extends Controller {
         return 0;
     }
 
-
     // Welcome popup appears on game start
     private void showWelcomePopup(Window owner) {
         Stage popup = new Stage();
@@ -295,8 +239,6 @@ public class TypingGameController extends Controller {
         popup.showAndWait();
     }
 
-
-
     // name and rank labels
     public Label nameLabel;
     public Label rankLabel;
@@ -305,15 +247,12 @@ public class TypingGameController extends Controller {
     @FXML
     private ImageView rankBadgeImageView;
 
-
     // username display
     @FXML
     private Label usernameLabel;
     private boolean usernameApplied = false;
 
-
     // sound files
-    // 3 correct sounds of bubbles to give variety/depth to user experience. 1 incorrect for recognisable consistency of errors
     private AudioClip[] correctSounds;
     private AudioClip incorrectSound;
 
@@ -353,12 +292,14 @@ public class TypingGameController extends Controller {
             setupInputField();
         });
     }
-        //set up chart
+
+    //set up chart
     private void setupBG() {
         String resourcePath = user.themePath();
         Image image = new Image(getClass().getResourceAsStream(resourcePath));
         bgImage.setImage(image);
     }
+
     private void setupChart() {
         if (wpmChart == null) {
             System.out.println("[Controller] wpmChart is null");
@@ -388,6 +329,7 @@ public class TypingGameController extends Controller {
             System.out.println("[Controller] wpmChart scene is null");
         }
     }
+
     //user display - name,rank,badge
     private void setupUserDisplay() {
         if (user == null) {
@@ -423,6 +365,7 @@ public class TypingGameController extends Controller {
             System.out.println("[Controller] rankBadgeImageView is null");
         }
     }
+
     // input field - user types here
     private void setupInputField() {
         inputField.setEditable(true);
@@ -462,10 +405,25 @@ public class TypingGameController extends Controller {
                 currentDrill = options.isEmpty() ? null : options.get(0);
                 targetText = (currentDrill != null) ? currentDrill.body : SentenceProvider.getSentence();
             }
+
+            // --- NEW: seed navigation list and index
+            navDrills.clear();
+            navDrills.addAll(options);
+            currentIndex = (!navDrills.isEmpty() && currentDrill != null)
+                    ? navDrills.indexOf(currentDrill)
+                    : (navDrills.isEmpty() ? -1 : 0);
+            if (currentIndex < 0 && !navDrills.isEmpty()) currentIndex = 0;
+            updateNavButtons();
+
         } catch (Exception ex) {
             System.err.println("[GameView] drill init skipped: " + ex.getMessage());
             currentDrill = null;
             targetText = SentenceProvider.getSentence();
+
+            // --- NEW: nav fallback
+            navDrills.clear();
+            currentIndex = -1;
+            updateNavButtons();
         }
 
         stats = new TypingStats(targetText);
@@ -603,13 +561,11 @@ public class TypingGameController extends Controller {
             keyMap.put(KeyCode.PERIOD, keyPERIOD);
             keyMap.put(KeyCode.SLASH, keySLASH);
 
-
             keyMap.put(KeyCode.SPACE, keySPACE);
 
             inputField.setOnKeyPressed(event -> {
                 KeyCode code = event.getCode();
                 String input = inputField.getText();
-                int index = input.length();
 
                 System.out.println("Pressed: " + code + " | Text: '" + event.getText() + "'");
 
@@ -653,8 +609,6 @@ public class TypingGameController extends Controller {
                     keyBACKSPACE.setStyle("-fx-background-color: #ffd700;");
                     return;
                 }
-
-
             });
 
             inputField.setOnKeyReleased(event -> {
@@ -692,7 +646,6 @@ public class TypingGameController extends Controller {
                     return;
                 }
 
-
                 unhighlightKey(code);
             });
         });
@@ -705,20 +658,13 @@ public class TypingGameController extends Controller {
         if (key != null) {
             // Skip styling Caps entirely — let toggle handle it
             if (code == KeyCode.CAPS) return;
-            // Wren - Testing the text fill with the newly styled keycaps
             if (isCorrect) {
-                key.setStyle("-fx-text-fill: #00ff00;"); //-fx-text-fill: black;"); - old line
+                key.setStyle("-fx-text-fill: #00ff00;");
             } else {
-                key.setStyle("-fx-text-fill: #ff4444;"); // -fx-text-fill: white;"); - old line
+                key.setStyle("-fx-text-fill: #ff4444;");
             }
         }
     }
-    //              Original Change the Button background Colout for above
-    //                key.setStyle("-fx-background-color: #00ff00; -fx-text-fill: black;");
-    //            } else {
-    //                key.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
-    //            }
-    //        }
 
     private void unhighlightKey(KeyCode code) {
         Button key = keyMap.get(code);
@@ -728,7 +674,6 @@ public class TypingGameController extends Controller {
             key.setStyle(""); // Reset to default
         }
     }
-
 
     /**
      * starts selected drill
@@ -746,8 +691,19 @@ public class TypingGameController extends Controller {
 
         if (choice != null) {
             loadDrill(choice);
+
+            // --- NEW: sync index and buttons after manual selection
+            if (!navDrills.isEmpty()) {
+                int idx = navDrills.indexOf(choice);
+                if (idx >= 0) currentIndex = idx;
+                updateNavButtons();
+            }
         } else {
             loadRandomDrill();
+
+            // --- NEW: clear selection context if random
+            currentIndex = -1;
+            updateNavButtons();
         }
 
         // Reset chart lines
@@ -808,11 +764,11 @@ public class TypingGameController extends Controller {
         if (d != null) loadDrill(d);
         else loadRandomDrill();
     }
+
     @FXML
     private void ToProfile(ActionEvent event) {
         displayScene("/playmenu.fxml", event);
     }
-
 
     /**
      * Load a specific drill and (re)start the game.
@@ -885,6 +841,18 @@ public class TypingGameController extends Controller {
                     drillSelect.getSelectionModel().selectFirst();
                 }
             }
+
+            // --- NEW: Refresh navigation list & index after potential unlock changes
+            navDrills.clear();
+            navDrills.addAll(options);
+            if (currentDrill != null) {
+                int idx = navDrills.indexOf(currentDrill);
+                currentIndex = (idx >= 0) ? idx : (!navDrills.isEmpty() ? 0 : -1);
+            } else {
+                currentIndex = (!navDrills.isEmpty() ? 0 : -1);
+            }
+            updateNavButtons();
+
         } catch (Exception saveEx) {
             System.err.println("[GameView] Failed to save session: " + saveEx.getMessage());
             saveEx.printStackTrace();
@@ -945,5 +913,44 @@ public class TypingGameController extends Controller {
         wpmLabel.setText("WPM: " + wpm);
         accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
         streakLabel.setText("Streak: " + bestStreak);
+    }
+
+    // =========================
+    // --- NEW: NAV METHODS ---
+    // =========================
+
+    /** Jump to a drill by list index and load it. */
+    private void loadDrillAtIndex(int idx) {
+        if (idx < 0 || idx >= navDrills.size()) return;
+        Drill d = navDrills.get(idx);
+        currentIndex = idx;
+        if (drillSelect != null) {
+            // keep dropdown in sync if visible
+            drillSelect.getSelectionModel().select(d);
+        }
+        loadDrill(d);
+        updateNavButtons();
+    }
+
+    /** Enable/disable Previous/Next buttons at boundaries. */
+    private void updateNavButtons() {
+        boolean hasPrev = currentIndex > 0;
+        boolean hasNext = currentIndex >= 0 && currentIndex < navDrills.size() - 1;
+        if (prevBtn != null) prevBtn.setDisable(!hasPrev);
+        if (nextBtn != null) nextBtn.setDisable(!hasNext);
+    }
+
+    @FXML
+    private void onPrevDrill() {
+        if (currentIndex > 0) {
+            loadDrillAtIndex(currentIndex - 1);
+        }
+    }
+
+    @FXML
+    private void onNextDrill() {
+        if (currentIndex >= 0 && currentIndex < navDrills.size() - 1) {
+            loadDrillAtIndex(currentIndex + 1);
+        }
     }
 }
