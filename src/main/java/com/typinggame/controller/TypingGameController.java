@@ -49,6 +49,8 @@ import javafx.geometry.Insets;
 import javafx.scene.input.KeyCode;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+
+import javafx.scene.media.AudioClip;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -244,6 +246,10 @@ public class TypingGameController extends Controller {
         this.currentUser = (manager != null) ? manager.getCurrentUser() : null;
     }
 
+
+
+
+
     private int resolveUserId() {
         try {
             if (userManager != null && userManager.getCurrentUser() != null)
@@ -287,22 +293,45 @@ public class TypingGameController extends Controller {
     }
 
 
-// rank image
+
+    // name and rank labels
+    public Label nameLabel;
+    public Label rankLabel;
+
+    // rank image
     @FXML
     private ImageView rankBadgeImageView;
 
 
-// username display
+    // username display
     @FXML
     private Label usernameLabel;
     private boolean usernameApplied = false;
 
 
+    // sound files
+    // 3 correct sounds of bubbles to give variety/depth to user experience. 1 incorrect for recognisable consistency of errors
+    private AudioClip[] correctSounds;
+    private AudioClip incorrectSound;
+
+    private void initializeSounds() {
+        correctSounds = new AudioClip[] {
+                new AudioClip(getClass().getResource("/sounds/correct1.mp3").toExternalForm()),
+                new AudioClip(getClass().getResource("/sounds/correct2.mp3").toExternalForm()),
+                new AudioClip(getClass().getResource("/sounds/correct3.mp3").toExternalForm())
+        };
+        incorrectSound = new AudioClip(getClass().getResource("/sounds/incorrect.mp3").toExternalForm());
+    }
+
+    // begin game state
     private User user;
     @FXML
     private void initialize() {
         user = AppContext.userManager.getCurrentUser(); // fallback
         System.out.println("[Controller] Instance hash: " + System.identityHashCode(this));
+
+        // Load sound effects
+        initializeSounds();
 
         // Initialize chart series before UI
         wpmSeries = new XYChart.Series<>();
@@ -367,7 +396,7 @@ public class TypingGameController extends Controller {
         System.out.println("[Controller] Resolved rank: " + rank.name());
 
         if (usernameLabel != null && !usernameApplied) {
-            usernameLabel.setText("Name: " + user.getDisplayName() + "\nRank: " + rank.name());
+            usernameLabel.setText( user.getDisplayName() + "\n\n\n"+ rank.name());
             usernameApplied = true;
             System.out.println("[Controller] Username and rank applied to label");
         } else if (usernameLabel == null) {
@@ -472,11 +501,27 @@ public class TypingGameController extends Controller {
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
             streakLabel.setText("Streak: " + currentStreak);
 
-            // Streak update only if input is within bounds
-            if (!input.isEmpty() && input.length() <= targetText.length()) {
-                char inputChar = input.charAt(input.length() - 1);
-                char targetChar = targetText.charAt(input.length() - 1);
-                stats.updateStreak(inputChar, targetChar);
+            // Sound logic — accurate for all characters including shift-modified
+            String typedText = e.getCharacter();
+            if (!input.isEmpty()
+                    && input.length() <= targetText.length()
+                    && typedText != null
+                    && typedText.length() == 1
+                    && !typedText.equals(" ") // skip space
+                    && !typedText.equals("\b")) { // skip backspace
+
+                char typedChar = typedText.charAt(0);
+                char expectedChar = targetText.charAt(input.length() - 1);
+                boolean isCorrect = typedChar == expectedChar;
+
+                stats.updateStreak(typedChar, expectedChar);
+
+                if (isCorrect) {
+                    int soundIndex = (int) (Math.random() * correctSounds.length);
+                    correctSounds[soundIndex].play();
+                } else {
+                    incorrectSound.play();
+                }
             }
 
             // Completion check
@@ -553,13 +598,11 @@ public class TypingGameController extends Controller {
 
             keyMap.put(KeyCode.SPACE, keySPACE);
 
-
             inputField.setOnKeyPressed(event -> {
                 KeyCode code = event.getCode();
                 String input = inputField.getText();
                 int index = input.length();
 
-                // Debug testing
                 System.out.println("Pressed: " + code + " | Text: '" + event.getText() + "'");
 
                 // TAB: prevent focus shift and reclaim focus
@@ -603,22 +646,7 @@ public class TypingGameController extends Controller {
                     return;
                 }
 
-                // Highlight regular keys
-                boolean isCorrect = false;
-                if (index < targetText.length()) {
-                    char expected = targetText.charAt(index);
-                    if (code == KeyCode.SPACE) {
-                        isCorrect = expected == ' ';
-                    } else {
-                        String name = code.getName();
-                        if (name != null && name.length() == 1) {
-                            char typed = name.charAt(0);
-                            isCorrect = Character.toUpperCase(typed) == Character.toUpperCase(expected);
-                        }
-                    }
-                }
 
-                highlightKey(code, isCorrect);
             });
 
             inputField.setOnKeyReleased(event -> {

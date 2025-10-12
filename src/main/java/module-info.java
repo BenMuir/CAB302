@@ -6,6 +6,7 @@ module com.typinggame {
     requires java.net.http;
     requires jdk.httpserver;
     requires java.desktop;
+    requires javafx.media;
 
     opens com.typinggame.controller to javafx.fxml;
     exports com.typinggame;

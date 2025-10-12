@@ -15,14 +15,27 @@
             <Image url="@images/BG-unlocks/default-rank-bg.png" />
         </image>
     </ImageView>
-    <!--username display-->
-    <Label fx:id="usernameLabel" layoutX="1432.0" layoutY="100.0" prefHeight="44.0" prefWidth="256.0" style="-fx-text-fill: white;">
+<!--name label-->
+    <Label fx:id="nameLabel" layoutX="1435.0" layoutY="100.0" text="Name:" textFill="#ff00e7">
+          <font>
+              <Font name="Press Start 2P Regular" size="18.0" />
+          </font>
+      </Label>
+<!--Rank Label-->
+    <Label fx:id="rankLabel" layoutX="1435.0" layoutY="170.0" text="Rank:" textFill="#FF5F1F">
         <font>
-            <Font name="Press Start 2P Regular" size="22.0" />
+            <Font name="Press Start 2P Regular" size="18.0" />
+        </font>
+      </Label>
+
+    <!--username and rank display-->
+    <Label fx:id="usernameLabel" layoutX="1435.0" layoutY="110.0" prefHeight="130.0" prefWidth="266.0" style="-fx-text-fill: white;">
+        <font>
+            <Font name="Press Start 2P Regular" size="20.0" />
         </font>
     </Label>
     <!--ranked badge display-->
-    <ImageView fx:id="rankBadgeImageView" fitHeight="185.0" fitWidth="185.0" layoutX="1650.0" layoutY="90.0" />
+    <ImageView fx:id="rankBadgeImageView" fitHeight="185.0" fitWidth="185.0" layoutX="1635.0" layoutY="80.0" />
 
     <!-- Drill Select -->
     <ComboBox fx:id="drillSelect" layoutX="1468.0" layoutY="789.0" prefWidth="320.0" promptText="Select a drill" />
