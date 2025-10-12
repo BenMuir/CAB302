@@ -367,7 +367,7 @@ public class TypingGameController extends Controller {
         System.out.println("[Controller] Resolved rank: " + rank.name());
 
         if (usernameLabel != null && !usernameApplied) {
-            usernameLabel.setText(user.getDisplayName() + "\nRank: " + rank.name());
+            usernameLabel.setText("Name: " + user.getDisplayName() + "\nRank: " + rank.name());
             usernameApplied = true;
             System.out.println("[Controller] Username and rank applied to label");
         } else if (usernameLabel == null) {
@@ -439,10 +439,12 @@ public class TypingGameController extends Controller {
         inputField.setDisable(false);
 
         inputField.setOnKeyTyped(e -> {
-            String input = inputField.getText();
+            String rawInput = inputField.getText();
+            String input = rawInput == null ? "" : rawInput.trim(); // trim for accuracy calc
+
             updateDisplay(input);
             stats.update(input);
-            stats.updateAccuracy(input, targetText);
+            stats.updateAccuracy(input, targetText); // now handles edge cases internally
 
             long elapsedMillis = System.currentTimeMillis() - startTime;
             double elapsedMinutes = elapsedMillis / 60000.0;
@@ -458,6 +460,7 @@ public class TypingGameController extends Controller {
             int elapsedSeconds = (int) (elapsedMillis / 1000);
             int currentStreak = stats.getCurrentStreak();
 
+            // Chart updates
             wpmSeries.getData().add(new XYChart.Data<>(elapsedSeconds, avgWPM));
             accuracySeries.getData().add(new XYChart.Data<>(elapsedSeconds, accuracy));
             streakSeries.getData().add(new XYChart.Data<>(elapsedSeconds, currentStreak));
@@ -467,25 +470,27 @@ public class TypingGameController extends Controller {
             if (streakSeries.getData().size() > 50) streakSeries.getData().remove(0);
 
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
+            streakLabel.setText("Streak: " + currentStreak);
 
+            // Streak update only if input is within bounds
             if (!input.isEmpty() && input.length() <= targetText.length()) {
                 char inputChar = input.charAt(input.length() - 1);
                 char targetChar = targetText.charAt(input.length() - 1);
                 stats.updateStreak(inputChar, targetChar);
-                streakLabel.setText("Streak: " + stats.getCurrentStreak());
             }
 
+            // Completion check
             if (stats.isComplete()) {
                 try {
                     if (timer != null) timer.stop();
                 } catch (Exception ignore) {}
+
                 inputField.setEditable(false);
                 inputField.setDisable(true);
                 saveSession();
                 showResults();
             }
         });
-
 
         Platform.runLater(() -> {
             // Key mapping
