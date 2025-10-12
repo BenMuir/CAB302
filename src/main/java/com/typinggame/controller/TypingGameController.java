@@ -376,7 +376,7 @@ public class TypingGameController extends Controller {
 
         if (rankBadgeImageView != null) {
             try {
-                Image badge = RankLoader.load(rank);
+                Image badge = RankLoader.loadIcon(rank);
                 rankBadgeImageView.setImage(badge);
                 System.out.println("[Controller] Rank badge loaded: " + rank.resourcePath);
             } catch (Exception e) {

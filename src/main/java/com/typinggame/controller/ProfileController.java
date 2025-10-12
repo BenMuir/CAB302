@@ -96,7 +96,7 @@ public class ProfileController extends Controller {
         try {
             double highestWPM = user.getBestWPM();
             var rank = Rank.forTypingSpeed(highestWPM);
-            rankBadgeImageView.setImage(RankLoader.load(rank));
+            rankBadgeImageView.setImage(RankLoader.loadIcon(rank));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

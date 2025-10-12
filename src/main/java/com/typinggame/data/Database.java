@@ -93,7 +93,7 @@ public class Database {
                 display_name TEXT    NOT NULL DEFAULT '',
                 font_family  TEXT    NOT NULL DEFAULT 'System',
                 font_size    INTEGER NOT NULL DEFAULT 16,
-                theme        TEXT    NOT NULL DEFAULT 'Light',
+                theme        TEXT    NOT NULL DEFAULT 'KRILL',
                 FOREIGN KEY(user_id) REFERENCES users(id)
               );
             """);

@@ -6,7 +6,7 @@ import java.net.URL;
 public class RankLoader {
     private RankLoader() {}
 
-    public static Image load(Rank rankBadge) {
+    public static Image loadIcon(Rank rankBadge) {
         String resourcePath = rankBadge.resourcePath;
         URL url = Rank.class.getResource(resourcePath); // leading "/" required
         if (url == null) {

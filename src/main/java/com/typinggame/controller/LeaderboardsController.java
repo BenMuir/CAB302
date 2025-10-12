@@ -60,7 +60,7 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
 
         colRank.setCellValueFactory(c -> {
             var rank = Rank.forTypingSpeed(c.getValue().wpm);
-            Image rankImage = RankLoader.load(rank);
+            Image rankImage = RankLoader.loadIcon(rank);
             return new SimpleObjectProperty<>(rankImage);
         });
 
