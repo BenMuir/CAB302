@@ -26,7 +26,7 @@
             </children>
         </AnchorPane>
 
-        <!-- Learn -->
+       <!--Learn-->
         <StackPane layoutX="217.0" layoutY="437.0" prefHeight="101.0" prefWidth="217.0">
             <children>
                 <Button minHeight="100.0" minWidth="261.0" onAction="#learnModeButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Learn">
