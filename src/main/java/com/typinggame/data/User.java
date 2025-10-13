@@ -17,11 +17,6 @@ import java.util.Map;
  * [Ben M – Sept 10 2025]
  */
 
-/**
- * Commented out a bunch of stuff that isn't necessary due to the new db structure. Will go through and
- * completely remove after prototype submission. Just leaving them to be safe
- * -Evan
- */
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +30,11 @@ public class User implements Serializable {
     //private List<Double> sessionAccuracies;
     //private List<Integer> sessionWPMs;
 
+    /**
+     * Constructs a new user class with the specified username and hasehd password
+     * @param username username of the user
+     * @param passwordHash hashed password of the user
+     */
     public User(String username, String passwordHash) {
         if (username == null || username.isEmpty())
             throw new IllegalArgumentException("Username cannot be empty");
@@ -43,11 +43,6 @@ public class User implements Serializable {
 
         this.username = username;
         this.passwordHash = passwordHash;
-        //this.highScore = 0;
-        //this.bestAccuracy = 0.0;
-        //this.totalSessions = 0;
-        //this.sessionAccuracies = new ArrayList<>();
-        //this.sessionWPMs = new ArrayList<>();
     }
 
     // Getters
@@ -58,14 +53,7 @@ public class User implements Serializable {
     public String getPasswordHash() {
         return passwordHash;
     }
-/** come back to this later when it's actually needed. just getting what we need working rn
-    public int getHighScore() {
-        try (Connection c = Database.getConnection();
-             PreparedStatement ps = c.prepareStatement((
-                     ""
-                     ))
-    }
-*/
+
     public double getBestAccuracy() {
         try (Connection c = Database.getConnection();
             PreparedStatement ps = c.prepareStatement(
@@ -131,6 +119,10 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * this updates the users display names in the settings table
+     * @param newName new display name to be set to
+     */
     public void updateDisplayName(String newName) {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -195,6 +187,13 @@ public class User implements Serializable {
 
     }
 
+    /**
+     * Updates all of the user settings with the information handed to the method
+     * @param displayName what to change the users display name to
+     * @param font what font the user wants to have their stuff changed to
+     * @param fontSize the fontsize the user wants
+     * @param theme what background theme the user wants
+     */
     public void updateAllSettings(String displayName, String font, int fontSize, String theme) {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(
@@ -211,55 +210,11 @@ public class User implements Serializable {
             System.err.println("Retreive ID failed: " + e.getMessage());
         }
     }
-//
-//    public List<Double> getSessionAccuracies() {
-//        return sessionAccuracies;
-//    }
-//
-//    public List<Integer> getSessionWPMs() {
-//        return sessionWPMs;
-//    }
-//
-//    // Setters
-//    public void setHighScore(int highScore) {
-//        this.highScore = highScore;
-//    }
-//
-//    public void setBestAccuracy(double bestAccuracy) {
-//        this.bestAccuracy = bestAccuracy;
-//    }
-//
-//    public void incrementSessions() {
-//        this.totalSessions++;
-//    }
 
     /**
-     * Records a new game session and updates stats accordingly.
-     *
-     * @param accuracy Accuracy percentage from the session
-     * @param wpm Words per minute from the session
+     * yeah this turns the given user into a string it's kinda not used anymore
+     * @return string concatenation of all the user details
      */
-    /** Not needed anymore with new databse implementation. Just leaving for now
-    public void recordSession(double accuracy, int wpm) {
-        sessionAccuracies.add(accuracy);
-        sessionWPMs.add(wpm);
-        totalSessions++;
-
-        if (accuracy > bestAccuracy) bestAccuracy = accuracy;
-        if (wpm > highScore) highScore = wpm;
-    }
-
-    /**
-     * Resets all gameplay statistics.
-     */
-//    public void resetStats() {
-//        highScore = 0;
-//        bestAccuracy = 0.0;
-//        totalSessions = 0;
-//        sessionAccuracies.clear();
-//        sessionWPMs.clear();
-//    }
-
     @Override
     public String toString() {
         return "User{" +

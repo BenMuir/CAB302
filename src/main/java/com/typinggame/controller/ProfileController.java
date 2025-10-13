@@ -48,14 +48,11 @@ public class ProfileController extends Controller {
 
 
     //private final UserManager userManager = new UserManager(new FileUserRepository());
-
+    /**
+     * things that need to happen before screen logic starts. mostly changing values in labels
+     */
     @FXML
     public void initialize() {
-        //if (user != null) {
-        //welcomeLabel.setText("Welcome, " + user.getUsername() + "!");
-        //highScoreLabel.setText("High Score: " + user.getHighScore());
-        //accuracyLabel.setText("Best Accuracy: " + String.format("%.2f%%", user.getBestAccuracy()));
-        //sessionCountLabel.setText("Sessions Played: " + user.getTotalSessions());
         displayNameLabel.setText(user.getDisplayName());
         wpmLabel.setText(String.valueOf(user.getBestWPM()));
         accuracyLabel.setText(String.valueOf(user.getBestAccuracy()));
@@ -64,7 +61,9 @@ public class ProfileController extends Controller {
 
         //}
     }
-
+    /**
+     * handles updating the user settings
+     */
     @FXML
     public void updateDisplay() {
         int idToSearch = user.getUserID();
