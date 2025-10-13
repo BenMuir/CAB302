@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -47,6 +48,10 @@ public class MainApp extends Application {
         primaryStage.setResizable(true);
         primaryStage.setMinWidth(960);
         primaryStage.setMinHeight(540);
+
+        // Add team icon
+        Image icon = new Image(getClass().getResourceAsStream("/images/TeamIcon.png"));
+        primaryStage.getIcons().add(icon);
 
         // Center content and allow letterboxing
         StackPane container = new StackPane(loginRoot);
