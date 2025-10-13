@@ -52,7 +52,7 @@ public class RegisterController extends Controller {
         if (globalUserManager.register(email, password)) {
             AppContext.userManager = globalUserManager;
             globalUserManager.getCurrentUser().updateDisplayName(displayName);
-            displayScene("/MainMenu.fxml", event);
+            displayScene("/MainMenuView.fxml", event);
         } else {
             errorResponse.setText("Email in use");
         }
