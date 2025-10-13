@@ -16,37 +16,36 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane stylesheets="@styles/comboBoxStyle.css, @styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LeaderboardsController">
-    <children>
+    <!-- Background Image-->
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
                 <Image url="@images/GameModeBackground.png" />
-            </image>
         </ImageView>
+    <!-- Drill Select Label-->
         <Label alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="27.0" prefWidth="157.0" text="Drill:" textFill="WHITE">
             <font>
                 <Font name="Press Start 2P Regular" size="24.0" />
             </font>
         </Label>
+    <!-- Drill ComboBox-->
         <ComboBox fx:id="drillSelect" layoutX="200.0" layoutY="50.0" prefWidth="300" />
+    <!-- Back Button-->
         <StackPane layoutX="1696.0" layoutY="50.0" prefHeight="45.0" prefWidth="174.0">
-            <children>
+
                 <Button fx:id="backButton" minHeight="47.0" minWidth="139.0" onAction="#handleBack" prefHeight="47.0" prefWidth="139.0" styleClass="menu-button" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="24.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
+    <!-- Leaderboard Pane-->
         <BorderPane blendMode="SRC_ATOP" mouseTransparent="true" prefHeight="1080.0" prefWidth="1920.0">
-
             <top>
                 <HBox spacing="10" style="-fx-padding: 10;">
-                    <children>
                         <Pane HBox.hgrow="ALWAYS" />
-                    </children>
                 </HBox>
             </top>
             <center>
+                <!-- Leaderboard-->
                 <TableView fx:id="table" prefWidth="1420.0" style="-fx-background-color: transparent;" stylesheets="@styles/tableViewStyle.css" BorderPane.alignment="CENTER">
                     <columns>
                         <TableColumn fx:id="colRank" prefWidth="225.0" />
@@ -58,7 +57,5 @@
             <padding>
                 <Insets bottom="50.0" left="507.0" right="507.0" top="100.0" />
             </padding>
-
         </BorderPane>
-    </children>
 </AnchorPane>

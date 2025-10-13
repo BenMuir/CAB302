@@ -12,61 +12,62 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/comboBoxStyle.css, @styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.OptionsMenuController">
-    <children>
-        <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
+    <!-- Background Image-->
+    <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
                 <Image url="@images/GameModeBackground.png" />
-            </image>
         </ImageView>
       <Pane layoutX="369.0" layoutY="315.0" prefHeight="450.0" prefWidth="1182.0" style="-fx-background-color: rgba(255,255,255,0.4); -fx-background-radius: 20; -fx-padding: 24;">
-         <children>
+          <!-- Display Label-->
               <Label fx:id="changeDisplayLabel" alignment="CENTER_RIGHT" layoutX="139.0" layoutY="50.0" prefHeight="51.0" prefWidth="505.0" text="Change display name: ">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Display Name Field-->
               <TextField fx:id="displayNameEntry" layoutX="744.0" layoutY="50.0" prefHeight="60.0" prefWidth="312.0" promptText="new display name">
                   <font>
                       <Font name="Press Start 2P Regular" size="18.0" />
                   </font>
               </TextField>
+          <!-- Font Select ComboBox-->
                 <ComboBox fx:id="fontCombo" layoutX="744.0" layoutY="150.0" prefHeight="50.0" prefWidth="200.0" promptText="Font" />
+          <!-- Font Select Label-->
               <Label fx:id="changeFontLabel" alignment="CENTER_RIGHT" layoutX="115.0" layoutY="150.0" prefHeight="51.0" prefWidth="505.0" text="Change font:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Font Size Label-->
               <Label fx:id="changeFontSizeLabel" alignment="CENTER_RIGHT" layoutX="115.0" layoutY="250.0" prefHeight="51.0" prefWidth="505.0" text="Change font size:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Font Size Combo Box-->
               <ComboBox fx:id="fontSizeCombo" layoutX="744.0" layoutY="250.0" prefHeight="50.0" prefWidth="200.0" promptText="Font size" />
+          <!-- Theme Label-->
               <Label fx:id="changeThemeLabel" alignment="CENTER_RIGHT" layoutX="115.0" layoutY="350.0" prefHeight="51.0" prefWidth="505.0" text="Change theme:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Theme Change Combo Box-->
               <ComboBox fx:id="themeCombo" layoutX="744.0" layoutY="350.0" prefHeight="50.0" prefWidth="200.0" promptText="Theme" />
-         </children>
       </Pane>
         <StackPane layoutX="1088.0" layoutY="929.0" prefHeight="101.0" prefWidth="217.0">
-         <children>
+            <!-- Update Display Button-->
               <Button fx:id="updateDisplayBtn" minHeight="100.0" minWidth="261.0" onAction="#updateUserSettings" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Update">
                   <font>
                       <Font name="Press Start 2P Regular" size="30.0" />
                   </font>
               </Button>
-         </children>
         </StackPane>
+        <!-- Back button-->
         <StackPane layoutX="50.0" layoutY="929.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <Button fx:id="backBtn" minHeight="100.0" minWidth="261.0" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
-    </children>
 </AnchorPane>
