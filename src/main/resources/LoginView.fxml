@@ -14,42 +14,46 @@
 <!-- FXML file for login page - Wren -->
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.LoginController">
-    <children>
+    <!-- Background Image-->
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
                 <Image url="@images/login-sea-type.png" />
-            </image>
         </ImageView>
         <Pane layoutX="1180.0" layoutY="6.0" prefHeight="701.0" prefWidth="731.0">
-            <children>
+            <!-- Menu  UI Background-->
                 <ImageView fitHeight="707.0" fitWidth="765.0" layoutX="-30.0" layoutY="-1.0" pickOnBounds="true">
-                    <image>
                         <Image url="@images/UIFieldBackground.png" />
-                    </image>
                 </ImageView>
+            <!-- Username Label-->
                 <Label alignment="CENTER" layoutX="73.0" layoutY="171.0" prefHeight="41.0" prefWidth="559.0" text="Username">
                     <font>
                         <Font name="Press Start 2P Regular" size="59.0" />
                     </font>
                 </Label>
+            <!-- Menu UI title - Sign In-->
                 <Label alignment="CENTER" layoutX="36.0" layoutY="3.0" prefHeight="126.0" prefWidth="652.0" text="Sign In">
                     <font>
                         <Font name="Press Start 2P Regular" size="74.0" />
                     </font>
                 </Label>
+            <!-- Password Field-->
                 <PasswordField fx:id="passwordField" layoutX="123.0" layoutY="373.0" prefHeight="60.0" prefWidth="460.0" promptText="********">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
-                    </font></PasswordField>
+                    </font>
+                </PasswordField>
+            <!-- Password Label-->
                 <Label alignment="CENTER" layoutX="74.0" layoutY="307.0" prefHeight="41.0" prefWidth="559.0" text="Password">
                     <font>
                         <Font name="Press Start 2P Regular" size="59.0" />
                     </font>
                 </Label>
+            <!-- Username Field-->
                 <TextField fx:id="usernameField" layoutX="123.0" layoutY="237.0" prefHeight="60.0" prefWidth="460.0" promptText="email@123.com">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
-                    </font></TextField>
+                    </font>
+                </TextField>
+            <!-- Login Button-->
                 <StackPane layoutX="122.0" layoutY="459.0" prefHeight="101.0" prefWidth="217.0">
                     <Button minHeight="101.0" minWidth="217.0" onAction="#handleLogin" prefHeight="101.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Login">
                         <font>
@@ -57,17 +61,15 @@
                         </font>
                     </Button>
                 </StackPane>
+            <!-- Register Button-->
                 <StackPane layoutX="369.0" layoutY="459.0" prefHeight="101.0" prefWidth="217.0">
-                    <children>
                         <Button minHeight="101.0" minWidth="217.0" onAction="#handleRegister" prefHeight="101.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Sign up">
                             <font>
                                 <Font name="Press Start 2P Regular" size="22.0" />
                             </font>
                         </Button>
-                    </children>
                 </StackPane>
-                <Label fx:id="statusLabel" text="" />
-            </children>
+            <!-- Hidden Status Label-->
+                <Label fx:id="statusLabel" />
         </Pane>
-    </children>
 </AnchorPane>

@@ -10,23 +10,20 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.ProfileController">
-    <children>
+    <!-- Background Image-->
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
                 <Image url="@images/GameModeBackground.png" />
-            </image>
         </ImageView>
+    <!-- Back -->
         <StackPane layoutX="50.0" layoutY="929.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <Button minHeight="100.0" minWidth="261.0" onAction="#handleBack" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
       <Pane layoutX="531.0" layoutY="327.0" prefHeight="427.0" prefWidth="858.0" style="-fx-background-color: rgba(255,255,255,0.4); -fx-background-radius: 20; -fx-padding: 24;">
-         <children>
+          <!-- Display Name -->
               <Label fx:id="displayNameTitle" layoutX="146.0" layoutY="50.0" text="Display Name: ">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
@@ -37,6 +34,7 @@
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- WPM -->
               <Label fx:id="wpmTitle" layoutX="170.0" layoutY="150.0" text="Highest WPM:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
@@ -47,6 +45,7 @@
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Accuracy -->
               <Label fx:id="accuracyTitle" layoutX="50.0" layoutY="250.0" text="Highest Accuracy:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
@@ -57,6 +56,7 @@
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
+          <!-- Sessions -->
               <Label fx:id="sessionsTitle" layoutX="122.0" layoutY="350.0" text="Session count:">
                   <font>
                       <Font name="Press Start 2P Regular" size="24.0" />
@@ -67,17 +67,15 @@
                       <Font name="Press Start 2P Regular" size="24.0" />
                   </font>
               </Label>
-         </children>
       </Pane>
+    <!-- Rank -->
       <Pane layoutX="50.0" layoutY="100.0" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: rgba(255,255,255,0.4); -fx-background-radius: 20; -fx-padding: 24;">
-         <children>
             <ImageView fx:id="rankBadgeImageView" fitHeight="250.0" fitWidth="250.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
       </Pane>
       <Label layoutX="64.0" layoutY="16.0" text="Rank" textFill="#e5b514">
          <font>
             <Font name="Press Start 2P Regular" size="68.0" />
          </font>
       </Label>
-    </children>
+
 </AnchorPane>
