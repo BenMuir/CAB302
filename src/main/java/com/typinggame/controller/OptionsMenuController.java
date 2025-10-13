@@ -80,7 +80,7 @@ public class OptionsMenuController extends Controller{
         this.user = userManager.getCurrentUser();
         this.userRank = Rank.forTypingSpeed(user.getBestWPM());
         ObservableList<String> fontOptions = FXCollections.observableArrayList("Pixels", "System", "Fortnite or something idk");
-        ObservableList<String> fontSizeOptions = FXCollections.observableArrayList("8", "16", "32");
+        ObservableList<String> fontSizeOptions = FXCollections.observableArrayList("24", "28", "32", "36", "40");
         //ObservableList<String> themeOptions = FXCollections.observableArrayList("Ocean", "Light", "Dark");
         ObservableList<String> themeOptions = FXCollections.observableArrayList(lowerRanksHelper(userRank));
         fontCombo.setItems(fontOptions);

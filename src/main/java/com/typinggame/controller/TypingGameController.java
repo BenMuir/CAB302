@@ -446,7 +446,7 @@ public class TypingGameController extends Controller {
 
         inputField.setStyle(
                 "-fx-font-family: 'Press Start 2P'; " +
-                        "-fx-font-size: 24px; " +
+                        "-fx-font-size: " + user.getFontSize() + "px; " +
                         "-fx-text-fill: whitesmoke; " +
                         "-fx-background-color: transparent; " +
                         "-fx-background-radius: 14;"
@@ -928,7 +928,7 @@ public class TypingGameController extends Controller {
         // style once (not inside the loop)
         displayFlow.setStyle(
                 "-fx-font-family: 'Press Start 2P'; " +
-                        "-fx-font-size: 24px; " +
+                        "-fx-font-size: " + user.getFontSize() + "px; " +
                         "-fx-background-color: transparent; " +
                         "-fx-background-radius: 20; " +
                         "-fx-padding: 20;"
