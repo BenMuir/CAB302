@@ -152,7 +152,8 @@
 
     <!-- Spacebar -->
     <Button fx:id="keySPACE" layoutX="332.0" layoutY="987.0" prefHeight="80.0" prefWidth="563.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="SPACE" />
-    <Button layoutX="1663.0" layoutY="953.0" onAction="#ToProfile" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
+
+    <Button layoutX="1663.0" layoutY="953.0" onAction="#BackButton" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>

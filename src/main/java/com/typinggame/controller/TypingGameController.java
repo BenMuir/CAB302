@@ -742,7 +742,6 @@ public class TypingGameController extends Controller {
         }
     }
 
-
     /**
      * starts selected drill
      */
@@ -770,6 +769,12 @@ public class TypingGameController extends Controller {
 
         wpmChart.getData().clear();
         wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
+
+        // Reset keyboard key styles
+        for (Button key : keyMap.values()) {
+            if (key == keyCAPS && capsActive[0]) continue; // preserve CAPS if active
+            key.setStyle(DEFAULT_KEY_STYLE);
+        }
 
         // Reset and focus input field -Ben
         inputField.clear();
@@ -808,6 +813,12 @@ public class TypingGameController extends Controller {
         wpmChart.getData().clear(); // remove all series
         wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries); // re-add empty series
 
+        // Reset keyboard key styles
+        for (Button key : keyMap.values()) {
+            if (key == keyCAPS && capsActive[0]) continue; // preserve CAPS if active
+            key.setStyle(DEFAULT_KEY_STYLE);
+        }
+
         // Restart the current drill
         Drill d = (currentDrill != null)
                 ? currentDrill
@@ -821,12 +832,6 @@ public class TypingGameController extends Controller {
         if (d != null) loadDrill(d);
         else loadRandomDrill();
     }
-    @FXML
-    private void ToProfile(ActionEvent event) {
-        displayScene("/PlayMenuView.fxml", event);
-    }
-
-
     /**
      * Load a specific drill and (re)start the game.
      */
@@ -959,4 +964,15 @@ public class TypingGameController extends Controller {
         accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
         streakLabel.setText("Streak: " + bestStreak);
     }
+
+
+
+    @FXML
+    private void BackButton(ActionEvent event) {
+        displayScene("/DifficultySelectView.fxml", event);
+    }
+
+
+
+
 }
