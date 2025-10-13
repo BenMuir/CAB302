@@ -284,14 +284,23 @@ public class TypingGameController extends Controller {
         popup.initOwner(owner);
         popup.setTitle("Welcome to Sea Type");
 
-        Label message = new Label("Start typing the sentence on the screen without looking at your keyboard, use the keyboard onscreen to find the keys!");
+        Label messagePart1 = new Label("Start typing the sentence on the screen without looking at ");
+        messagePart1.setStyle("-fx-font-family: 'Press Start 2P'; -fx-font-size: 18px;");
+        Label messagePart2 = new Label("your keyboard, use the keyboard onscreen to find the keys!");
+        messagePart2.setStyle("-fx-font-family: 'Press Start 2P'; -fx-font-size: 18px;");
+
         Button okButton = new Button("Let's Type");
+        okButton.getStyleClass().add("menu-button");
+        okButton.setPrefHeight(80);
+        okButton.setPrefWidth(300);
         okButton.setOnAction(e -> popup.close());
 
-        VBox layout = new VBox(15, message, okButton);
+        VBox layout = new VBox(15, messagePart1, messagePart2,okButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
-        popup.setScene(new Scene(layout));
+        Scene popUpScene = new Scene(layout);
+        popUpScene.getStylesheets().add(getClass().getResource("/styles/buttonStyle.css").toExternalForm());
+        popup.setScene(popUpScene);
         popup.showAndWait();
     }
 
@@ -712,7 +721,6 @@ public class TypingGameController extends Controller {
                 unhighlightKey(code);
             });
         });
-        ;
     }
 
     // Keyboard

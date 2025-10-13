@@ -4,28 +4,69 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/comboBoxStyle.css, @styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.RegisterController">
    <children>
-      <Label layoutX="228.0" layoutY="28.0" text="Sign up!">
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/login-sea-type.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="errorResponse" layoutX="466.0" layoutY="1010.0" text="Sign Up Error Message" textFill="RED">
          <font>
-            <Font size="84.0" />
+            <Font name="Press Start 2P Regular" size="44.0" />
          </font>
       </Label>
-      <Label fx:id="errorResponse" layoutX="103.0" layoutY="126.0" text="Thsi will be invisible on initialisainn then have error text like oooooo that's not a valid email or already in user or whatever" textFill="RED">
-         <font>
-            <Font size="8.0" />
-         </font>
-      </Label>
-      <Label layoutX="133.0" layoutY="157.0" text="Display name:" />
-      <Label layoutX="133.0" layoutY="230.0" text="Email:" />
-      <Label layoutX="133.0" layoutY="295.0" text="pasword:" />
-      <TextField fx:id="displayNameField" layoutX="240.0" layoutY="153.0" promptText="Enter display name" />
-      <TextField fx:id="emailField" layoutX="240.0" layoutY="226.0" promptText="enter email" />
-      <PasswordField fx:id="passwordField" layoutX="261.0" layoutY="300.0" promptText="Enter password" />
-      <Button fx:id="registerButton" layoutX="261.0" layoutY="343.0" mnemonicParsing="false" onAction="#registerNewUser" styleClass="menu-button" text="Register" />
-      <Button fx:id="backButton" layoutX="25.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleBack" styleClass="menu-button" text="Back" />
+      <Pane layoutX="1179.0" layoutY="6.0" prefHeight="903.0" prefWidth="731.0">
+         <children>
+            <ImageView fitHeight="887.0" fitWidth="765.0" layoutX="-30.0" layoutY="-1.0" pickOnBounds="true">
+               <image>
+                  <Image url="@images/UIFieldBackground.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="73.0" layoutY="185.0" prefHeight="41.0" prefWidth="559.0" text="Display Name">
+               <font>
+                  <Font name="Press Start 2P Regular" size="44.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="36.0" layoutY="20.0" prefHeight="126.0" prefWidth="652.0" text="Sign Up!">
+               <font>
+                  <Font name="Press Start 2P Regular" size="74.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="76.0" layoutY="462.0" prefHeight="41.0" prefWidth="559.0" text="Password">
+               <font>
+                  <Font name="Press Start 2P Regular" size="44.0" />
+               </font>
+            </Label>
+            <Button fx:id="registerButton" layoutX="81.0" layoutY="599.0" minHeight="100.0" minWidth="261.0" mnemonicParsing="false" onAction="#registerNewUser" styleClass="menu-button" text="Register" />
+            <Label alignment="CENTER" layoutX="73.0" layoutY="312.0" prefHeight="41.0" prefWidth="559.0" text="Email">
+               <font>
+                  <Font name="Press Start 2P Regular" size="44.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="131.0" layoutY="522.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter password">
+               <font>
+                  <Font name="Press Start 2P Regular" size="30.0" />
+               </font>
+            </PasswordField>
+            <TextField fx:id="emailField" layoutX="131.0" layoutY="375.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter email">
+               <font>
+                  <Font name="Press Start 2P Regular" size="30.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="displayNameField" layoutX="131.0" layoutY="240.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter display name">
+               <font>
+                  <Font name="Press Start 2P Regular" size="24.0" />
+               </font>
+            </TextField>
+            <Button fx:id="backButton" layoutX="356.0" layoutY="599.0" minHeight="100.0" minWidth="261.0" mnemonicParsing="false" onAction="#handleBack" styleClass="menu-button" text="Cancel" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -5,14 +5,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0"
-            stylesheets="@styles/buttonStyle.css"
-            xmlns="http://javafx.com/javafx/21.0.6"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.typinggame.controller.DifficultySelectController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.DifficultySelectController">
 
     <children>
         <!-- Background -->
@@ -23,36 +21,44 @@
         </ImageView>
 
         <!-- Title -->
-        <Label layoutX="620.0" layoutY="150.0" text="Select Difficulty" textFill="#e5b514">
+        <Label layoutX="450.0" layoutY="154.0" text="Select Difficulty" textFill="#e5b514">
             <font>
                 <Font name="Press Start 2P Regular" size="60.0" />
             </font>
         </Label>
 
         <!-- Level Buttons -->
-        <GridPane layoutX="580.0" layoutY="350.0" hgap="40.0" vgap="40.0">
+        <GridPane hgap="40.0" layoutX="555.0" layoutY="350.0" vgap="40.0">
             <children>
-                <Button fx:id="btnLevel1"  text="1" onAction="#onPick1"  GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="menu-button"/>
-                <Button fx:id="btnLevel2"  text="2" onAction="#onPick2"  GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="menu-button"/>
-                <Button fx:id="btnLevel3"  text="3" onAction="#onPick3"  GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="menu-button"/>
-                <Button fx:id="btnLevel4"  text="4" onAction="#onPick4"  GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="menu-button"/>
-                <Button fx:id="btnLevel5"  text="5" onAction="#onPick5"  GridPane.columnIndex="4" GridPane.rowIndex="0" styleClass="menu-button"/>
+                <Button fx:id="btnLevel1" minHeight="50.0" minWidth="130.0" onAction="#onPick1" styleClass="menu-button" text="1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Button fx:id="btnLevel2" minHeight="50.0" minWidth="130.0" onAction="#onPick2" styleClass="menu-button" text="2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Button fx:id="btnLevel3" minHeight="50.0" minWidth="130.0" onAction="#onPick3" styleClass="menu-button" text="3" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Button fx:id="btnLevel4" minHeight="50.0" minWidth="130.0" onAction="#onPick4" styleClass="menu-button" text="4" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <Button fx:id="btnLevel5" minHeight="50.0" minWidth="130.0" onAction="#onPick5" styleClass="menu-button" text="5" GridPane.columnIndex="4" GridPane.rowIndex="0" />
 
-                <Button fx:id="btnLevel6"  text="6" onAction="#onPick6"  GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="menu-button"/>
-                <Button fx:id="btnLevel7"  text="7" onAction="#onPick7"  GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="menu-button"/>
-                <Button fx:id="btnLevel8"  text="8" onAction="#onPick8"  GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="menu-button"/>
-                <Button fx:id="btnLevel9"  text="9" onAction="#onPick9"  GridPane.columnIndex="3" GridPane.rowIndex="1" styleClass="menu-button"/>
-                <Button fx:id="btnLevel10" text="10" onAction="#onPick10" GridPane.columnIndex="4" GridPane.rowIndex="1" styleClass="menu-button"/>
+                <Button fx:id="btnLevel6" minHeight="50.0" minWidth="130.0" onAction="#onPick6" styleClass="menu-button" text="6" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Button fx:id="btnLevel7" minHeight="50.0" minWidth="130.0" onAction="#onPick7" styleClass="menu-button" text="7" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="btnLevel8" minHeight="50.0" minWidth="130.0" onAction="#onPick8" styleClass="menu-button" text="8" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Button fx:id="btnLevel9" minHeight="50.0" minWidth="130.0" onAction="#onPick9" styleClass="menu-button" text="9" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <Button fx:id="btnLevel10" minHeight="50.0" minWidth="130.0" onAction="#onPick10" styleClass="menu-button" text="10" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
 
         <!-- Back Button -->
-        <Button layoutX="150.0" layoutY="900.0"
-                text="Back" onAction="#onBack"
-                prefWidth="200.0" prefHeight="60.0"
-                styleClass="menu-button">
+        <Button layoutX="150.0" layoutY="900.0" onAction="#onBack" prefHeight="100.0" prefWidth="261.0" styleClass="menu-button" text="Back">
             <font>
-                <Font name="Press Start 2P Regular" size="20.0"/>
+                <Font name="Press Start 2P Regular" size="20.0" />
             </font>
         </Button>
 
