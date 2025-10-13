@@ -56,7 +56,7 @@ public class DifficultySelectController extends Controller {
         };
     }
 
-    @FXML public void onBack(ActionEvent e) { displayScene("/playmenu.fxml", e); }
+    @FXML public void onBack(ActionEvent e) { displayScene("/PlayMenuView.fxml", e); }
 
     @FXML public void onPick1(ActionEvent e){ pickLevel(1, e); }
     @FXML public void onPick2(ActionEvent e){ pickLevel(2, e); }

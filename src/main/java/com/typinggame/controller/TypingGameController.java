@@ -51,12 +51,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 import javafx.scene.media.AudioClip;
-import java.awt.*;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -828,7 +823,7 @@ public class TypingGameController extends Controller {
     }
     @FXML
     private void ToProfile(ActionEvent event) {
-        displayScene("/playmenu.fxml", event);
+        displayScene("/PlayMenuView.fxml", event);
     }
 
 

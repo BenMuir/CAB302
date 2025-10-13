@@ -10,23 +10,15 @@ import com.typinggame.data.User;
 //import com.typinggame.util.SceneManager;
 import com.typinggame.util.Rank;
 import com.typinggame.util.RankLoader;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
 
 /**
  * ProfileController displays user statistics and handles navigation
@@ -89,7 +81,7 @@ public class ProfileController extends Controller {
     }
 
     public void handleBack(ActionEvent event) {
-        displayScene("/mainmenu.fxml", event);
+        displayScene("/MainMenuView.fxml", event);
     }
 
     public void updateRank() {
@@ -128,7 +120,7 @@ public class ProfileController extends Controller {
  public void handleBack() {
  SceneManager.switchScene(
  (Stage) welcomeLabel.getScene().getWindow(),
- "/mainmenu.fxml"
+ "/MainMenuView.fxml"
  );
  }
  } */

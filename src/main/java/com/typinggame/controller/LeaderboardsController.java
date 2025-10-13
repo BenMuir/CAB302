@@ -104,7 +104,7 @@ public class LeaderboardsController extends Controller { // <-- extend Controlle
 
     @FXML
     public void handleBack(ActionEvent event) throws IOException {
-        displayScene("/mainmenu.fxml", event);
+        displayScene("/MainMenuView.fxml", event);
     }
 
 }

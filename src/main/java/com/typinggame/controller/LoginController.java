@@ -24,7 +24,7 @@ public class LoginController extends Controller {
     //could probably store it somewhere or some shit idk actually this might be the best solution lol since they don't really look at our code
     public static final UserManager globalUserManager = new UserManager(new SqliteUserRepository());
 
-    private static final String MAIN_MENU_FXML = "/MainMenu.fxml";
+    private static final String MAIN_MENU_FXML = "/MainMenuView.fxml";
 
 
     @FXML
