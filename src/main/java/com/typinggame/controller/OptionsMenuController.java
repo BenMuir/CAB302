@@ -74,6 +74,9 @@ public class OptionsMenuController extends Controller{
         return ranks;
     }
 
+    /**
+     * initilalise the screen. changes values in like all the drop downs
+     */
     @FXML
     public void initialize() {
         this.userManager = AppContext.userManager;
@@ -113,7 +116,8 @@ public class OptionsMenuController extends Controller{
     }
 
     /**
-     * Navigates back to the main menu.
+     * updates the users settings based on what is in input stuff
+     * @param event the event
      */
     @FXML
     public void updateUserSettings(ActionEvent event) {
@@ -141,6 +145,10 @@ public class OptionsMenuController extends Controller{
         } */
     }
 
+    /**
+     * sends back to main menu
+     * @param event da event
+     */
     @FXML
     public void handleBack(ActionEvent event) {
         displayScene("/mainmenu.fxml", event);
