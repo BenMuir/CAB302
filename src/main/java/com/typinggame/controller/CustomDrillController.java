@@ -58,7 +58,7 @@ public class CustomDrillController extends Controller {
             Drill d = new Drill(0, title, content, level);
             new DrillRepository().insertCustom(d);
             toast("Custom drill saved.");
-            displayScene("/playmenu.fxml", event);
+            displayScene("/PlayMenuView.fxml", event);
         } catch (Exception ex) {
             error("Failed to save the custom drill:\n" + ex.getMessage());
         }
@@ -66,7 +66,7 @@ public class CustomDrillController extends Controller {
 
     @FXML
     private void onCancel(ActionEvent event) {
-        displayScene("/playmenu.fxml", event);
+        displayScene("/PlayMenuView.fxml", event);
     }
 
     private void toast(String msg) {

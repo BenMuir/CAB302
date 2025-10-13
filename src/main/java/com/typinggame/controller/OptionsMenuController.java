@@ -2,28 +2,20 @@ package com.typinggame.controller;
 
 //import com.typinggame.data.Database;
 import com.typinggame.config.AppContext;
-import com.typinggame.data.Database;
 import com.typinggame.data.UserManager;
 //import com.typinggame.controller.LoginController;
 import com.typinggame.data.User;
 //import com.typinggame.data.FileUserRepository;
 //import com.typinggame.util.SceneManager;
 import com.typinggame.util.Rank;
-import com.typinggame.util.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,6 +135,6 @@ public class OptionsMenuController extends Controller{
 
     @FXML
     public void handleBack(ActionEvent event) {
-        displayScene("/mainmenu.fxml", event);
+        displayScene("/MainMenuView.fxml", event);
     }
 }
