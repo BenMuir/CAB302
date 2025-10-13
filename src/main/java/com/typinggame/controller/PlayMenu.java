@@ -24,6 +24,6 @@ public class PlayMenu extends Controller {
     @FXML
     public void backButtonPressed(ActionEvent event) {
         // Return to main menu
-        displayScene("/mainmenu.fxml", event);
+        displayScene("/MainMenuView.fxml", event);
     }
 }

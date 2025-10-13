@@ -10,12 +10,11 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920" stylesheets="@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.MainMenu">
-    <children>
+    <!-- Background Image-->
         <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-            <image>
                 <Image url="@images/MainScreenBackground.png" />
-            </image>
         </ImageView>
+    <!-- Game Title-->
         <Label layoutX="399.0" layoutY="195.0" text="Sea Type">
             <font>
                 <Font name="Press Start 2P Regular" size="78.0" />
@@ -24,64 +23,57 @@
                 <Insets />
             </opaqueInsets>
         </Label>
+
         <AnchorPane layoutX="478.0" layoutY="383.0" prefHeight="684.0" prefWidth="487.0">
-            <children>
+            <!-- Menu UI Background-->
                 <ImageView fitHeight="680.0" fitWidth="477.0" layoutY="8.0" pickOnBounds="true">
-                    <image>
                         <Image url="@images/UIFieldBackground.png" />
-                    </image>
                 </ImageView>
+            <!-- Menu Title-->
                 <Label layoutX="115.0" layoutY="40.0" text="Menu">
                     <font>
                         <Font name="Press Start 2P Regular" size="66.0" />
                     </font>
                 </Label>
+            <!-- Play Button-->
                 <StackPane layoutX="103.0" layoutY="180.0" prefHeight="101.0" prefWidth="217.0">
-                    <children>
-                        <Button minHeight="100.0" minWidth="261.0" onAction="#playButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Play">
+                        <Button minHeight="100.0" minWidth="261.0" onAction="#playButtonPressed" prefHeight="100.0" prefWidth="261.0" styleClass="menu-button" text="Play">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
                         </Button>
-                    </children>
                 </StackPane>
+            <!-- Options Button-->
                 <StackPane layoutX="103.0" layoutY="295.0" prefHeight="100.0" prefWidth="261.0">
-                    <children>
                         <Button minHeight="100.0" minWidth="261.0" onAction="#optionsButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Options">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
                         </Button>
-                    </children>
                 </StackPane>
+            <!-- Exit Button-->
                 <StackPane layoutX="103.0" layoutY="410.0" prefHeight="100.0" prefWidth="261.0">
-                    <children>
                         <Button minHeight="100.0" minWidth="261.0" onAction="#exitButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Exit">
                             <font>
                                 <Font name="Press Start 2P Regular" size="30.0" />
                             </font>
                         </Button>
-                    </children>
                 </StackPane>
-            </children>
         </AnchorPane>
+    <!-- Profile Button-->
         <StackPane layoutX="1552.0" layoutY="35.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <Button minHeight="152.0" minWidth="346.0" onAction="#profileButtonPressed" prefHeight="152.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Profile">
                     <font>
                         <Font name="Press Start 2P Regular" size="32.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
+    <!-- Leaderboard button-->
         <StackPane layoutX="1553.0" layoutY="216.0" prefHeight="101.0" prefWidth="217.0">
-            <children>
                 <Button minHeight="100.0" minWidth="346.0" onAction="#leaderboardButtonPressed" prefHeight="100.0" prefWidth="346.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Leaderboards">
                     <font>
                         <Font name="Press Start 2P Regular" size="22.0" />
                     </font>
                 </Button>
-            </children>
         </StackPane>
-    </children>
 </AnchorPane>

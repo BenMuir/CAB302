@@ -11,62 +11,64 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/comboBoxStyle.css, @styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.RegisterController">
-   <children>
+   <!-- Background Image -->
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
-         <image>
             <Image url="@images/login-sea-type.png" />
-         </image>
       </ImageView>
+   <!-- Error -->
       <Label fx:id="errorResponse" layoutX="466.0" layoutY="1010.0" text="Sign Up Error Message" textFill="RED">
          <font>
             <Font name="Press Start 2P Regular" size="44.0" />
          </font>
       </Label>
+
       <Pane layoutX="1179.0" layoutY="6.0" prefHeight="903.0" prefWidth="731.0">
-         <children>
+         <!-- UI Menu Background -->
             <ImageView fitHeight="887.0" fitWidth="765.0" layoutX="-30.0" layoutY="-1.0" pickOnBounds="true">
-               <image>
                   <Image url="@images/UIFieldBackground.png" />
-               </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="73.0" layoutY="185.0" prefHeight="41.0" prefWidth="559.0" text="Display Name">
-               <font>
-                  <Font name="Press Start 2P Regular" size="44.0" />
-               </font>
-            </Label>
+         <!-- Title - Sign Up! -->
             <Label alignment="CENTER" layoutX="36.0" layoutY="20.0" prefHeight="126.0" prefWidth="652.0" text="Sign Up!">
                <font>
                   <Font name="Press Start 2P Regular" size="74.0" />
                </font>
             </Label>
+         <!-- Password -->
             <Label alignment="CENTER" layoutX="76.0" layoutY="462.0" prefHeight="41.0" prefWidth="559.0" text="Password">
                <font>
                   <Font name="Press Start 2P Regular" size="44.0" />
                </font>
             </Label>
-            <Button fx:id="registerButton" layoutX="81.0" layoutY="599.0" minHeight="100.0" minWidth="261.0" mnemonicParsing="false" onAction="#registerNewUser" styleClass="menu-button" text="Register" />
+         <PasswordField fx:id="passwordField" layoutX="131.0" layoutY="522.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter password">
+            <font>
+               <Font name="Press Start 2P Regular" size="30.0" />
+            </font>
+         </PasswordField>
+         <!-- Email -->
             <Label alignment="CENTER" layoutX="73.0" layoutY="312.0" prefHeight="41.0" prefWidth="559.0" text="Email">
                <font>
                   <Font name="Press Start 2P Regular" size="44.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="131.0" layoutY="522.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter password">
-               <font>
-                  <Font name="Press Start 2P Regular" size="30.0" />
-               </font>
-            </PasswordField>
             <TextField fx:id="emailField" layoutX="131.0" layoutY="375.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter email">
                <font>
                   <Font name="Press Start 2P Regular" size="30.0" />
                </font>
             </TextField>
+         <!-- Display Name -->
             <TextField fx:id="displayNameField" layoutX="131.0" layoutY="240.0" prefHeight="60.0" prefWidth="460.0" promptText="Enter display name">
                <font>
                   <Font name="Press Start 2P Regular" size="24.0" />
                </font>
             </TextField>
+         <Label alignment="CENTER" layoutX="73.0" layoutY="185.0" prefHeight="41.0" prefWidth="559.0" text="Display Name">
+            <font>
+               <Font name="Press Start 2P Regular" size="44.0" />
+            </font>
+         </Label>
+         <!-- Register Button -->
+         <Button fx:id="registerButton" layoutX="81.0" layoutY="599.0" minHeight="100.0" minWidth="261.0" mnemonicParsing="false" onAction="#registerNewUser" styleClass="menu-button" text="Register" />
+         <!-- Back Button -->
             <Button fx:id="backButton" layoutX="356.0" layoutY="599.0" minHeight="100.0" minWidth="261.0" mnemonicParsing="false" onAction="#handleBack" styleClass="menu-button" text="Cancel" />
-         </children>
       </Pane>
-   </children>
 </AnchorPane>
