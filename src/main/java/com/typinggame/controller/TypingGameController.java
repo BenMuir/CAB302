@@ -95,6 +95,7 @@ public class TypingGameController extends Controller {
     private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
 
+
     //keyboard row 0
 
     @FXML
@@ -554,6 +555,8 @@ public class TypingGameController extends Controller {
 
             int avgWPM = wpmHistory.stream().mapToInt(Integer::intValue).sum() / wpmHistory.size();
             wpmLabel.setText("WPM: " + avgWPM);
+            Rank rank = Rank.forTypingSpeed(avgWPM);
+            updateInputBorderByRank(rank);
 
             int elapsedSeconds = (int) (elapsedMillis / 1000);
             int currentStreak = stats.getCurrentStreak();
@@ -769,7 +772,34 @@ public class TypingGameController extends Controller {
         });
     }
 
-    // Keyboard
+    private void updateInputBorderByRank(Rank rank) {
+        String color;
+
+        switch (rank) {
+            case KRILL -> color = "#ff3b30";      // red
+            case CLOWNFISH -> color = "#ff9500";  // orange
+            case TUNA -> color = "#ffd700";       // gold
+            case SWORDFISH -> color = "#00ccff";  // light blue
+            case WHALE -> color = "#00ffcc";      // turquoise
+            default -> color = "white";
+        }
+
+        inputField.setStyle(
+                "-fx-font-family: 'Press Start 2P'; " +
+                        "-fx-font-size: 24px; " +
+                        "-fx-text-fill: whitesmoke; " +
+                        "-fx-background-color: transparent; " +
+                        "-fx-background-radius: 14; " +
+                        "-fx-border-color: " + color + "; " +
+                        "-fx-border-width: 3px; " +
+                        "-fx-border-radius: 14; " +
+                        "-fx-focus-color: transparent; " +
+                        "-fx-faint-focus-color: transparent;" +
+                        "-fx-effect: dropshadow(gaussian, " + color + ", 15, 0.5, 0, 0);"
+        );
+    }
+
+// Keyboard
     private void highlightKey(KeyCode code, boolean isCorrect) {
         Button key = keyMap.get(code);
         if (key != null) {
