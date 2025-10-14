@@ -86,6 +86,11 @@ public class TypingGameController extends Controller {
     private ComboBox<Drill> drillSelect;
     @FXML
     private Button startButton;
+    // Added: Prev/Next buttons
+    @FXML
+    private Button prevButton;
+    @FXML
+    private Button nextButton;
     //keyboard
     private final Map<KeyCode, Button> keyMap = new HashMap<>();
 
@@ -468,6 +473,9 @@ public class TypingGameController extends Controller {
                     currentDrill = null;
                     targetText = SentenceProvider.getSentence();
                 }
+                // keep Prev/Next state in sync with selection
+                drillSelect.getSelectionModel().selectedIndexProperty().addListener((obs, ov, nv) -> updatePrevNextButtons());
+                updatePrevNextButtons();
             } else {
                 currentDrill = options.isEmpty() ? null : options.get(0);
                 targetText = (currentDrill != null) ? currentDrill.body : SentenceProvider.getSentence();
@@ -781,6 +789,8 @@ public class TypingGameController extends Controller {
         inputField.setEditable(true);
         inputField.setDisable(false);
         Platform.runLater(() -> inputField.requestFocus());
+
+        updatePrevNextButtons();
     }
 
     /**
@@ -831,6 +841,8 @@ public class TypingGameController extends Controller {
 
         if (d != null) loadDrill(d);
         else loadRandomDrill();
+
+        updatePrevNextButtons();
     }
     /**
      * Load a specific drill and (re)start the game.
@@ -902,6 +914,7 @@ public class TypingGameController extends Controller {
                 } else if (!options.isEmpty()) {
                     drillSelect.getSelectionModel().selectFirst();
                 }
+                updatePrevNextButtons();
             }
         } catch (Exception saveEx) {
             System.err.println("[GameView] Failed to save session: " + saveEx.getMessage());
@@ -965,6 +978,44 @@ public class TypingGameController extends Controller {
         streakLabel.setText("Streak: " + bestStreak);
     }
 
+
+    // ===== Added: Prev/Next drill navigation =====
+
+    @FXML
+    private void prevDrill(ActionEvent e) {
+        if (drillSelect == null || drillSelect.getItems().isEmpty()) return;
+        int index = drillSelect.getSelectionModel().getSelectedIndex();
+        if (index > 0) {
+            drillSelect.getSelectionModel().select(index - 1);
+            Drill selected = drillSelect.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                loadDrill(selected);
+            }
+        }
+        updatePrevNextButtons();
+    }
+
+    @FXML
+    private void nextDrill(ActionEvent e) {
+        if (drillSelect == null || drillSelect.getItems().isEmpty()) return;
+        int index = drillSelect.getSelectionModel().getSelectedIndex();
+        if (index < drillSelect.getItems().size() - 1) {
+            drillSelect.getSelectionModel().select(index + 1);
+            Drill selected = drillSelect.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                loadDrill(selected);
+            }
+        }
+        updatePrevNextButtons();
+    }
+
+    private void updatePrevNextButtons() {
+        if (drillSelect == null) return;
+        int size = drillSelect.getItems().size();
+        int idx = Math.max(0, drillSelect.getSelectionModel().getSelectedIndex());
+        if (prevButton != null) prevButton.setDisable(size == 0 || idx <= 0);
+        if (nextButton != null) nextButton.setDisable(size == 0 || idx >= size - 1);
+    }
 
 
     @FXML

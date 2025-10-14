@@ -47,6 +47,18 @@
         </font>
     </Button>
 
+    <!-- Added: Prev/Next buttons -->
+    <Button fx:id="prevButton" layoutX="1443.0" layoutY="870.0" onAction="#prevDrill" prefHeight="84.0" prefWidth="190.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Prev">
+        <font>
+            <Font name="Press Start 2P Regular" size="22.0" />
+        </font>
+    </Button>
+    <Button fx:id="nextButton" layoutX="1645.0" layoutY="870.0" onAction="#nextDrill" prefHeight="84.0" prefWidth="190.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Next">
+        <font>
+            <Font name="Press Start 2P Regular" size="22.0" />
+        </font>
+    </Button>
+
     <!-- Display Text -->
     <TextFlow fx:id="displayFlow" layoutX="170.0" layoutY="100.0" prefHeight="350.0" prefWidth="950.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-padding: 24;" />
 
