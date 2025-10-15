@@ -235,6 +235,12 @@ public class TypingGameController extends Controller {
     private TypingStats stats;
     private Drill currentDrill;
 
+    // >>> CHANGE: level-scoped navigation state
+    private int activeLevel = 0; // 0 = mixed/all, >0 = fixed level
+    private java.util.List<Drill> currentLevelDrills = new java.util.ArrayList<>();
+    private int currentDrillIndex = 0;
+    // <<< CHANGE
+
     // Data access
     private final SessionRepository sessionRepo = new SessionRepository();
     private final DrillRepository drillRepo = new DrillRepository();
@@ -459,27 +465,64 @@ public class TypingGameController extends Controller {
             int userId = resolveUserId();
             int unlocked = new ProgressService().unlockedUpTo(userId);
 
-            var options = drillRepo.findUpToTier(unlocked);
+            // >>> CHANGE: Respect the level/drill set by DifficultySelectController
+            Integer chosenLevel   = AppContext.get().getSelectedTier();
+            Integer chosenDrillId = AppContext.get().getSelectedDrillId();
+
+            var options = (chosenLevel != null)
+                    ? drillRepo.findByLevel(chosenLevel)
+                    : drillRepo.findUpToTier(unlocked);
+
+            // keep level context for Prev/Next
+            activeLevel = (chosenLevel != null) ? chosenLevel : 0;
+            currentLevelDrills = options;
+            // <<< CHANGE
 
             if (drillSelect != null) {
                 drillSelect.getItems().setAll(options);
-                if (!options.isEmpty()) {
-                    drillSelect.getSelectionModel().selectFirst();
-                    currentDrill = options.get(0);
-                    targetText = currentDrill.body;
+
+                Drill initial = null;
+                if (chosenLevel != null) {
+                    // try to select the specified drill (or first in that level)
+                    if (chosenDrillId != null) {
+                        for (int i = 0; i < options.size(); i++) {
+                            Drill d = options.get(i);
+                            if (d.id == chosenDrillId) { initial = d; currentDrillIndex = i; break; }
+                        }
+                    }
+                    if (initial == null && !options.isEmpty()) { initial = options.get(0); currentDrillIndex = 0; }
+                } else if (!options.isEmpty()) {
+                    initial = options.get(0);
+                    currentDrillIndex = 0;
+                }
+
+                if (initial != null) {
+                    drillSelect.getSelectionModel().select(initial);
+                    currentDrill = initial;
+                    targetText = initial.body;
                     startButton.setDisable(false);
                 } else {
                     startButton.setDisable(true);
                     currentDrill = null;
                     targetText = SentenceProvider.getSentence();
                 }
+
                 // keep Prev/Next state in sync with selection
-                drillSelect.getSelectionModel().selectedIndexProperty().addListener((obs, ov, nv) -> updatePrevNextButtons());
+                drillSelect.getSelectionModel().selectedIndexProperty().addListener((obs, ov, nv) -> {
+                    currentDrillIndex = Math.max(0, nv == null ? 0 : nv.intValue());
+                    updatePrevNextButtons();
+                });
                 updatePrevNextButtons();
             } else {
-                currentDrill = options.isEmpty() ? null : options.get(0);
+                currentDrill = (!options.isEmpty()) ? options.get(0) : null;
+                currentDrillIndex = 0;
                 targetText = (currentDrill != null) ? currentDrill.body : SentenceProvider.getSentence();
             }
+
+            // Clear consumed selection so future entries don't "stick"
+            AppContext.get().setSelectedTier(null);
+            AppContext.get().setSelectedDrillId(null);
+
         } catch (Exception ex) {
             System.err.println("[GameView] drill init skipped: " + ex.getMessage());
             currentDrill = null;
@@ -765,6 +808,11 @@ public class TypingGameController extends Controller {
         }
 
         if (choice != null) {
+            // >>> CHANGE: keep index in sync when user picks from dropdown
+            for (int i = 0; i < currentLevelDrills.size(); i++) {
+                if (currentLevelDrills.get(i).id == choice.id) { currentDrillIndex = i; break; }
+            }
+            // <<< CHANGE
             loadDrill(choice);
         } else {
             loadRandomDrill();
@@ -837,6 +885,7 @@ public class TypingGameController extends Controller {
         if (d == null && drillSelect != null && !drillSelect.getItems().isEmpty()) {
             d = drillSelect.getItems().get(0);
             drillSelect.getSelectionModel().selectFirst();
+            currentDrillIndex = 0; // <<< CHANGE keep index in sync
         }
 
         if (d != null) loadDrill(d);
@@ -903,19 +952,44 @@ public class TypingGameController extends Controller {
             System.out.println("[GameView] Session saved: user=" + userId +
                     " drill=" + drillId + " wpm=" + wpm + " acc=" + accuracyPct);
 
-            // Refresh dropdown if a new tier unlocked
+            // >>> CHANGE: keep the visible list scoped to the same level, if we’re in a level
             int unlocked = new ProgressService().unlockedUpTo(userId);
-            var options = drillRepo.findUpToTier(unlocked);
+            var options = (activeLevel > 0)
+                    ? drillRepo.findByLevel(activeLevel)
+                    : drillRepo.findUpToTier(unlocked);
+
             if (drillSelect != null) {
+                // Remember where we were
+                Drill previous = currentDrill;
+                int previousIndex = currentDrillIndex;
+
                 drillSelect.getItems().setAll(options);
-                // keep current drill selected if still present; otherwise select first
-                if (currentDrill != null && options.contains(currentDrill)) {
-                    drillSelect.getSelectionModel().select(currentDrill);
+                currentLevelDrills = options;
+
+                // Restore by id (objects are different instances after reload)
+                if (previous != null && !options.isEmpty()) {
+                    int restore = -1;
+                    for (int i = 0; i < options.size(); i++) {
+                        if (options.get(i).id == previous.id) { restore = i; break; }
+                    }
+                    if (restore >= 0) {
+                        currentDrillIndex = restore;
+                        drillSelect.getSelectionModel().select(options.get(restore));
+                    } else if (previousIndex < options.size()) {
+                        currentDrillIndex = previousIndex;
+                        drillSelect.getSelectionModel().select(options.get(previousIndex));
+                    } else {
+                        currentDrillIndex = 0;
+                        drillSelect.getSelectionModel().selectFirst();
+                    }
                 } else if (!options.isEmpty()) {
-                    drillSelect.getSelectionModel().selectFirst();
+                    currentDrillIndex = Math.min(previousIndex, options.size() - 1);
+                    drillSelect.getSelectionModel().select(options.get(currentDrillIndex));
                 }
+
                 updatePrevNextButtons();
             }
+            // <<< CHANGE
         } catch (Exception saveEx) {
             System.err.println("[GameView] Failed to save session: " + saveEx.getMessage());
             saveEx.printStackTrace();
@@ -983,38 +1057,42 @@ public class TypingGameController extends Controller {
 
     @FXML
     private void prevDrill(ActionEvent e) {
-        if (drillSelect == null || drillSelect.getItems().isEmpty()) return;
-        int index = drillSelect.getSelectionModel().getSelectedIndex();
-        if (index > 0) {
-            drillSelect.getSelectionModel().select(index - 1);
-            Drill selected = drillSelect.getSelectionModel().getSelectedItem();
+        // >>> CHANGE: navigate within currentLevelDrills only
+        if (currentLevelDrills == null || currentLevelDrills.isEmpty()) return;
+        if (currentDrillIndex > 0) {
+            currentDrillIndex--;
+            Drill selected = currentLevelDrills.get(currentDrillIndex);
             if (selected != null) {
+                if (drillSelect != null) drillSelect.getSelectionModel().select(selected);
                 loadDrill(selected);
             }
         }
         updatePrevNextButtons();
+        // <<< CHANGE
     }
 
     @FXML
     private void nextDrill(ActionEvent e) {
-        if (drillSelect == null || drillSelect.getItems().isEmpty()) return;
-        int index = drillSelect.getSelectionModel().getSelectedIndex();
-        if (index < drillSelect.getItems().size() - 1) {
-            drillSelect.getSelectionModel().select(index + 1);
-            Drill selected = drillSelect.getSelectionModel().getSelectedItem();
+        // >>> CHANGE: navigate within currentLevelDrills only
+        if (currentLevelDrills == null || currentLevelDrills.isEmpty()) return;
+        if (currentDrillIndex < currentLevelDrills.size() - 1) {
+            currentDrillIndex++;
+            Drill selected = currentLevelDrills.get(currentDrillIndex);
             if (selected != null) {
+                if (drillSelect != null) drillSelect.getSelectionModel().select(selected);
                 loadDrill(selected);
             }
         }
         updatePrevNextButtons();
+        // <<< CHANGE
     }
 
     private void updatePrevNextButtons() {
-        if (drillSelect == null) return;
-        int size = drillSelect.getItems().size();
-        int idx = Math.max(0, drillSelect.getSelectionModel().getSelectedIndex());
-        if (prevButton != null) prevButton.setDisable(size == 0 || idx <= 0);
-        if (nextButton != null) nextButton.setDisable(size == 0 || idx >= size - 1);
+        // >>> CHANGE: button state reflects level-scoped list
+        int size = (currentLevelDrills == null) ? 0 : currentLevelDrills.size();
+        if (prevButton != null) prevButton.setDisable(size == 0 || currentDrillIndex <= 0);
+        if (nextButton != null) nextButton.setDisable(size == 0 || currentDrillIndex >= size - 1);
+        // <<< CHANGE
     }
 
 

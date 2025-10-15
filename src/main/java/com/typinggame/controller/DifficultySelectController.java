@@ -77,6 +77,7 @@ public class DifficultySelectController extends Controller {
             return;
         }
 
+        // >>> CHANGE: ensure the chosen level and initial drill are passed forward
         AppContext.get().setSelectedTier(level);
 
         List<Drill> drillsInLevel = drillRepo.findByLevel(level);
@@ -84,7 +85,10 @@ public class DifficultySelectController extends Controller {
             System.err.println("[DifficultySelect] No drills for level " + level);
             return;
         }
+        // Select the first drill in the chosen level so GameView starts at the correct one
         AppContext.get().setSelectedDrillId(drillsInLevel.get(0).id);
+        // <<< CHANGE END
+
         displayScene("/GameView.fxml", e);
     }
 
