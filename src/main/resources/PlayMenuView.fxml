@@ -32,16 +32,10 @@
         </StackPane>
 
         <!-- Race -->
-        <StackPane layoutX="217.0" layoutY="554.0" prefHeight="101.0" prefWidth="217.0">
-                <Button minHeight="100.0" minWidth="261.0" onAction="#raceModeButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Race">
-                    <font>
-                        <Font name="Press Start 2P Regular" size="30.0" />
-                    </font>
-                </Button>
-        </StackPane>
+        <StackPane layoutX="217.0" layoutY="554.0" prefHeight="101.0" prefWidth="217.0" />
 
         <!-- Add Custom Drill -->
-        <StackPane layoutX="217.0" layoutY="670.0" prefHeight="101.0" prefWidth="217.0">
+        <StackPane layoutX="217.0" layoutY="557.0" prefHeight="101.0" prefWidth="217.0">
                 <Button minHeight="100.0" minWidth="261.0" onAction="#onAddCustomDrill" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Custom">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />
@@ -50,7 +44,7 @@
         </StackPane>
 
         <!-- Back -->
-        <StackPane layoutX="217.0" layoutY="790.0" prefHeight="101.0" prefWidth="217.0">
+        <StackPane layoutX="217.0" layoutY="677.0" prefHeight="101.0" prefWidth="217.0">
                 <Button minHeight="100.0" minWidth="261.0" onAction="#backButtonPressed" prefHeight="100.0" prefWidth="261.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Back">
                     <font>
                         <Font name="Press Start 2P Regular" size="30.0" />

@@ -108,7 +108,7 @@ public final class DrillSeeder {
                         "Sustain high WPM for a full minute without dropping accuracy.", 10);
             }
 
-            System.out.println("DrillSeeder: seeded 10 levels × 3 drills each (hard-coded).");
+            System.out.println("DrillSeeder: seeded 10 levels × 3 drills each.");
         } catch (SQLException e) {
             throw new RuntimeException("DrillSeeder failed", e);
         }

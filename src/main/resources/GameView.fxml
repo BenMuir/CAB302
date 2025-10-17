@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/comboBoxStyle.css,@styles/chartStyle.css,@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.TypingGameController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="@styles/comboBoxStyle.css,@styles/chartStyle.css,@styles/buttonStyle.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typinggame.controller.TypingGameController">
 
 
     <!-- Fullscreen Background Image -->
@@ -48,12 +54,12 @@
     </Button>
 
     <!-- Added: Prev/Next buttons -->
-    <Button fx:id="prevButton" layoutX="1443.0" layoutY="870.0" onAction="#prevDrill" prefHeight="84.0" prefWidth="190.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Prev">
+    <Button fx:id="prevButton" layoutX="1433.0" layoutY="861.0" onAction="#prevDrill" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Prev">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
     </Button>
-    <Button fx:id="nextButton" layoutX="1645.0" layoutY="870.0" onAction="#nextDrill" prefHeight="84.0" prefWidth="190.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Next">
+    <Button fx:id="nextButton" layoutX="1663.0" layoutY="861.0" onAction="#nextDrill" prefHeight="84.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" text="Next">
         <font>
             <Font name="Press Start 2P Regular" size="22.0" />
         </font>
@@ -93,17 +99,17 @@
     <!-- On-screen Keyboard (Row 0) -->
     <Button fx:id="keyBACKQUOTE" layoutX="29.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="`" />
     <Button fx:id="key1" layoutX="121.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="1" />
-    <Button fx:id="key2" layoutX="213.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="2" />
-    <Button fx:id="key3" layoutX="305.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="3" />
-    <Button fx:id="key4" layoutX="397.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="4" />
-    <Button fx:id="key5" layoutX="489.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="5" />
-    <Button fx:id="key6" layoutX="581.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="6" />
+    <Button fx:id="key2" layoutX="213.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="2" />
+    <Button fx:id="key3" layoutX="305.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="3" />
+    <Button fx:id="key4" layoutX="397.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="4" />
+    <Button fx:id="key5" layoutX="489.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="5" />
+    <Button fx:id="key6" layoutX="581.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="6" />
     <Button fx:id="key7" layoutX="673.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="7" />
     <Button fx:id="key8" layoutX="765.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="8" />
     <Button fx:id="key9" layoutX="857.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="9" />
     <Button fx:id="key0" layoutX="949.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="0" />
     <Button fx:id="keyMINUS" layoutX="1041.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="-" />
-    <Button fx:id="keyEQUALS" layoutX="1133.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0"  style="-fx-font-size: 20px;" styleClass="keyboard-button" text="=" />
+    <Button fx:id="keyEQUALS" layoutX="1133.0" layoutY="620.0" prefHeight="80.0" prefWidth="80.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="=" />
     <Button fx:id="keyBACKSPACE" layoutX="1225.0" layoutY="620.0" prefHeight="80.0" prefWidth="120.0" style="-fx-font-size: 20px;" styleClass="keyboard-button" text="&lt;-" />
 
 

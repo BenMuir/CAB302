@@ -26,11 +26,11 @@ public class MainApp extends Application {
         System.out.println("[Init] Database initialized.");
 
         // --- NEW: start local API server ---
-        try {
-            new ApiServer().start(18080);
-        } catch (Exception e) {
-            System.err.println("Failed to start API: " + e.getMessage());
-        }
+//        try {
+//            new ApiServer().start(18080);
+//        } catch (Exception e) {
+//            System.err.println("Failed to start API: " + e.getMessage());
+//        }
 
         //Load the font
         Font.loadFont(getClass().getResourceAsStream("/font/PressStart2P-Regular.ttf"), 12);
