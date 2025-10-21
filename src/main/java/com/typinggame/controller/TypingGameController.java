@@ -573,7 +573,7 @@ public class TypingGameController extends Controller {
             accuracyLabel.setText(String.format("Accuracy: %.2f%%", accuracy));
             streakLabel.setText("Streak: " + currentStreak);
 
-            // Sound logic — accurate for all characters including shift-modified
+            // Sound logic
             String typedText = e.getCharacter();
             if (!input.isEmpty()
                     && input.length() <= targetText.length()
@@ -871,6 +871,9 @@ public class TypingGameController extends Controller {
         updatePrevNextButtons();
     }
 
+
+
+
     /**
      * Resets game state for a new round
      */
@@ -1085,36 +1088,75 @@ public class TypingGameController extends Controller {
 
     // ===== Added: Prev/Next drill navigation =====
 
-    @FXML
+//    added reset logic - graph and keyboard clear -  TODO refactor into a separate method and call it
+@FXML
     private void prevDrill(ActionEvent e) {
-        // >>> CHANGE: navigate within currentLevelDrills only
         if (currentLevelDrills == null || currentLevelDrills.isEmpty()) return;
         if (currentDrillIndex > 0) {
             currentDrillIndex--;
             Drill selected = currentLevelDrills.get(currentDrillIndex);
             if (selected != null) {
+                // Repeat restartGame logic inline
+                try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+                accuracyLabel.setText("Accuracy: 0%");
+                wpmLabel.setText("WPM: 0");
+                timerLabel.setText("Time: 0s");
+                streakLabel.setText("Streak: 0");
+                displayFlow.getChildren().clear();
+                inputField.clear();
+                inputField.setEditable(true);
+                inputField.setDisable(false);
+                Platform.runLater(() -> inputField.requestFocus());
+                wpmSeries.getData().clear();
+                accuracySeries.getData().clear();
+                streakSeries.getData().clear();
+                wpmChart.getData().clear();
+                wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
+                for (Button key : keyMap.values()) {
+                    if (key == keyCAPS && capsActive[0]) continue;
+                    key.setStyle(DEFAULT_KEY_STYLE);
+                }
+
                 if (drillSelect != null) drillSelect.getSelectionModel().select(selected);
                 loadDrill(selected);
             }
         }
         updatePrevNextButtons();
-        // <<< CHANGE
     }
 
     @FXML
     private void nextDrill(ActionEvent e) {
-        // >>> CHANGE: navigate within currentLevelDrills only
         if (currentLevelDrills == null || currentLevelDrills.isEmpty()) return;
         if (currentDrillIndex < currentLevelDrills.size() - 1) {
             currentDrillIndex++;
             Drill selected = currentLevelDrills.get(currentDrillIndex);
             if (selected != null) {
+                // Repeat restartGame logic inline
+                try { if (timer != null) timer.stop(); } catch (Exception ignore) {}
+                accuracyLabel.setText("Accuracy: 0%");
+                wpmLabel.setText("WPM: 0");
+                timerLabel.setText("Time: 0s");
+                streakLabel.setText("Streak: 0");
+                displayFlow.getChildren().clear();
+                inputField.clear();
+                inputField.setEditable(true);
+                inputField.setDisable(false);
+                Platform.runLater(() -> inputField.requestFocus());
+                wpmSeries.getData().clear();
+                accuracySeries.getData().clear();
+                streakSeries.getData().clear();
+                wpmChart.getData().clear();
+                wpmChart.getData().addAll(wpmSeries, accuracySeries, streakSeries);
+                for (Button key : keyMap.values()) {
+                    if (key == keyCAPS && capsActive[0]) continue;
+                    key.setStyle(DEFAULT_KEY_STYLE);
+                }
+
                 if (drillSelect != null) drillSelect.getSelectionModel().select(selected);
                 loadDrill(selected);
             }
         }
         updatePrevNextButtons();
-        // <<< CHANGE
     }
 
     private void updatePrevNextButtons() {
