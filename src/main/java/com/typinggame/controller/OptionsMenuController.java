@@ -119,22 +119,6 @@ public class OptionsMenuController extends Controller{
         int fontSize = Integer.parseInt(fontSizeCombo.getSelectionModel().getSelectedItem());
         String theme = themeCombo.getSelectionModel().getSelectedItem();
         userToUpdate.updateAllSettings(displayName, font, fontSize, theme);
-        /**
-        int idToUpdate = user.getUserID();
-        try (Connection c = Database.getConnection();
-             PreparedStatement ps = c.prepareStatement(
-                     "UPDATE user_settings SET display_name = ?," +
-                             "font_family = ?, font_size = ?," +
-                             "theme = ? WHERE user_id = ?")) {
-            ps.setString(1, displayNameEntry.getText().trim());
-            ps.setString(2, fontCombo.getSelectionModel().getSelectedItem());
-            ps.setInt(3, Integer.parseInt(fontSizeCombo.getSelectionModel().getSelectedItem()));
-            ps.setString(4, themeCombo.getSelectionModel().getSelectedItem());
-            ps.setInt(5, idToUpdate);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Retreive ID failed: " + e.getMessage());
-        } */
     }
 
     /**
