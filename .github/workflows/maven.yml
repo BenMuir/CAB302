@@ -20,7 +20,7 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      - name: Run tests (excluding known failures)
+      - name: Run tests
         run: mvn test -Dtest=!SettingsTest,!TypingStatsTest
 
       - name: Confirm test report folder exists
@@ -35,10 +35,10 @@ jobs:
           name: test-results
           path: target/surefire-reports/
 
-      - name: Build project (excluding known failures)
+      - name: Build project
         run: mvn clean package -Dtest=!SettingsTest,!TypingStatsTest
 
-      - name: Generate Javadoc (excluding known failures)
+      - name: Generate Javadoc
         run: mvn verify -Dtest=!SettingsTest,!TypingStatsTest
 
       - name: Publish Javadoc to GitHub Pages
