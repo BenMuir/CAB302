@@ -1,0 +1,10 @@
+module:com.typinggame
+com.typinggame
+com.typinggame.api
+com.typinggame.config
+com.typinggame.controller
+com.typinggame.data
+com.typinggame.model
+com.typinggame.service
+com.typinggame.store
+com.typinggame.util

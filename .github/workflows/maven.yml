@@ -1,0 +1,51 @@
+name: Build and Publish Javadoc
+
+on:
+  push:
+    branches:
+      - main
+      - integration
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Run tests
+        run: mvn test
+
+      - name: Confirm test report folder exists
+        run: |
+          echo "Checking for test reports..."
+          ls -l target/surefire-reports || echo "No test reports found"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: target/surefire-reports/
+
+      - name: Build project
+        run: mvn clean package -Dtest=!SettingsTest,!TypingStatsTest
+
+      - name: Generate Javadoc
+        run: mvn verify -Dtest=!SettingsTest,!TypingStatsTest
+
+      - name: Publish Javadoc to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: target/docs/javadoc
+          branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+          git-config-name: Ben Muir
+          git-config-email: n10867716@qut.edu.au
